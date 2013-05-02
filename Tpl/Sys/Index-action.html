@@ -1,0 +1,46 @@
+<form action="{:U('Rbac/Role/action_access_edit')}" name="form_action_access_edit" id="form_action_access_edit" method="post">
+<input name="role_id" type="hidden" value="{$_GET[role_id]}" />
+<input name="pid" type="hidden" value="{$_GET[pid]}" />
+<table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+      <th width="60px">名称</th>
+      <th>操作名</th>
+      <th>备注</th>
+      <th width="30px">操作</th>
+    </tr>
+    <foreach name="list_action" item="info">
+        <tr>
+          <td width="60px">{$info[title]}</td>
+          <td><a href="javascript:dialog_action_edit('{$info[id]}')">{$info[name]}</a></td>
+          <td>{$info[remark]}</td>
+          <td><a href="javascript:confirm_delete(this,'{$info[id]}')">删除</a></td>
+          </tr>
+        </foreach>
+</table>
+</form>
+<div id="dialog_action_edit"></div>
+<script language="javascript">
+//修改操作
+$('#dialog_action_edit').dialog({
+    autoOpen: false,
+    title: '修改操作信息',
+    height: 300,
+    width: 400,
+    modal: true,
+    buttons: {
+        '确认': function () {
+   			$("#dialog_action_edit form").submit();
+        	$("#dialog_action_edit").dialog("close");
+   		},
+        '取消': function () {
+           $("#dialog_action_edit").dialog("close");
+        }
+    }
+});
+//修改操作信息
+function dialog_action_edit(id){	
+	var url='{:U("action_edit?id=")}'+id;
+	$('#dialog_action_edit').load(url);
+	$('#dialog_action_edit').dialog('open');
+}
+</script>

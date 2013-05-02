@@ -1,0 +1,21 @@
+<div class="dialog-div">
+  <table cellspacing='1' cellpadding='3'>
+  <php>$msg_num=0;</php>
+  <foreach name="list" item="info"  key="k">
+  <php>$msg_num++; if($i++%2==0){ $class='even'; }else{ $class='odd'; }</php>
+    <tr class="{$class}" id="dialog_tip_msg_{$info[id]}"><td><a href="{$info[callback_url]}">{$info[content]}</a>【<a href="javascript:delete_tip('{$info[id]}');">不再提示</a>】</td></tr>
+  </foreach>
+  </table>
+</div>
+<script language="javascript">
+var dialog_tip_msg_num=<php>echo $msg_num</php>;
+function delete_tip(id){
+	$.post('{:U("Sys/Tip/delete")}','id='+id,function(rs){
+		$("#dialog_tip_msg_"+id).hide();
+		dialog_tip_msg_num--;
+		if(dialog_tip_msg_num<1){
+			$("#dialog_tip_msg").dialog('close');
+		}
+	})
+}
+</script>

@@ -1,0 +1,10 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}">
+<input name="act" type="hidden" id="act" value="todo">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+<tr><th>客户id</th><td><input name='customer_id' type='text' class='customer_id'></td><th>资金流向</th><td><input type="radio" name="flow[]" class="flow" value="收入" />收入<input type="radio" name="flow[]" class="flow" value="支出" />支出</td></tr>
+<tr><th>金额</th><td><input name='money' type='text' class='money'></td><th>说明</th><td><textarea name='remark' class='remark'></textarea></td></tr>
+<tr><th>发生时间</th><td><input name='happen_date' type='text' class='happen_date'></td>
+</table>
+</form>
+</div>

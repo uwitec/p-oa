@@ -1,0 +1,76 @@
+<include file="./Tpl/Public/header.html" />
+<h1>
+    <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span>
+    <foreach name="list_main_menu" item="info">
+    <span class="action-span"><a href="{$info[url]}" target="{$info[target]}">{$info[title]}</a></span>
+    </foreach>
+    <div style="clear:both"></div>
+</h1>
+
+<div class="list-div">
+<table cellspacing='1' cellpadding='3'>
+  <tr>
+    <th style="width:40px;">序号</th>
+    <th><a href="?_order=storage_id&_sort={$sort}">仓库</a><if condition="$order eq 'ckid'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th><th><a href="?_order=code&_sort={$sort}">产品代码</a><if condition="$order eq 'cpdm'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+    <th>产品名称</th>
+    <th style="width:60px; text-align:center;"><a href="?_order=number&_sort={$sort}">库存数量</a><if condition="$order eq 'kcsl'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+    <th width="80px"><a href="?_order=update_date&_sort={$sort}">最后更新时间</a>
+      <if condition="$order eq 'gxsj'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+    <th>库存说明</th>
+    <th width="120px;">操作</th>
+    </tr>
+  <foreach name="list" item="info" key="k">
+  <php>if($i++%2==0){ $class='even'; }else{ $class='odd'; }</php>
+  <tr class="{$class}">
+	<td>{$k+1}</td>
+    <td>{$storage[$info[storage_id]]}</td>
+    <td>{$info[code]}</td>
+    <td>{$info[product_name]}</td>
+    <td style="text-align:center;">{$info[number]}</td>
+    <td>{$info[update_date]}</td>
+    <td>{$info[remark]}</td>
+    <td>
+      <a href="javascript:dialog({'title':'仓库调拨','w':'420','h':'300'},'transfer_add','id={$info[id]}');">调拨</a>| 
+      <a href="javascript:dialog({'title':'报损产品','w':'420','h':'300'},'bscp_add','id={$info[id]}');">报损</a>| 
+      <a href="javascript:dialog_edit('{$info[id]}');">修改 </a>| 
+      <a href="javascript:confirm_delete('{$info[id]}');">删除</a>
+    </td>
+    </tr>
+  </foreach>
+</table>
+<div id="turn-page">{$page}</div>
+</div>
+<div id="dialog"><!--公用对话框容器--></div>
+<div id="dialog_delete" style="color:#F00; font-size:13px; vertical-align: middle;">如果此库存数量为0并且已不再使用可以删除！</div>
+<script type="text/javascript">
+function dialog_add(param){
+	dialog({'title':'添加采购信息','w':'800','h':'600'},'add',param);
+}
+function dialog_edit(param){
+	dialog({'title':'修改采购信息','w':'800','h':'600'},'edit',param);
+}
+//删除数据
+var delete_id="";
+$("#dialog_delete").dialog({
+    autoOpen: false,
+    title: '删除信息',
+    width:'270',
+    height:'150',
+    modal: true,
+    buttons: {
+        '彻底删除': function () {
+			window.location.href='{:U("foreverdelete?id=")}'+delete_id;
+        },
+		'取消': function () {
+           $("#dialog_delete").dialog("close");
+        }
+    }
+});
+function confirm_delete(id){
+	delete_id=id;
+	$("#dialog_delete").dialog("open");
+}
+//初始化
+Initialize();
+</script>
+<include file="./Tpl/Public/footer.html" />

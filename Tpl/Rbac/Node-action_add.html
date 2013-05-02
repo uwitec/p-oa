@@ -1,0 +1,48 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}">
+<input type="hidden" name="act" value="todo" >
+<input type="hidden" name="level" value="3">
+<input type="hidden" name="pid" value="{$pid}">
+<table>
+<tr>
+	<td>操作</td>
+	<td><input type="text" name="name">
+	  必需是字母和下或线，不能有空格</td>
+</tr>
+<tr>
+	<td>显示名：</td>
+	<td><input type="text" name="title"></td>
+</tr>
+<tr>
+  <td>状态：</td>
+  <td><SELECT name="status">
+    <option value="1">启用</option>
+    <option value="0">禁用</option>
+    </SELECT></td>
+</tr>
+<tr>
+  <td>数据表：</td>
+  <td>
+    <input name="table_name" type="text" id="table_name" value="{$_REQUEST[_URL_][1]}" />  
+    无需填写前缀</td>
+</tr>
+<tr>
+  <td>模板：</td>
+  <td><input name="demo_type" type="radio" value="index" checked="checked" />列表
+  <input type="radio" name="demo_type" value="add" />
+  添加对话框
+  <input type="radio" name="demo_type" id="radio" value="edit" />
+  修改对话框
+  <input type="radio" name="demo_type" id="radio" value="show" />
+  显示
+  <input type="radio" name="demo_type" id="radio" value="export" />
+  导出
+  </td>
+</tr>
+<tr>
+	<td>描 述：</td>
+	<td><TEXTAREA name="remark"  rows="5" cols="57"></textarea></td>
+</tr>
+</table>
+</form>
+</div>

@@ -1,0 +1,110 @@
+<include file="./Tpl/Public/header.html" />
+<h1> <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span>
+  <foreach name="list_main_menu" item="info"> <span class="action-span"><a href="{$info[url]}" target="{$info[target]}">{$info[title]}</a></span> </foreach>
+  <div style="clear:both"></div>
+</h1>
+<div class="form-div">
+  <form name="searchForm" action="">
+    <img width="26" height="22" border="0" alt="SEARCH" src="__PUBLIC__/images/icon_search.gif"> 姓名：
+    <input name='name' type='text' value='{$Think.request.name}' />
+    身份证：
+    <input name='id_card' type='text' value='{$Think.request.id_card}' />
+    <input type="submit" class="button" value=" 搜索 ">
+  </form>
+</div>
+<div class="list-div">
+  <table cellspacing='1' cellpadding='3'>
+    <tr>
+      <th width="40px">序号</th>
+      <th><a href="?_order=name&_sort={$sort}">姓名</a>
+        <if condition="$order eq 'name'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=gender&_sort={$sort}">性别</a>
+        <if condition="$order eq 'gender'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=id_card&_sort={$sort}">身份证</a>
+        <if condition="$order eq 'id_card'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=resume_code&_sort={$sort}">简历编号</a>
+        <if condition="$order eq 'resume_code'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th>意向职位</th>
+      <th>期望薪酬</th>
+      <th>毕业院校</th>
+      <th>学历</th>
+      <th>专业</th>
+      <th>联系电话</th>
+      <th><a href="?_order=nation&_sort={$sort}">民族</a>
+        <if condition="$order eq 'nation'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=hometown&_sort={$sort}">籍贯</a>
+        <if condition="$order eq 'hometown'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=marital_status&_sort={$sort}">婚姻状况</a>
+        <if condition="$order eq 'marital_status'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=health&_sort={$sort}">健康状况</a>
+        <if condition="$order eq 'health'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=political_landscape&_sort={$sort}">政治面貌</a>
+        <if condition="$order eq 'political_landscape'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=account_address&_sort={$sort}">户口所在地</a>
+        <if condition="$order eq 'account_address'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=present_address&_sort={$sort}">现住址</a>
+        <if condition="$order eq 'present_address'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th>操作</th>
+    </tr>
+    <foreach name="list" item="info" key="k">
+      <php>if($i++%2==0){ $class='even'; }else{ $class='odd'; }</php>
+      <tr class="{$class}">
+        <td>{$k+1}</td>
+        <td>{$info[name]}</td>
+        <td>{$info[gender]}</td>
+        <td>{$info[id_card]}</td>
+        <td><a href="{$info[resume_document]}">{$info[resume_code]}</a></td>
+        <td>{$info[intention_position]}</td>
+        <td>{$info[expect_salary]}</td>
+        <td>{$info[graduate_school]}</td>
+        <td>{$info[degree]}</td>
+        <td>{$info[profession]}</td>
+        <td>{$info[tel]}</td>
+        <td>{$info[nation]}</td>
+        <td>{$info[hometown]}</td>
+        <td>{$info[marital_status]}</td>
+        <td>{$info[health]}</td>
+        <td>{$info[political_landscape]}</td>
+        <td>{$info[account_address]}</td>
+        <td>{$info[present_address]}</td>
+        <td><a href="javascript:dialog({title:'通知面试'},'{:U("Talent/add?id_card=$info[id_card]")}');">通知面试</a>| <a href="javascript:dialog_edit('id={$info[id]}');">修改 </a>| <a href="javascript:confirm_delete('{$info[id]}');">删除</a></td>
+      </tr>
+    </foreach>
+  </table>
+  <div id="turn-page">{$page}</div>
+</div>
+<div id="dialog_delete" style="color:#F00; font-size:13px; vertical-align: middle;">"彻底删除"的数据是不可恢复的，请慎用！</div>
+<script type="text/javascript">
+//参数param一般是id=XX
+function dialog_add(param){
+	dialog({'title':'添加信息','w':'720','h':'300'},'{:U("add")}',param);
+}
+function dialog_edit(param){
+	dialog({'title':'修改信息','w':'720','h':'300'},'{:U("edit")}',param);
+}
+//删除数据
+var delete_id="";
+$("#dialog_delete").dialog({
+    autoOpen: false,
+    title: '删除信息',
+    width:'270',
+    height:'150',
+    modal: true,
+    buttons: {
+        '丢到垃圾站': function () {
+        	window.location.href='{:U("delete?id=")}'+delete_id;
+   		},
+        '彻底删除': function () {
+			window.location.href='{:U("foreverdelete?id=")}'+delete_id;
+        },
+		'取消': function () {
+           $("#dialog_delete").dialog("close");
+        }
+    }
+});
+function confirm_delete(id){
+	delete_id=id;
+	$("#dialog_delete").dialog("open");
+}
+</script> 
+<include file="./Tpl/Public/footer.html" />

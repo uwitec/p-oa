@@ -1,0 +1,55 @@
+<!--导出数据脚本开始-->
+<div id="dialog_export">
+<div class="msg"></div>
+<div style="border:#666 3px solid; width:280px; height:20px;"><div class="complete_percent" style="background-color:#060; height:20px; width:1px;"><span class="complete_percent_num" style="color:#FFF">0%</span></div>
+<div style="color:#F00; margin-top:20px;">注意：下载时点“另存为”，或用下载工具下载。</div>
+</div>
+</div>
+<script language="javascript">
+$("#dialog_export").dialog({
+    autoOpen: false,
+    title: '导出数据',
+    width:'300',
+    height:'200',
+    modal: true
+});
+function dialog_export(uri,param,type){
+	$("#dialog_export").dialog("open");
+	if(typeof(uri)=='undefined'||uri==''){
+		uri='{:U(export)}';
+	}
+	if(typeof(param)=='undefined'){
+		param=$('#searchForm');
+		var type='form';
+	}
+	if(type=='form'){ //是表单就把表单的参数全传过去，这里还没有完善，要修改的		
+		var form_param='1=1';
+		param.find('input').each(function() {
+            form_param=form_param+'&'+$(this).attr('name')+'='+$(this).val();
+        });
+		uri=uri+'?'+form_param;
+	}else{
+		uri=uri+'?'+param;
+	}
+	processing_export_data(uri);
+}
+function processing_export_data(uri){
+	$.ajax({
+		type: "get",
+		url:uri,
+		dataType:"json",
+		success: function(json){
+			$("#dialog_export .msg").html(json.info);
+			if(json.status==1){
+				$("#dialog_export .complete_percent").css('width',json.data.complete_percent+'%');
+				$("#dialog_export .complete_percent_num").html(json.data.complete_percent+'%');
+				processing_export_data(json.data.url);
+			}else if(json.status==2){
+				$("#dialog_export .complete_percent").css('width','100%');
+				$("#dialog_export .complete_percent_num").html('100%');
+			}
+		}
+	});	
+}
+</script>
+<!--导出数据脚本结束--

@@ -1,0 +1,35 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}">
+<input type="hidden" name="act" value="todo" >
+<input type="hidden" name="level" value="1">
+<input type="hidden" name="pid" value="0">
+<table>
+<tr>
+	<td>应用</td>
+	<td><input type="text" name="name">
+	  必需是字母和下或线，不能有空格</td>
+</tr>
+<tr>
+	<td>显示名：</td>
+	<td><input type="text" class="medium bLeftRequire" check='Require' warning="显示名称必须"  name="title"></td>
+</tr>
+<tr>
+  <td>状态：</td>
+  <td><SELECT name="status">
+    <option value="1">启用</option>
+    <option value="0">禁用</option>
+    </SELECT></td>
+</tr>
+<tr>
+  <td>数据表：</td>
+  <td>
+    <input name="table_name" type="text" id="table_name" value="demo" />  
+    无需填写前缀</td>
+</tr>
+<tr>
+	<td>描 述：</td>
+	<td><TEXTAREA name="remark"  rows="5" cols="57"></textarea></td>
+</tr>
+</table>
+</form>
+</div>

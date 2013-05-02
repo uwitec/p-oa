@@ -1,0 +1,10 @@
+<include file="./Tpl/Public/header.html" />
+<link href="__PUBLIC__/css/print.css" rel="stylesheet" type="text/css" />
+<h1 class="noprint"> <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span> <span class="action-span"><a href="javascript:history.go(-1);">返回</a></span>
+<span class="action-span"><a href="javascript:window.print();">打印</a></span>
+  <foreach name="list_main_menu" item="menu"> <span class="action-span"><a href="{$menu[url]}" target="{$menu[target]}">{$menu[title]}</a></span> </foreach>
+  <div style="clear:both"></div>
+</h1>
+<div class="a4" >
+<!--一张A4纸打的内容-->
+</div>

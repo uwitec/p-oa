@@ -1,0 +1,84 @@
+<form action="{:U('Rbac/Role/module_access_edit')}" name="form_module_access_edit" id="form_module_access_edit" method="post">
+<input name="role_id" type="hidden" value="{$_GET[role_id]}" />
+<input name="pid" type="hidden" value="{$_GET[pid]}" />
+<table width="100%" border="0" cellspacing="1" cellpadding="3">
+<tr>
+      <th width="60px">名称</th>
+      <th>模块名</th>
+      <th>备注</th>
+      <th width="85px">操作</th>
+    </tr>
+    <foreach name="list_module" item="info">
+        <tr id="module_tr_{$info[id]}">
+          <td><a href="javascript:select_action('{$info[id]}');">{$info[title]}</a></td>
+          <td><a href="javascript:dialog_module_edit('{$info[id]}')">{$info[name]}</a></td>
+          <td>{$info[remark]}</td>
+          <td><a href="javascript:dialog_action_add('{$info[id]}')">添加操作</a> | <a href="javascript:confirm_delete(this,'{$info[id]}')">删除</a></td>
+          </tr>
+        </foreach>
+</table>
+</form>
+<div id="dialog_action_add"></div>
+<div id="dialog_module_edit"></div>
+<script language="javascript">
+function select_action(pid){
+	var url='{:U("action?pid=")}'+pid;
+	$('#list_action').load(url);
+	$('#list_module').find('td').css('background-color','');
+	$('#module_tr_'+pid).find('td').css('background-color','#6CF');
+}
+//添加操作
+$('#dialog_action_add').dialog({
+    autoOpen: false,
+    title: '添加操作信息',
+	width: 800,
+    height: 500,
+    modal: true,
+    buttons: {
+        '确认': function () {
+			if(!$("#dialog_action_add form .title").val()){
+				alert('必需填写名称');
+				return false;
+			}
+			if(!$("#dialog_action_add form .name").val()){
+				alert('必需填写应用名');
+				return false;
+			}
+   			$("#dialog_action_add form").submit();
+        	$("#dialog_action_add").dialog("close");
+   		},
+        '取消': function () {
+           $("#dialog_action_add").dialog("close");
+        }
+    }
+});
+function dialog_action_add(pid){
+	var url='{:U("action_add?pid=")}'+pid;
+	$('#dialog_action_add').load(url);
+	$('#dialog_action_add').dialog('open');
+}
+//修改模块
+$('#dialog_module_edit').dialog({
+    autoOpen: false,
+    title: '修改模块信息',
+    height: 300,
+    width: 400,
+    modal: true,
+    buttons: {
+        '确认': function () {
+   			$("#dialog_module_edit form").submit();
+        	$("#dialog_module_edit").dialog("close");
+   		},
+        '取消': function () {
+           $("#dialog_module_edit").dialog("close");
+        }
+    }
+});
+//修改模块信息
+function dialog_module_edit(id){	
+	var url='{:U("module_edit?id=")}'+id;
+	$('#dialog_module_edit').load(url);
+	$('#dialog_module_edit').dialog('open');
+}
+
+</script>

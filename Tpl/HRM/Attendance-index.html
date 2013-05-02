@@ -1,0 +1,192 @@
+<include file="./Tpl/Public/header.html" />
+<style type="text/css">
+tr td.day_type_0,tr td.day_type_{
+	background-color:#000;
+}
+tr td.day_type_1{
+	background-color:green;
+}
+tr td.day_type_2{
+	background-color:#060;
+}
+tr td.day_type_3,tr td.day_type_4{
+	background-color:yellow;
+}
+tr td.day_type_5,tr td.day_type_6{
+	background-color:#6CC;
+}
+tr td.day_type_10{
+	background-color:#999;
+}
+</style>
+<h1> <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span>
+  <foreach name="list_main_menu" item="info"> <span class="action-span"><a href="{$info[url]}" target="{$info[target]}">{$info[title]}</a></span> </foreach>
+  <div style="clear:both"></div>
+</h1>
+<div class="form-div">
+  <form name="searchForm" action="">
+    <img width="26" height="22" border="0" alt="SEARCH" src="__PUBLIC__/images/icon_search.gif"> 年月：
+    <input name='year_month' type='text' value='{$Think.request.year_month}' />
+    员工编号：
+    <input name='employee_number' type='text' value='{$Think.request.employee_number}' />
+    员工姓名：
+    <input name='employee_name' type='text' value='{$Think.request.employee_name}' />
+    <input type="submit" class="button" value=" 搜索 ">
+  </form>
+</div>
+<div class="list-div">
+  <table cellspacing='1' cellpadding='3'>
+    <tr>
+      <th width="40px">序号</th>
+      <th><a href="?_order=year_month&_sort={$sort}">年月</a>
+        <if condition="$order eq 'year_month'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=employee_number&_sort={$sort}">员工编号</a>
+        <if condition="$order eq 'employee_number'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=employee_name&_sort={$sort}">员工姓名</a>
+        <if condition="$order eq 'employee_name'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=need_attendance_days&_sort={$sort}">应出勤</a>
+        <if condition="$order eq 'need_attendance_days'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day01&_sort={$sort}">01日</a>
+        <if condition="$order eq 'day01'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day02&_sort={$sort}">02日</a>
+        <if condition="$order eq 'day02'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day03&_sort={$sort}">03日</a>
+        <if condition="$order eq 'day03'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day04&_sort={$sort}">04日</a>
+        <if condition="$order eq 'day04'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day05&_sort={$sort}">05日</a>
+        <if condition="$order eq 'day05'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day06&_sort={$sort}">06日</a>
+        <if condition="$order eq 'day06'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day07&_sort={$sort}">07日</a>
+        <if condition="$order eq 'day07'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day08&_sort={$sort}">08日</a>
+        <if condition="$order eq 'day08'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day09&_sort={$sort}">09日</a>
+        <if condition="$order eq 'day09'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day10&_sort={$sort}">10日</a>
+        <if condition="$order eq 'day10'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day11&_sort={$sort}">11日</a>
+        <if condition="$order eq 'day11'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day12&_sort={$sort}">12日</a>
+        <if condition="$order eq 'day12'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day13&_sort={$sort}">13日</a>
+        <if condition="$order eq 'day13'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day14&_sort={$sort}">14日</a>
+        <if condition="$order eq 'day14'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day15&_sort={$sort}">15日</a>
+        <if condition="$order eq 'day15'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day16&_sort={$sort}">16日</a>
+        <if condition="$order eq 'day16'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day17&_sort={$sort}">17日</a>
+        <if condition="$order eq 'day17'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day18&_sort={$sort}">18日</a>
+        <if condition="$order eq 'day18'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day19&_sort={$sort}">19日</a>
+        <if condition="$order eq 'day19'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day20&_sort={$sort}">20日</a>
+        <if condition="$order eq 'day20'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day21&_sort={$sort}">21日</a>
+        <if condition="$order eq 'day21'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day22&_sort={$sort}">22日</a>
+        <if condition="$order eq 'day22'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day23&_sort={$sort}">23日</a>
+        <if condition="$order eq 'day23'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day24&_sort={$sort}">24日</a>
+        <if condition="$order eq 'day24'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day25&_sort={$sort}">25日</a>
+        <if condition="$order eq 'day25'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day26&_sort={$sort}">26日</a>
+        <if condition="$order eq 'day26'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day27&_sort={$sort}">27日</a>
+        <if condition="$order eq 'day27'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day28&_sort={$sort}">28日</a>
+        <if condition="$order eq 'day28'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day29&_sort={$sort}">29日</a>
+        <if condition="$order eq 'day29'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day30&_sort={$sort}">30日</a>
+        <if condition="$order eq 'day30'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th><a href="?_order=day31&_sort={$sort}">31日</a>
+        <if condition="$order eq 'day31'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th>操作</th>
+    </tr>
+    <foreach name="list" item="info" key="k">
+      <php>if($i++%2==0){ $class='even'; }else{ $class='odd'; }</php>
+      <tr class="{$class}">
+        <td>{$k+1}</td>
+        <td>{$info[year_month]}</td>
+        <td>{$info[employee_number]}</td>
+        <td>{$info[employee_name]}</td>
+        <td>{$info[need_attendance_days]}</td>
+        <td class="day_type_{$info[day01]}">{$day_type[$info[day01]]}</td>
+        <td class="day_type_{$info[day02]}">{$day_type[$info[day02]]}</td>
+        <td class="day_type_{$info[day03]}">{$day_type[$info[day03]]}</td>
+        <td class="day_type_{$info[day04]}">{$day_type[$info[day04]]}</td>
+        <td class="day_type_{$info[day05]}">{$day_type[$info[day05]]}</td>
+        <td class="day_type_{$info[day06]}">{$day_type[$info[day06]]}</td>
+        <td class="day_type_{$info[day07]}">{$day_type[$info[day07]]}</td>
+        <td class="day_type_{$info[day08]}">{$day_type[$info[day08]]}</td>
+        <td class="day_type_{$info[day09]}" >{$day_type[$info[day09]]}</td>
+        <td class="day_type_{$info[day10]}">{$day_type[$info[day10]]}</td>
+        <td class="day_type_{$info[day11]}">{$day_type[$info[day11]]}</td>
+        <td class="day_type_{$info[day12]}">{$day_type[$info[day12]]}</td>
+        <td class="day_type_{$info[day13]}">{$day_type[$info[day13]]}</td>
+        <td class="day_type_{$info[day14]}">{$day_type[$info[day14]]}</td>
+        <td class="day_type_{$info[day15]}">{$day_type[$info[day15]]}</td>
+        <td class="day_type_{$info[day16]}">{$day_type[$info[day16]]}</td>
+        <td class="day_type_{$info[day17]}">{$day_type[$info[day17]]}</td>
+        <td class="day_type_{$info[day18]}">{$day_type[$info[day18]]}</td>
+        <td class="day_type_{$info[day19]}">{$day_type[$info[day19]]}</td>
+        <td class="day_type_{$info[day20]}">{$day_type[$info[day20]]}</td>
+        <td class="day_type_{$info[day21]}">{$day_type[$info[day21]]}</td>
+        <td class="day_type_{$info[day22]}">{$day_type[$info[day22]]}</td>
+        <td class="day_type_{$info[day23]}">{$day_type[$info[day23]]}</td>
+        <td class="day_type_{$info[day24]}">{$day_type[$info[day24]]}</td>
+        <td class="day_type_{$info[day25]}">{$day_type[$info[day25]]}</td>
+        <td class="day_type_{$info[day26]}">{$day_type[$info[day26]]}</td>
+        <td class="day_type_{$info[day27]}">{$day_type[$info[day27]]}</td>
+        <td class="day_type_{$info[day28]}">{$day_type[$info[day28]]}</td>
+        <td class="day_type_{$info[day29]}">{$day_type[$info[day29]]}</td>
+        <td class="day_type_{$info[day30]}">{$day_type[$info[day30]]}</td>
+        <td class="day_type_{$info[day31]}">{$day_type[$info[day31]]}</td>
+        <td><a href="javascript:dialog_edit('id={$info[id]}');">修改 </a>| <a href="javascript:confirm_delete('{$info[id]}');">删除</a></td>
+      </tr>
+    </foreach>
+  </table>
+  <div id="turn-page">{$page}</div>
+</div>
+<div id="dialog_delete" style="color:#F00; font-size:13px; vertical-align: middle;">"彻底删除"的数据是不可恢复的，请慎用！</div>
+<script type="text/javascript">
+//参数param一般是id=XX
+function dialog_add(param){
+	dialog({'title':'添加信息','w':'960','h':'325'},'{:U("add")}',param);
+}
+function dialog_edit(param){
+	dialog({'title':'修改信息','w':'960','h':'325'},'{:U("edit")}',param);
+}
+//删除数据
+var delete_id="";
+$("#dialog_delete").dialog({
+    autoOpen: false,
+    title: '删除信息',
+    width:'270',
+    height:'150',
+    modal: true,
+    buttons: {
+        '丢到垃圾站': function () {
+        	window.location.href='{:U("delete?id=")}'+delete_id;
+   		},
+        '彻底删除': function () {
+			window.location.href='{:U("foreverdelete?id=")}'+delete_id;
+        },
+		'取消': function () {
+           $("#dialog_delete").dialog("close");
+        }
+    }
+});
+function confirm_delete(id){
+	delete_id=id;
+	$("#dialog_delete").dialog("open");
+}
+</script> 
+<include file="./Tpl/Public/footer.html" />

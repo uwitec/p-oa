@@ -1,0 +1,7 @@
+<if condition="$_REQUEST[filename] eq ''">
+序号[￥name]<!--[￥换行]-->
+</if>
+<php>if($_GET[C('VAR_PAGE')]){ $num=($_GET[C('VAR_PAGE')]-1)*2+1;}else{ $num=1;}</php>
+<foreach name="list" item="info">
+{$num++}[￥field]<!--[￥换行]-->
+</foreach>

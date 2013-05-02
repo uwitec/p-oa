@@ -1,0 +1,33 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}" onsubmit="return check_submit();">
+<input name="act" type="hidden" id="act" value="todo">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+[￥html]
+</table>
+</form>
+</div>
+<script language="javascript">
+function check_submit(){
+	var regexp=''; 
+	var str='';
+	var error=false;
+	$('#form_{$_REQUEST[_URL_][2]} .check_data').each(function(index, element) {
+		regexp=eval($(this).attr('regexp'));
+		str=$(this).val();
+		if(str.match(regexp)){
+			alert($(this).attr('title'));
+			$(this).focus();
+			error=true;
+			return false;
+		}
+		
+    });
+	if(error){
+		return false;
+	}else{
+		return true;
+	}
+<!--[￥check_submit]-->	
+}
+<!--[￥date]-->
+</script>

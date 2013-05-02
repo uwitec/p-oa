@@ -1,0 +1,33 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}" onsubmit="return check_submit();">
+<input name="act" type="hidden" id="act" value="todo">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+<tr><th>姓名</th><td><input name='name' type='text' class='name' value='{$info[name]}'></td><th>身份证</th><td><input name='id_card' type='text' class='id_card' value='{$info[id_card]}'></td><th>开户银行</th><td><input name='bank' type='text' class='bank' value='{$info[bank]}' /></td><th>银行帐号</th><td><input name='bank_account' type='text' class='bank_account' value='{$info[bank_account]}' /></td></tr>
+<tr><th>员工编号</th><td><input name='employee_number' type='text' class='employee_number' value='{$info[employee_number]}' /></td><th>&nbsp;</th><td>&nbsp;</td><th>&nbsp;</th><td>&nbsp;</td><th>&nbsp;</th><td>&nbsp;</td></tr>
+<tr><th>薪酬体系</th><td>{:W('Superman',array('tpl'=>'select','html_name'=>'pay_system_id','table_name'=>'hrm_salary_set','name'=>'name','value'=>'id','default'=>$info[pay_system]))}
+</td><th>所属月</th><td><input name='belongs_month' type='text' class='belongs_month' value='{$info[belongs_month]}' /></td><th>实际出勤天数</th><td><input name='actual_attendance_days' type='text' class='actual_attendance_days' value='{$info[actual_attendance_days]}' /></td><th>应出勤天数</th><td><input name='need_attendance_days' type='text' class='need_attendance_days' value='{$info[need_attendance_days]}' /></td></tr>
+<tr>
+  <th>应发工资</th>
+  <td colspan="7">
+  <foreach name="info_salary[should_wages]" key="title" item="value">
+  <div style="float:left;"><div style="text-align:center">{$title}</div>+<input name="salary[{$title}]" type="text" class="add_money" value="{$value}" size="10" maxlength="10" /></div>
+  </foreach></td></tr>
+  <tr>
+  <th>应扣款项</th>
+  <td colspan="7">
+  <foreach name="info_salary[should_debit]" key="title" item="value">
+  <div style="float:left;">
+    <div style="text-align:center">{$title}</div>-<input name="salary_del[{$title}]" type="text" class="del_money" value="{$value}" size="10" maxlength="10" /></div>
+  </foreach>
+  </td></tr>
+  <tr>
+  <th>实发工资</th>
+  <td colspan="7"><input name='real_wages' type='text' class='real_wages' value="{$info_salary[real_wages]}" /></td></tr>
+</table>
+</form>
+</div>
+<script language="javascript">
+function check_submit(){
+<!--[￥check_submit]-->	
+}
+</script>

@@ -1,0 +1,32 @@
+<include file="./Tpl/Public/header.html" />
+<h1>
+    <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span>
+    <span class="action-span"><a href="{:U('Product/Index/index')}" >返回</a></span>
+    <div style="clear:both"></div>
+</h1>
+<div class="list-div">
+<form id="import_form" name="import_form" method="post" action="" onsubmit="return check_data();">
+<input name="act" type="hidden" value="todo" />
+<input name="field_key[姓名]" type="hidden" value="name" /><input name="field_key[身份证]" type="hidden" value="id_card" /><input name="field_key[薪酬体系id]" type="hidden" value="pay_system_id" /><input name="field_key[应出勤天数]" type="hidden" value="need_attendance_days" /><input name="field_key[实际出勤天数]" type="hidden" value="actual_attendance_days" /><input name="field_key[应发工资]" type="hidden" value="should_wages" /><input name="field_key[应扣款]" type="hidden" value="should_debit" /><input name="field_key[实发工资]" type="hidden" value="real_wages" /><input name="field_key[员工签名]" type="hidden" value="employee_signature" /><input name="field_key[签名日期]" type="hidden" value="signature_date" /><input name="field_key[开户银行]" type="hidden" value="bank" /><input name="field_key[银行帐号]" type="hidden" value="bank_account" /><input name="field_key[员工编号]" type="hidden" value="employee_number" />
+<table cellspacing='1' cellpadding='3'>
+<tr>
+  <th width="100px">批量导入数据</th>
+  <td>{:W('UploadFile',array('method'=>'tmp','html_name'=>'file_path'))}<input type="submit" name="button" id="button" value="确认导入" />  </td>
+  </tr>
+<tr>
+  <th>说明</th>
+  <td>本模块只支持CSV格式数据上传</td></tr>
+</table>
+</form>
+</div>
+<script language="javascript">
+function check_data(){
+	if($('.file_path').val()){
+		return true;
+	}else{
+		alert('请选择文件');
+		return false;
+	}
+}
+</script>
+<include file="./Tpl/Public/footer.html" />

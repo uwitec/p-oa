@@ -1,0 +1,113 @@
+<include file="./Tpl/Public/header.html" />
+<h1>
+    <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span>
+    <foreach name="list_main_menu" item="info">
+    <span class="action-span"><a href="{$info[url]}" target="{$info[target]}">{$info[title]}</a></span>
+    </foreach>
+    <div style="clear:both"></div>
+</h1>
+<div class="form-div">
+  <form name="searchForm" action="">
+    <img width="26" height="22" border="0" alt="SEARCH" src="__PUBLIC__/images/icon_search.gif">
+    表名：<input name='name' type='text' value='{$Think.request.name}' />
+
+    <input type="submit" class="button" value=" 搜索 ">
+  </form>
+</div>
+<div class="list-div">
+<table cellspacing='1' cellpadding='3'>
+  <tr>
+    <th>序号</th>
+    <th>表名</th><th>备注</th>
+    <th>添加人</th>
+    <th>添加时间</th>
+    <th>操作</th>
+    </tr>
+  <foreach name="list" item="info" key="k">
+  <php>if($i++%2==0){ $class='even'; }else{ $class='odd'; }</php>
+  <tr class="{$class}">
+	<td>{$k+1}</td>
+    <td><a href='{:U("Sys/Field/index?table_name=$info[name]")}'>{$info[name]}</a></td><td>{$info[remark]}</td>
+    <td>{$info[add_user_id]}</td>
+    <td>{$info[add_time]}</td>
+    <td>
+      <a href="javascript:dialog_edit('{$info[id]}');">修改 </a>| 
+      <a href="javascript:confirm_delete('{$info[id]}');">删除</a>
+    </td>
+    </tr>
+  </foreach>
+</table>
+<table id="page-table" cellspacing="0">
+  <tr>
+    <td align="right" nowrap="true">
+            <div id="turn-page">{$page}</div>
+    </td>
+  </tr>
+</table>
+</div>
+<div id="dialog_add"><!--添加信息 --></div>
+<div id="dialog_edit"><!-- 修改信息--></div>
+<script type="text/javascript">
+$("#dialog_add").dialog({
+    autoOpen: false,
+    title: '添加信息',
+    width:'600',
+    height:'400',
+    modal: true,
+    buttons: {
+        '确认': function () {
+   			$("#dialog_add form").submit();
+        	$("#dialog_add").dialog("close");
+   		},
+        '取消': function () {
+           $("#dialog_add").dialog("close");
+        }
+    }
+});
+function dialog_add(){
+	var uri='{:U("add")}';
+	$.ajax({
+		type: "get",
+		url: uri,
+		dataType:"html",
+		success: function(html){
+			$("#dialog_add").html(html);
+			$("#dialog_add").dialog("open");
+		}
+	});
+}
+$("#dialog_edit").dialog({
+    autoOpen: false,
+    title: '修改信息',
+    width:'600',
+    height:'400',
+    modal: true,
+    buttons: {
+        '确认': function () {
+   			$("#dialog_edit form").submit();
+        	$("#dialog_edit").dialog("close");
+   		},
+        '取消': function () {
+           $("#dialog_edit").dialog("close");
+        }
+    }
+});
+function dialog_edit(id){
+	var uri='{:U("edit?id=")}'+id;
+	$.ajax({
+		type: "get",
+		url: uri,
+		dataType:"html",
+		success: function(html){
+			$("#dialog_edit").html(html);
+			$("#dialog_edit").dialog("open");
+		}
+	});
+}
+function confirm_delete(id){
+	if(confirm("确认删除此记录吗？删除后不可恢复。")){
+		window.location.href='{:U("foreverdelete?id=")}'+id;
+	}
+}
+</script>
+<include file="./Tpl/Public/footer.html" />

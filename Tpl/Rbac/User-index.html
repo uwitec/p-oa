@@ -1,0 +1,110 @@
+<include file="./Tpl/Public/header.html" />
+<h1>
+    <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span>
+    <foreach name="list_main_menu" item="info">
+    <span class="action-span"><a href="{$info[url]}" target="{$info[target]}">{$info[title]}</a></span>
+    </foreach>
+    <div style="clear:both"></div>
+</h1>
+<div class="list-div">
+<table cellspacing='1' cellpadding='3'>
+  <tr>
+    <th width="20px">编号</th>
+    <th width="100px">用户名</th>
+    <th width="100px">昵称</th>
+    <th>授权角色</th>
+    <th>备注</th>
+    <th width="80px">添加时间</th>
+    <th width="80px">上次登录时间</th>
+    <th width="60px">登录次数</th>
+    <th width="40px">状态</th>
+    <th width="100px">操作</th>
+  </tr>
+  <foreach name="list" item="info">
+  <php>if($i++%2==0){ $class='even'; }else{ $class='odd'; }</php>
+  <tr class="{$class}">
+    <td>{$info[id]}</td>
+    <td>{$info[account]}</td>
+    <td>{$info[nickname]}</td>
+    <td><php>$str='';$role_list=get_role($info[id]);foreach($role_list as $role){ $str.='、'.$role[name];} echo mb_substr($str,3);</php></td>
+    <td>{$info[remark]}</td>
+    <td>{$info[create_time]|date="Y-m-d",###}</td>
+    <td>{$info[last_login_time]|date="Y-m-d",###}</td>
+    <td>{$info[login_count]}</td>
+    <td><if condition="$info[status] eq 1">正常<else/>禁用</if></td>
+    <td><a href="javascript:dialog_edit('{$info[id]}');">修改</a> | <a href="javascript:confirm_delete('{$info[id]}');">删除</a></td>
+  </tr>
+  </foreach>
+</table>
+<table id="page-table" cellspacing="0">
+  <tr>
+    <td align="right" nowrap="true">
+            <div id="turn-page">{$page}</div>
+    </td>
+  </tr>
+</table>
+</div>
+<div id="dialog_add"><!--添加信息 --></div>
+<div id="dialog_edit"><!-- 修改信息--></div>
+<script type="text/javascript">
+$("#dialog_add").dialog({
+    autoOpen: false,
+    title: '添加信息',
+    width:'600',
+    height:'400',
+    modal: true,
+    buttons: {
+        '确认': function () {
+   			$("#dialog_add form").submit();
+   		},
+        '取消': function () {
+           $("#dialog_add").dialog("close");
+        }
+    }
+});
+function dialog_add(){
+	var uri='{:U("add?role_id=$_GET[role_id]")}';
+	$.ajax({
+		type: "get",
+		url: uri,
+		dataType:"html",
+		success: function(html){
+			$("#dialog_add").html(html);
+			$("#dialog_add").dialog("open");
+		}
+	});
+}
+$("#dialog_edit").dialog({
+    autoOpen: false,
+    title: '修改信息',
+    width:'600',
+    height:'400',
+    modal: true,
+    buttons: {
+        '确认': function () {
+   			$("#dialog_edit form").submit();
+   		},
+        '取消': function () {
+           $("#dialog_edit").dialog("close");
+        }
+    }
+});
+function dialog_edit(id){
+	var uri='{:U("edit?id=")}'+id;
+	$.ajax({
+		type: "get",
+		url: uri,
+		dataType:"html",
+		success: function(html){
+			$("#dialog_edit").html(html);
+			$("#dialog_edit").dialog("open");
+		}
+	});
+}
+function confirm_delete(id){
+	if(confirm("确认删除此记录吗？删除后不可恢复。")){
+		window.location.href='{:U("foreverdelete?id=")}'+id;
+	}
+}
+</script>
+<include file="./Tpl/Public/footer.html" />

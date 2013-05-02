@@ -1,0 +1,12 @@
+<table border="1" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>序号</th>
+    <th>姓名</th><th>身份证</th><th>薪酬体系id</th><th>应出勤天数</th><th>实际出勤天数</th><th>应发工资</th><th>应扣款</th><th>实发工资</th><th>员工签名</th><th>签名日期</th><th>开户银行</th><th>银行帐号</th><th>员工编号</th>
+  </tr>
+  <foreach name="list" item="info">
+  <tr>
+	<td>{$k+1}</td>
+    <td>{$info[name]}</td><td>{$info[id_card]}</td><td>{$info[pay_system_id]}</td><td>{$info[need_attendance_days]}</td><td>{$info[actual_attendance_days]}</td><td>{$info[should_wages]}</td><td>{$info[should_debit]}</td><td>{$info[real_wages]}</td><td>{$info[employee_signature]}</td><td>{$info[signature_date]}</td><td>{$info[bank]}</td><td>{$info[bank_account]}</td><td>{$info[employee_number]}</td>
+    </tr>
+  </foreach>
+</table>

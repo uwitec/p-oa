@@ -1,0 +1,111 @@
+<include file="./Tpl/Public/header.html" />
+<div class="list-div">
+<form action="{:U('sequence')}" name="list" method="post">
+<table id="page-table" cellspacing="0">
+  <tr>
+    <td align="right" nowrap="true">
+            <div id="turn-page">{$page}</div>
+    </td>
+  </tr>
+</table>
+  <table cellspacing='1' cellpadding='3'>
+    <tr>
+      <th><a href="javascript:$('form').submit();">排序</a></th>
+      <th>名称</th>
+      <th>位置</th>
+      <th>目标窗口</th>
+      <th>角色ID</th>
+      <th>操作</th>
+    </tr>
+    <foreach name="list" item="info" key="k">
+    <php>$i++;if($i%2==0){ $class='even'; }else{ $class='odd'; }</php>
+      <tr class="{$class}">
+        <td>
+        <input name="listorder[{$info[id]}]" type="text" id="listorder" value="{$info[listorder]}" size="4" /></td>
+        <td><a href="javascript:show('{$iframe_name}','{$info[id]}');">{$info[title]}</a></td>
+        <td>{$info[position]}</td>
+        <td>{$info[target]}</td>
+        <td>{$info[role_id]}</td>
+        <td><a href="javascript:dialog_add('{$info[id]}');">添加</a> | <a href="javascript:dialog_edit('{$info[id]}');">修改 </a>| <a href="javascript:confirm_delete('{$info[id]}');">删除</a></td>
+      </tr>
+    </foreach>
+  </table>
+</form>
+</div>
+<div id="dialog_add"><!--添加信息 --></div>
+<div id="dialog_edit"><!-- 修改信息--></div>
+<script type="text/javascript">
+$("#dialog_add").dialog({
+    autoOpen: false,
+    title: '添加信息',
+    width:'500',
+    height:'400',
+    modal: true,
+    buttons: {
+        '确认': function () {
+   			$("#dialog_add .dialog-div form").submit();
+   		},
+        '取消': function () {
+           $("#dialog_add").dialog("close");
+        }
+    }
+});
+function dialog_add(parent_id){
+	<if condition="$_GET[user_id]">
+	var uri='{:U("Rbac/Menu/add?user_id=$_GET[user_id]&parent_id=")}'+parent_id;
+	<else/>
+	var uri='{:U("Rbac/Menu/add?role_id=$_GET[role_id]&parent_id=")}'+parent_id;
+	</if>
+	$.ajax({
+		type: "get",
+		url: uri,
+		dataType:"html",
+		success: function(html){
+			$("#dialog_add").html(html);
+			$("#dialog_add").dialog("open");
+		}
+	});
+}
+$("#dialog_edit").dialog({
+    autoOpen: false,
+    title: '修改信息',
+    width:'500',
+    height:'400',
+    modal: true,
+    buttons: {
+        '确认': function () {
+   			$("#dialog_edit form").submit();
+        	$("#dialog_edit").dialog("close");
+   		},
+        '取消': function () {
+           $("#dialog_edit").dialog("close");
+        }
+    }
+});
+function dialog_edit(id){
+	var uri='{:U("edit?id=")}'+id;
+	$.ajax({
+		type: "get",
+		url: uri,
+		dataType:"html",
+		success: function(html){
+			$("#dialog_edit").html(html);
+			$("#dialog_edit").dialog("open");
+		}
+	});
+}
+function confirm_delete(id){
+	if(confirm("确认删除此记录吗？删除后不可恢复。")){
+		window.location.href='{:U("Menu/foreverdelete?id=")}'+id;
+	}
+}
+//显示指定的菜单并显示到相应的Iframe
+function show(iframe_name,parent_id){
+	<if condition="$_GET[user_id]">
+		window.parent.frames[iframe_name].location='{:U("iframe?user_id=$_GET[user_id]&from_iframe=")}'+iframe_name+"/parent_id/"+parent_id;
+	<else/>
+		window.parent.frames[iframe_name].location='{:U("iframe?role_id=$_GET[role_id]&from_iframe=")}'+iframe_name+"/parent_id/"+parent_id;
+	</if>
+}
+</script>
+<include file="./Tpl/Public/footer.html" />

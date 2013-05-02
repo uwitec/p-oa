@@ -1,0 +1,105 @@
+<include file="./Tpl/Public/header.html" />
+<h1>
+    <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span>
+    <foreach name="list_main_menu" item="info">
+    <span class="action-span"><a href="{$info[url]}" target="{$info[target]}">{$info[title]}</a></span>
+    </foreach>
+    <div style="clear:both"></div>
+</h1>
+<link type="text/css" href="__PUBLIC__/js/jquery-treeview/jquery.treeview.css" rel="stylesheet" />	
+<script type="text/javascript" src="__PUBLIC__/js/jquery-treeview/jquery.treeview.js"></script>
+<div class="list-div">
+{$cat_tree}
+<script language="JavaScript">
+$("#product_cat_tree").treeview({
+	persist: "location",
+	collapsed: true,
+	unique: false,
+	control: "#treecontrol"
+});
+</script>
+</div>
+<div id="dialog_add"><!--添加信息 --></div>
+<div id="dialog_edit"><!-- 修改信息--></div>
+<div id="dialog_delete" style="color:#F00; font-size:13px; vertical-align: middle;">"彻底删除"的数据是不可恢复的，请慎用！</div>
+<script type="text/javascript">
+$("#dialog_add").dialog({
+    autoOpen: false,
+    title: '添加信息',
+    width:'200',
+    height:'150',
+    modal: true,
+    buttons: {
+        '确认': function () {
+   			$("#dialog_add form").submit();
+   		},
+        '取消': function () {
+           $("#dialog_add").dialog("close");
+        }
+    }
+});
+function dialog_add(pid){
+	var uri='{:U("add?pid=")}'+pid;
+	$.ajax({
+		type: "get",
+		url: uri,
+		dataType:"html",
+		success: function(html){
+			$("#dialog_add").html(html);
+			$("#dialog_add").dialog("open");
+		}
+	});
+}
+$("#dialog_edit").dialog({
+    autoOpen: false,
+    title: '修改信息',
+    width:'200',
+    height:'150',
+    modal: true,
+    buttons: {
+        '确认': function () {
+   			$("#dialog_edit form").submit();
+   		},
+        '取消': function () {
+           $("#dialog_edit").dialog("close");
+        }
+    }
+});
+function dialog_edit(id){
+	var uri='{:U("edit?id=")}'+id;
+	$.ajax({
+		type: "get",
+		url: uri,
+		dataType:"html",
+		success: function(html){
+			$("#dialog_edit").html(html);
+			$("#dialog_edit").dialog("open");
+		}
+	});
+}
+//删除数据
+var delete_id="";
+$("#dialog_delete").dialog({
+    autoOpen: false,
+    title: '删除信息',
+    width:'270',
+    height:'150',
+    modal: true,
+    buttons: {
+        '丢到垃圾站': function () {
+        	window.location.href='{:U("delete?id=")}'+delete_id;
+   		},
+        '彻底删除': function () {
+			window.location.href='{:U("foreverdelete?id=")}'+delete_id;
+        },
+		'取消': function () {
+           $("#dialog_delete").dialog("close");
+        }
+    }
+});
+function confirm_delete(id){
+	delete_id=id;
+	$("#dialog_delete").dialog("open");
+}
+</script>
+<include file="./Tpl/Public/footer.html" />

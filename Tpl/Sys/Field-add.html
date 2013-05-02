@@ -1,0 +1,115 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}">
+<input name="act" type="hidden" id="act" value="todo">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+	<tr>
+    	<th>表名</th>
+    	<td><input name="table_name" type="text" class="table_name" value="<php>if($_REQUEST[table_name]){ echo $_REQUEST[table_name];}else{ echo cookie('table_name');}</php>" size="60" maxlength="24" /></td>
+    </tr>
+    <tr>
+    	<th>名称</th>
+    	<td><input name="name" type="text" id="name" size="60" /></td>
+    </tr>
+    <tr>
+    	<th>字段</th>
+    	<td><input name="field" type="text" id="field" size="60" />
+    	  <input name="pinyin" type="radio" class="pinyin" onchange="zh2pinyin();" value="en" checked="checked"/> 英文
+    	  <input type="radio" name="pinyin" class="pinyin" value="pinyin" onchange="zh2pinyin();" />拼音
+          <input type="radio" name="pinyin" class="pinyin" value="pinyin_first_letter" onchange="zh2pinyin();" />拼音首字母
+          <span style="color:#F63" id="field_msg"></span></td>
+    </tr>
+    <tr>
+    	<th>字段类型</th>
+    	<td><select name="formtype" id="formtype" onchange="select_formtype();">
+    	  <option value="text" selected="selected">文本框</option>
+          <option value="number">数字</option>
+          <option value="money">金额</option>
+          <option value="date">日期</option>
+          <option value="date_time">时间</option>
+    	  <option value="password">密码框</option>
+    	  <option value="textarea">多行文本</option>
+    	  <option value="select">下拉框</option>
+    	  <option value="radio">单选框</option>
+    	  <option value="checkbox">复选框</option>
+  	  </select>
+    	  最大长度
+          <input name="maxlength" type="text" id="maxlength" value="32" size="5" maxlength="5" />
+用于搜索
+<input name="issearch" type="checkbox" id="issearch" value="1" /></td>
+    </tr>
+    <tr>
+    	<th>数据设置</th>
+    	<td><textarea name="setting" id="setting"></textarea>
+    	  “选项|值” 多个选项用换行</td>
+    </tr>
+    <tr>
+    	<th>提示信息</th>
+    	<td><textarea name="tips" id="tips"></textarea></td>
+    </tr>
+</table>
+</form>
+</div>
+<script language="javascript">
+$("#name").blur(function (){
+	if($("#field").val().length<1){
+		zh2pinyin();
+	}
+});
+$("#field").blur(function (){
+	check_field();
+});
+function zh2pinyin(){
+	var text=$("#name").val();
+	var type=$(".pinyin:checked").val();
+	var uri="{:U('/Sys/Field/zh2pinyin?text=')}"+text;
+	$.ajax({
+		type: "post",
+		url: uri,
+		data:"text="+text+'&type='+type,
+		dataType:"html",
+		success: function(pinyin){
+			$("#field").val(pinyin);
+			check_field();
+		}
+	});
+}
+//设置最大长度
+function select_formtype(){
+	var formtype=$("[name='formtype']").val();
+	switch(formtype){
+		case 'text':
+			$("#maxlength").val('32');
+		break;
+		case 'number':
+			$("#maxlength").val('11');
+		break;
+		case 'password':
+		case 'select':
+		case 'radio':
+		case 'checkbox':
+			$("#maxlength").val('64');
+		break;
+		case 'textarea':
+			$("#maxlength").val('512');
+		break;
+		default :
+			$("#maxlength").val('');
+		break;
+		
+	}
+}
+//检查字段是否存在此表
+function check_field(){
+	var table_name=$("#form_{$_REQUEST[_URL_][2]} .table_name").val();
+	var field=$("#field").val();
+	var uri="{:U('Sys/Field/check_field?table_name=')}"+table_name+'/field/'+field;
+	$.ajax({
+		type: "get",
+		url: uri,
+		dataType:"json",
+		success: function(data){
+			$("#field_msg").html(data.info);
+		}
+	});
+}
+</script>

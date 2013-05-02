@@ -1,0 +1,126 @@
+<div class="dialog-div">
+  <form action="{:U($_REQUEST[_URL_][2])}" method='post' enctype="multipart/form-data"  id="form_{$_REQUEST[_URL_][2]}" onsubmit="return check_submit();">
+    <input name="act" type="hidden" id="act" value="todo">
+    <input name="id" type="hidden" id="id" value="{$info[id]}">
+    <table width="100%" border="1" cellspacing="0" cellpadding="0">
+      <tr>
+        <th>姓名</th>
+        <td><input name='name' type='text' class='name' value='{$info[name]}'>
+          <span style="color:#F00">*</span></td>
+        <th>性别</th>
+        <td><select name="gender" class="gender">
+            <option value="男" 
+            <if condition="$info[gender] eq '男'">selected</if>
+            >男
+            </option>
+            <option value="女" 
+            <if condition="$info[gender] eq '女'">selected</if>
+            >女
+            </option>
+          </select>
+          <span style="color:#F00">*</span></td>
+        <th>身份证</th>
+        <td><input name='id_card' type='text' class='id_card' value='{$info[id_card]}'>
+          <span style="color:#F00">*</span></td>
+      </tr>
+      <tr>
+        <th>籍贯</th>
+        <td><input name='hometown' type='text' class='hometown' value='{$info[hometown]}'></td>
+        <th>婚姻状况</th>
+        <td><select name="marital_status" class="marital_status">
+            <option value="已婚" 
+            <if condition="$info[marital_status] eq '已婚'">selected</if>
+            >已婚
+            </option>
+            <option value="未婚" 
+            <if condition="$info[marital_status] eq '未婚'">selected</if>
+            >未婚
+            </option>
+            <option value="再婚" 
+            <if condition="$info[marital_status] eq '再婚'">selected</if>
+            >再婚
+            </option>
+          </select></td>
+        <th>健康状况</th>
+        <td><select name="health" class="health">
+            <option value="良好" 
+            <if condition="$info[health] eq '良好'">selected</if>
+            >良好
+            </option>
+            <option value="健康" 
+            <if condition="$info[health] eq '健康'">selected</if>
+            >健康
+            </option>
+            <option value="亚健康" 
+            <if condition="$info[health] eq '亚健康'">selected</if>
+            >亚健康
+            </option>
+            <option value="一般" 
+            <if condition="$info[health] eq '一般'">selected</if>
+            >一般
+            </option>
+            <option value="差" 
+            <if condition="$info[health] eq '差'">selected</if>
+            >差
+            </option>
+          </select></td>
+      </tr>
+      <tr>
+        <th>政治面貌</th>
+        <td>
+        <select name="political_landscape" class="political_landscape">
+            <option <if condition="$info[political_landscape] eq '党员'">selected="selected"</if> >党员</option>
+            <option <if condition="$info[political_landscape] eq '团员'">selected="selected"</if>>团员</option>
+            <option <if condition="$info[political_landscape] eq '群众'">selected="selected"</if>>群众</option>
+          </select></td>
+        <th>户口所在地</th>
+        <td><input name='account_address' type='text' class='account_address' value='{$info[account_address]}'></td>
+        <th>现住址</th>
+        <td><input name='present_address' type='text' class='present_address' value='{$info[present_address]}'></td>
+      </tr>
+      <tr>
+        <th>毕业院校</th>
+        <td><input name='graduate_school' type='text' class='graduate_school' value='{$info[graduate_school]}'></td>
+        <th>学历</th>
+        <td><select name="degree" class="degree">
+            <option <if condition="$info[degree] eq '博士后'">selected="selected"</if> >博士后</option>
+            <option <if condition="$info[degree] eq '博士'">selected="selected"</if>>博士</option>
+            <option <if condition="$info[degree] eq '研究生'">selected="selected"</if>>研究生</option>
+            <option <if condition="$info[degree] eq '本科'">selected="selected"</if>>本科</option>
+            <option <if condition="$info[degree] eq '大专'">selected="selected"</if>>大专</option>
+            <option <if condition="$info[degree] eq '高职'">selected="selected"</if>>高职</option>
+            <option <if condition="$info[degree] eq '高中'">selected="selected"</if>>高中</option>
+            <option <if condition="$info[degree] eq '职中'">selected="selected"</if>>职中</option>
+            <option <if condition="$info[degree] eq '技校'">selected="selected"</if>>技校</option>
+            <option <if condition="$info[degree] eq '初中'">selected="selected"</if>>初中</option>
+            <option <if condition="$info[degree] eq '小学'">selected="selected"</if>>小学 </option>
+          </select></td>
+        <th>专业</th>
+        <td><input name='profession' type='text' class='profession' value='{$info[profession]}'></td>
+      </tr>
+      <tr>
+        <th>意向职位</th>
+        <td><input name='intention_position ' type='text' class='intention_position' value='{$info[intention_position]}'></td>
+        <th>期望薪酬</th>
+        <td><input name='expect_salary' type='text' class='expect_salary' value='{$info[expect_salary]}'></td>
+        <th>民族</th>
+        <td><input name='nation' type='text' class='nation' value='{$info[nation]}' /></td>
+      </tr>
+      <tr>
+        <th>简历文档</th>
+        <td><input name='old_resume_document' type='hidden' class='old_resume_document' value='{$info[resume_document]}' />
+        <input type="file" name="resume_document" class="resume_document" value="{$info[resume_document]}" /><span style="color:#F00">*</span></td>
+        <th>联系电话</th>
+        <td><input name='tel' type='text' class='tel' value='{$info[tel]}' /></td>
+        <th>&nbsp;</th>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+  </form>
+</div>
+<script language="javascript">
+function check_submit(){
+<!--[￥check_submit]-->	
+}
+<!--[￥date]-->
+</script>

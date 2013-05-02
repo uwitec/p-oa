@@ -1,0 +1,114 @@
+<include file="./Tpl/Public/header.html" />
+<h1>
+    <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span>
+    <foreach name="list_main_menu" item="info">
+    <span class="action-span"><a href="{$info[url]}" target="{$info[target]}">{$info[title]}</a></span>
+    </foreach>
+    <div style="clear:both"></div>
+</h1>
+<div class="list-div">
+<div style=" padding:10px 8px;">当前用户角色：
+  <select name="role_id" id="role_id" onchange="location.href = '?role_id='+this.options[this.selectedIndex].value;">
+  <option>请选择用户角色</option>
+  <foreach name="list_role" item="info">
+  	<option value="{$info[id]}" <if condition="$_GET[role_id] eq $info[id]">selected="selected"</if>>{$info[name]}</option>
+  </foreach>
+  </select>
+</div>
+<table cellspacing='1' cellpadding='3'>
+  <tr>
+    <th>应用授权
+      <input type="button" name="button" id="button" onclick="app_access_edit();" value="保存" />
+    </th>
+    <th width="30%">模块授权
+      <input type="button" name="button2" id="button2" onclick="module_access_edit();" value="保存" /></th>
+    <th width="30%">操作授权
+      <input type="button" name="button3" id="button3" onclick="action_access_edit();" value="保存" /></th>
+    </tr>
+  <tr>
+    <td valign="top">
+   <div class="list-div" id="list_app"> 
+   <form action="{:U('Rbac/Role/app_access_edit')}" name="form_app_access_edit" id="form_app_access_edit" method="post">
+   <input name="role_id" type="hidden" value="{$_GET[role_id]}" />
+   <table width="100%" border="0" cellspacing="1" cellpadding="3">
+   <tr>
+      <th><input name="all_app" type="checkbox" id="all_app" value="1" />名称</th>
+      <th>应用名</th>
+      <th>备注</th>
+      <th>操作</th>
+    </tr>
+    <foreach name="list_app" item="info">
+        <tr id="app_tr_{$info[id]}">
+          <td><input name="app[]" type="checkbox" class="app_checkbox" value="{$info[id]}" <if condition="$list_role_app[$info[id]]">checked="checked"</if> />
+            <a href="javascript:select_module('{$info[id]}');">{$info[title]}</a></td>
+          <td>{$info[name]}</td>
+          <td>{$info[remark]}</td>
+          <td><a href="javascript:dialog_app_edit('{$info[id]}');">修改</a></td>
+          </tr>
+        </foreach>
+      </table>
+   </form>
+   </div>
+      </td>
+    <td valign="top"><div class="list-div" id="list_module"></div></td>
+    <td valign="top"><div class="list-div" id="list_action"></div></td>
+    </tr>
+</table>
+</div>
+<div id="dialog_app_add"></div>
+<div id="dialog_app_edit"></div>
+<div id="dialog_module_add"></div>
+<script language="javascript">
+//选择应用，加载当前模块
+function select_module(pid){
+	var url='{:U("Rbac/Role/module?role_id=$_GET[role_id]&pid=")}'+pid;
+	$('#list_module').load(url);
+	$('#list_action').html('');
+	$('#list_app').find('td').css('background-color','');
+	$('#app_tr_'+pid).find('td').css('background-color','#6CF');
+}
+//全选应用
+$('#all_app').click(function (){
+	if($(this).attr('checked')){
+		$('.app_checkbox').attr('checked',true);
+	}else{
+		$('.app_checkbox').attr('checked',false);
+	}
+});
+//修改应用
+$('#dialog_app_edit').dialog({
+    autoOpen: false,
+    title: '修改应用信息',
+    height: 300,
+    width: 400,
+    modal: true,
+    buttons: {
+        '确认': function () {
+   			$("#dialog_app_edit form").submit();
+        	$("#dialog_app_edit").dialog("close");
+   		},
+        '取消': function () {
+           $("#dialog_app_edit").dialog("close");
+        }
+    }
+});
+//修改应用信息
+function dialog_app_edit(id){	
+	var url='{:U("app_edit?id=")}'+id;
+	$('#dialog_app_edit').load(url);
+	$('#dialog_app_edit').dialog('open');
+}
+//保存修改的应用权限
+function app_access_edit(){
+	$("#form_app_access_edit").submit();	
+}
+//保存修改的应用权限
+function module_access_edit(){
+	$("#list_module form").submit();	
+}
+//保存修改的操作权限
+function action_access_edit(){
+	$("#list_action form").submit();	
+}
+</script>
+<include file="./Tpl/Public/footer.html" />

@@ -1,0 +1,20 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}" onsubmit="return check_submit();">
+<input name="act" type="hidden" id="act" value="todo">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+<tr><th>姓名</th><td><input name='name' type='text' class='name' value="{$info[name]}"></td><th>性别</th><td><select name="gender" class="gender">
+  <option <if condition="$info[gender] eq '男'">selected</if>>男</option>
+  <option <if condition="$info[gender] eq '女'">selected</if>>女</option>
+</select></td></tr>
+<tr><th>身份证</th><td><input name='id_card' type='text' class='id_card' value="{$info[id_card]}"></td><th>简历编号</th><td><input name='resume_code' type='text' class='resume_code' value="{$info[resume_code]}"><input name='resume_document' type='hidden' class='resume_document' value="{$info[resume_document]}"></td></tr>
+<tr><th> 招聘过程描述</th><td colspan="3"><textarea name='description' cols="80" rows="5" class='description'><php>echo date('Y-m-d');</php>:<br>通过电话{$info[tel]}通知{$info[name]}面试，约定时间为XXXX</textarea>{:W('Fckeditor','description')}
+</td>
+</table>
+</form>
+</div>
+<script language="javascript">
+function check_submit(){
+<!--[￥check_submit]-->	
+}
+<!--[￥date]-->
+</script>

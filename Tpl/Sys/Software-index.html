@@ -1,0 +1,112 @@
+<include file="./Tpl/Public/header.html" />
+<h1>
+    <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span>
+    <foreach name="list_main_menu" item="info">
+    <span class="action-span"><a href="{$info[url]}" target="{$info[target]}">{$info[title]}</a></span>
+    </foreach>
+    <div style="clear:both"></div>
+</h1>
+<div class="list-div">
+<table cellspacing='1' cellpadding='3'>
+  <tr>
+    <th width="20px">序号</th>
+    <th width="100px">软件名称</th>
+    <th width="40px">版本</th>
+    <th>软件说明</th>
+    <th width="100px">下载时间</th>
+    <th width="100px">安装时间</th>
+    <th width="100px">软件类别</th>
+    <th width="100px">注册时间</th>
+    <th width="140px">注册码</th>
+    <th width="80px">操作</th>
+    </tr>
+  <foreach name="list" item="info" key="k">
+  <php>if($i++%2==0){ $class='even'; }else{ $class='odd'; }</php>
+  <tr class="{$class}">
+	<td>{$k+1}</td>
+    <td align="center"><img src="{$info[img]}" width="64" height="64" style="border:#CCC solid 1px;" /><br>{$info[name]}</td><td>{$info[version]}</td><td>{$info[remark]}</td><td>{$info[down_time]}</td><td>{$info[install_time]}</td><td>{$info[type]}</td><td>{$info[register_time]}</td><td>{$info[sn]}</td>
+    <td>
+       <if condition="$info[install_time]"><a href="#" onclick="javascript:confirm_delete('{$info[name]}');">卸载</a>
+       <else/><a href="#" onclick="javascript:dialog_install('{$info[name]}');">安装</a></if>
+    </td>
+    </tr>
+  </foreach>
+</table>
+<table id="page-table" cellspacing="0">
+  <tr>
+    <td align="right" nowrap="true">
+            <div id="turn-page">{$page}</div>
+    </td>
+  </tr>
+</table>
+</div>
+<div id="dialog_sn"><!--输入注册码 --></div>
+<div id="dialog_edit"><!-- 修改信息--></div>
+<script type="text/javascript">
+$("#dialog_sn").dialog({
+    autoOpen: false,
+    title: '输入注册码信息',
+    width:'600',
+    height:'400',
+    modal: true,
+    buttons: {
+        '确认': function () {
+   			$("#dialog_sn form").submit();
+        	$("#dialog_sn").dialog("close");
+   		},
+        '取消': function () {
+           $("#dialog_sn").dialog("close");
+        }
+    }
+});
+function dialog_sn(){
+	alert("本系统暂不提供在线注册功能，请联系服务供应商QQ:38738862,或登录http://www.emtit.net进行注册");return false;
+	var uri='{:U("dialog_sn")}';
+	$.ajax({
+		type: "get",
+		url: uri,
+		dataType:"html",
+		success: function(html){
+			$("#dialog_add").html(html);
+			$("#dialog_add").dialog("open");
+		}
+	});
+}
+$("#dialog_install").dialog({
+    autoOpen: false,
+    title: '修改信息',
+    width:'600',
+    height:'400',
+    modal: true,
+    buttons: {
+        '确认': function () {
+   			$("#dialog_install form").submit();
+        	$("#dialog_install").dialog("close");
+   		},
+        '取消': function () {
+           $("#dialog_install").dialog("close");
+        }
+    }
+});
+function dialog_install(id){
+	alert("本系统暂不提供在线安装功能，请联系服务供应商QQ:38738862,或登录http://www.emtit.net进行注册");
+	return false;
+	var uri='{:U("edit?id=")}'+id;
+	$.ajax({
+		type: "get",
+		url: uri,
+		dataType:"html",
+		success: function(html){
+			$("#dialog_edit").html(html);
+			$("#dialog_edit").dialog("open");
+		}
+	});
+}
+function confirm_delete(name){
+	alert("本系统暂不提供在线卸载功能，请联系服务供应商QQ:38738862,或登录http://www.emtit.net进行注册");return false;
+	if(confirm("确认卸载此软件吗？")){
+		window.location.href='{:U("uninstall?name=")}'+name;
+	}
+}
+</script>
+<include file="./Tpl/Public/footer.html" />

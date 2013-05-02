@@ -1,0 +1,15 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}">
+<input name="act" type="hidden" id="act" value="todo">
+<input name="id" type="hidden" id="id" value="{$info[id]}">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+	<tr><th>文本框</th><td><input name='text' type='text' class='text' value='{$info[text]}'>文本框输入的DEMO</td></tr>
+	<tr><th>密码框</th><td><input name='password' type='password' class='password' value='{$info[password]}'>密码输入框</td></tr>
+	<tr><th>下拉选择框</th><td><select name="select" class="select"><option value="1" <if condition="$info[select] eq '1'">selected</if>>选项一</option><option value="2" <if condition="$info[select] eq '2'">selected</if>>选项二</option></select>下拉选择框DEMO
+</td></tr>
+	<tr><th>复选框</th><td><input type="checkbox" name="checkbox[]" id="checkbox" value="1" <if condition="$info[checkbox] eq '1'">checked="checked"</if> />选项一<input type="checkbox" name="checkbox[]" id="checkbox" value="2" <if condition="$info[checkbox] eq '2'">checked="checked"</if> />选项二</td></tr>
+	<tr><th>单选框</th><td><input type="radio" name="radio" class="radio" value="1" <if condition="$info[radio] eq '1'">checked="checked"</if>/>选项一<input type="radio" name="radio" class="radio" value="2" <if condition="$info[radio] eq '2'">checked="checked"</if>/>选项二</td></tr>
+
+</table>
+</form>
+</div>

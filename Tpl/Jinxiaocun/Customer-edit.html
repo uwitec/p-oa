@@ -1,0 +1,14 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}">
+<input name="act" type="hidden" id="act" value="todo">
+<input name="id" type="hidden" id="id" value="{$info[id]}">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+<tr><th>客户名称</th><td><input name='name' type='text' class='name' value='{$info[name]}'></td><th>联系人</th><td><input name='contact' type='text' class='contact' value='{$info[contact]}'></td></tr>
+<tr><th>联系电话</th><td><input name='contact_tel' type='text' class='contact_tel' value='{$info[contact_tel]}'></td><th>传真号码</th><td><input name='fax' type='text' class='fax' value='{$info[fax]}'></td></tr>
+<tr><th>客户地址</th><td><input name='address' type='text' class='address' value='{$info[address]}'></td><th>邮政编码</th><td><input name='zip_code' type='text' class='zip_code' value='{$info[zip_code]}'></td></tr>
+<tr><th>客户QQ</th><td><input name='qq' type='text' class='qq' value='{$info[qq]}'></td><th>电子邮箱</th><td><input name='email' type='text' class='email' value='{$info[email]}'></td></tr>
+<tr><th>淘宝旺旺</th><td><input name='wanwan' type='text' class='wanwan' value='{$info[wanwan]}'></td><th>客户存款余额</th><td><input name='deposit_balance' type='text' class='deposit_balance' value="{$info[deposit_balance]}"></td></tr>
+
+</table>
+</form>
+</div>

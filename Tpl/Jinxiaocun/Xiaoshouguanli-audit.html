@@ -1,0 +1,18 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}" onsubmit="return check_submit();">
+<input name="act" type="hidden" id="act" value="todo">
+<input name="id" type="hidden" id="id" value="{$info[id]}">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+<tr><th>出单单号</th><td><input name='cddh' type='text' class='cddh' value='{$info[cddh]}'></td><th>合计总金额</th><td><input name='hjzje' type='text' class='hjzje'></td></tr>
+<tr><th>销售员</th><td><input name='xsy' type='text' class='xsy' value='{$info[xsy]}'></td><th>销售员id</th><td><input name='xsyid' type='text' class='xsyid' value='{$info[xsyid]}'></td></tr>
+<tr><th>审核人</th><td><input name='shr' type='text' class='shr' value='{$info[shr]}'></td><th>审核时间</th><td><input name='shsj' type='text' class='shsj' value='{$info[shsj]}'></td></tr>
+<tr><th>审核人id</th><td><input name='shrid' type='text' class='shrid' value='{$info[shrid]}'></td><th>销售日期</th><td><input name='sale_date' type='text' class='sale_date' value='{$info[sale_date]}'></td></tr>
+<tr><th>客户id</th><td><input name='customer_id' type='text' class='customer_id' value='{$info[customer_id]}'></td>
+</table>
+</form>
+</div>
+<script language="javascript">
+function check_submit(){
+<!--[￥check_submit]-->	
+}
+</script>

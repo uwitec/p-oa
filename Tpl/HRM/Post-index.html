@@ -1,0 +1,67 @@
+<include file="./Tpl/Public/header.html" />
+<h1>
+    <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span>
+    <foreach name="list_main_menu" item="info">
+    <span class="action-span"><a href="{$info[url]}" target="{$info[target]}">{$info[title]}</a></span>
+    </foreach>
+    <div style="clear:both"></div>
+</h1>
+
+<div class="list-div">
+<table cellspacing='1' cellpadding='3'>
+  <tr>
+    <th width="40px">序号</th>
+    <th><a href="?_order=name&_sort={$sort}">职位名称</a><if condition="$order eq 'name'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th><th><a href="?_order=description&_sort={$sort}">工作职责及说明</a><if condition="$order eq 'description'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th><th><a href="?_order=plan_number&_sort={$sort}">计划编制人数</a><if condition="$order eq 'plan_number'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+    <th>实际在编人数</th>
+    <th>操作</th>
+    </tr>
+  <foreach name="list" item="info" key="k">
+  <php>if($i++%2==0){ $class='even'; }else{ $class='odd'; }</php>
+  <tr class="{$class}">
+	<td>{$k+1}</td>
+    <td>{$info[name]}</td><td>{$info[description]}</td><td>{$info[plan_number]}</td>
+    <td>{$info[real_number]}</td>
+    <td>
+      <a href="javascript:dialog_edit('id={$info[id]}');">修改 </a>| 
+      <a href="javascript:confirm_delete('{$info[id]}');">删除</a>
+    </td>
+    </tr>
+  </foreach>
+</table>
+<div id="turn-page">{$page}</div>
+</div>
+<div id="dialog_delete" style="color:#F00; font-size:13px; vertical-align: middle;">"彻底删除"的数据是不可恢复的，请慎用！</div>
+<script type="text/javascript">
+//参数param一般是id=XX
+function dialog_add(param){
+	dialog({'title':'添加信息','w':'480','h':'190'},'{:U("add")}',param);
+}
+function dialog_edit(param){
+	dialog({'title':'修改信息','w':'480','h':'190'},'{:U("edit")}',param);
+}
+//删除数据
+var delete_id="";
+$("#dialog_delete").dialog({
+    autoOpen: false,
+    title: '删除信息',
+    width:'270',
+    height:'150',
+    modal: true,
+    buttons: {
+        '丢到垃圾站': function () {
+        	window.location.href='{:U("delete?id=")}'+delete_id;
+   		},
+        '彻底删除': function () {
+			window.location.href='{:U("foreverdelete?id=")}'+delete_id;
+        },
+		'取消': function () {
+           $("#dialog_delete").dialog("close");
+        }
+    }
+});
+function confirm_delete(id){
+	delete_id=id;
+	$("#dialog_delete").dialog("open");
+}
+</script>
+<include file="./Tpl/Public/footer.html" />

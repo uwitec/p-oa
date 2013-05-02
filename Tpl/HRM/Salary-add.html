@@ -1,0 +1,19 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}" onsubmit="return check_submit();">
+<input name="act" type="hidden" id="act" value="todo">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+<tr><th>姓名</th><td><input name='name' type='text' class='name'></td><th>身份证</th><td><input name='id_card' type='text' class='id_card'></td><th>薪酬体系id</th><td><input name='pay_system_id' type='text' class='pay_system_id'></td><th>应出勤天数</th><td><input name='need_attendance_days' type='text' class='need_attendance_days'></td></tr>
+<tr><th>实际出勤天数</th><td><input name='actual_attendance_days' type='text' class='actual_attendance_days'></td><th>应发工资</th><td><input name='should_wages' type='text' class='should_wages'></td><th>应扣款</th><td><textarea name='should_debit' class='should_debit'></textarea></td><th>实发工资</th><td><input name='real_wages' type='text' class='real_wages'></td></tr>
+<tr><th>员工签名</th><td><input name='employee_signature' type='text' class='employee_signature'></td><th>签名日期</th><td><input name='signature_date' type='text' class='signature_date'></td><th>开户银行</th><td><input name='bank' type='text' class='bank'></td><th>银行帐号</th><td><input name='bank_account' type='text' class='bank_account'></td></tr>
+<tr><th>员工编号</th><td><input name='employee_number' type='text' class='employee_number'></td><th>&nbsp;</th><td>&nbsp;</td>
+<th>&nbsp;</th><td>&nbsp;</td>
+<th>&nbsp;</th><td>&nbsp;</td></tr>
+
+</table>
+</form>
+</div>
+<script language="javascript">
+function check_submit(){
+<!--[￥check_submit]-->	
+}
+</script>

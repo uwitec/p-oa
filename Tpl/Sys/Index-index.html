@@ -1,0 +1,190 @@
+<include file="./Tpl/Public/header.html" />
+<h1>
+    <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span>
+    <foreach name="list_main_menu" item="info">
+    <span class="action-span"><a href="{$info[url]}" target="{$info[target]}">{$info[title]}</a></span>
+    </foreach>
+    <div style="clear:both"></div>
+</h1>
+<style>
+.list-div2 th {
+    background: url("__PUBLIC__/images/th_bg.gif") repeat-x scroll 0 0 #BBDDE5;
+    line-height: 24px;
+    white-space: nowrap;
+	 font-style: normal;
+    font-weight: normal;
+}
+</style>
+<div class="list-div2">
+<table cellspacing='1' cellpadding='3'>
+  <tr>
+    <th>应用列表 [<a href="javascript:dialog_app_add();">添加应用</a>]</th>
+    <th width="30%">模块列表</th>
+    <th width="30%">操作列表</th>
+    </tr>
+  <tr>
+    <td valign="top">
+   <div class="list-div" id="list_app"> 
+   <table width="100%" border="0" cellspacing="1" cellpadding="3">
+   <tr>
+      <th width="80px;">名称</th>
+      <th>应用名</th>
+      <th>备注</th>
+      <th width="60px">操作</th>
+    </tr>
+    <foreach name="list_app" item="info">
+        <tr id="app_tr_{$info[id]}">
+          <td><a href="javascript:select_module('{$info[id]}');">{$info[title]}</a></td>
+          <td><a href="javascript:dialog_app_edit('{$info[id]}');">{$info[name]}</a></td>
+          <td>{$info[remark]}</td>
+          <td><a href="javascript:dialog_module_add('{$info[id]}')">添加模块</a></td>
+          </tr>
+        </foreach>
+      </table>
+   </div>
+      </td>
+    <td valign="top"><div class="list-div" id="list_module"></div></td>
+    <td valign="top"><div class="list-div" id="list_action"></div></td>
+    </tr>
+</table>
+</div>
+<div id="dialog_app_add"></div>
+<div id="dialog_app_edit"></div>
+<div id="dialog_module_add"></div>
+<script language="javascript">
+function confirm_delete(dom,id){
+	if(confirm("确认删除此记录吗？删除后不可恢复。")){
+		uri='{:U("Rbac/Node/check_son?id=")}'+id;
+		$.ajax({
+			type: "get",
+			url: uri,
+			dataType:"html",
+			success: function(data){
+				if(data>0){
+					alert('存在下级数据不能删除');	
+				}else{
+					uri='{:U("foreverdelete?id=")}'+id;
+					$.ajax({
+						type: "get",
+						url: uri,
+						dataType:"json",
+						success: function(data){
+							if(data.status==1){
+								alert(data.info);alert($(dom).parent(document).html());
+								$(dom).parent(this).parent(this).hide();
+							}
+						}
+					});
+				}
+			}
+		});
+		//window.location.href='{:U("foreverdelete?id=")}'+id;
+	}
+}
+//选择应用，加载当前模块
+function select_module(pid){
+	var url='{:U("module?pid=")}'+pid;
+	$('#list_module').load(url);
+	$('#list_action').html('');
+	$('#list_app').find('td').css('background-color','');
+	$('#app_tr_'+pid).find('td').css('background-color','#6CF');
+}
+//添加应用
+$('#dialog_app_add').dialog({
+    autoOpen: false,
+    title: '添加应用信息',
+	width: 800,
+    height: 500,
+    modal: true,
+    buttons: {
+        '确认': function () {
+			if(!$("#dialog_app_add form .title").val()){
+				alert('必需填写名称');
+				return false;
+			}
+			if(!$("#dialog_app_add form .name").val()){
+				alert('必需填写应用名');
+				return false;
+			}
+			$("#dialog_app_add form").submit();
+        	$("#dialog_app_add").dialog("close");
+   		},
+        '取消': function () {
+           $("#dialog_app_add").dialog("close");
+        }
+    }
+});
+function dialog_app_add(){
+	var url='{:U("app_add")}';
+	$('#dialog_app_add').load(url);
+	$('#dialog_app_add').dialog('open');
+}
+//修改应用
+$('#dialog_app_edit').dialog({
+    autoOpen: false,
+    title: '修改应用信息',
+    width: 800,
+    height: 500,
+    modal: true,
+    buttons: {
+        '确认': function () {
+   			$("#dialog_app_edit form").submit();
+        	$("#dialog_app_edit").dialog("close");
+   		},
+        '取消': function () {
+           $("#dialog_app_edit").dialog("close");
+        }
+    }
+});
+//修改应用信息
+function dialog_app_edit(id){	
+	var url='{:U("app_edit?id=")}'+id;
+	$('#dialog_app_edit').load(url);
+	$('#dialog_app_edit').dialog('open');
+}
+//保存修改的应用权限
+function app_access_edit(){
+	$("#form_app_access_edit").submit();	
+}
+//保存修改的应用权限
+function module_access_edit(){
+	$("#list_module form").submit();	
+}
+//保存修改的操作权限
+function action_access_edit(){
+	$("#list_action form").submit();	
+}
+//============================模块操作开始============================================
+//添加模块
+$('#dialog_module_add').dialog({
+    autoOpen: false,
+    title: '添加模块信息',
+	width: 800,
+    height: 500,
+    modal: true,
+    buttons: {
+        '确认': function () {
+			if(!$("#dialog_module_add form .title").val()){
+				alert('必需填写名称');
+				return false;
+			}
+			if(!$("#dialog_module_add form .name").val()){
+				alert('必需填写应用名');
+				return false;
+			}
+   			$("#dialog_module_add form").submit();
+        	$("#dialog_module_add").dialog("close");
+   		},
+        '取消': function () {
+           $("#dialog_module_add").dialog("close");
+        }
+    }
+});
+function dialog_module_add(pid){
+	var url='{:U("module_add?pid=")}'+pid;
+	$('#dialog_module_add').load(url);
+	$('#dialog_module_add').dialog('open');
+}
+//============================模块操作结束============================================
+</script>
+<include file="./Tpl/Public/footer.html" />

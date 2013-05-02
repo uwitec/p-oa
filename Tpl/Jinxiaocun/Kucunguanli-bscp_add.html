@@ -1,0 +1,13 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}">
+<input name="act" type="hidden" id="act" value="todo">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+<tr><th>产品名称</th><td><input name='name' type='text' class='name' value="{$inventory_info[product_name]}"></td><th>产品代码</th><td><input name='code' type='text' class='code' value="{$inventory_info[code]}"></td></tr>
+<tr><th>报损数量</th><td><input name='number' type='text' class='number' value="{$inventory_info[number]}"></td><th>产品所在仓库</th><td><select name="storage_id" class="storage_id">
+  <option value="">请选择</option>
+    {:storage_select("$inventory_info[storage_id]")}
+  </select></td></tr>
+<tr><th>报损原因</th><td colspan="3"><textarea name="remark" cols="50" rows="5" class="remark"></textarea></td>
+</table>
+</form>
+</div>

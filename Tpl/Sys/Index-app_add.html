@@ -1,0 +1,95 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}">
+<input type="hidden" name="act" value="todo" >
+<input type="hidden" name="level" value="1">
+<input type="hidden" name="pid" value="0">
+<table>
+<tr>
+	<td rowspan="5" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+	    <td>名称：</td>
+	    <td><input type="text" class="title" name="title" onblur="check_app('title');" /></td>
+	    </tr>
+	  <tr>
+	    <td>应用名：</td>
+	    <td><input type="text" class="name" name="name" onblur="check_app('name');" />
+	      <span style="color:#C30" class="name_msg">必需是字母和下或线，不能有空格</span></td>
+	    </tr>
+	  <tr>
+	    <td>状态：</td>
+	    <td><select name="status">
+	      <option value="1">启用</option>
+	      <option value="0">禁用</option>
+	      </select></td>
+	    </tr>
+	  <tr>
+	    <td>自动生成：</td>
+	    <td><input name="create_data[]" type="checkbox" value="index" checked="checked" />
+	      列表
+	      <input name="create_data[]" type="checkbox" value="add" checked="checked" />
+	      添加
+  <input name="create_data[]" type="checkbox" value="edit" checked="checked" />
+	      修改
+  <input name="create_data[]" type="checkbox" value="show" checked="checked" />
+	      详细信息
+  <input name="create_data[]" type="checkbox" value="export" checked="checked" />
+	      导出数据</td>
+	    </tr>
+	  <tr>
+	    <td>描 述：</td>
+	    <td><textarea name="remark"  rows="5" cols="57"></textarea></td>
+	    </tr>
+	  </table></td>
+	<td valign="top">&nbsp;&nbsp;数据表
+      <input name="table_name" type="text" id="table_name" value="demo" />
+无需填写前缀<div>如需添加字段请到“<a href="{:U('Rbac/Field/index')}" style="color:#690" target="_blank">字段管理</a>”中增加</div></td>
+</tr>
+<tr>
+	<td rowspan="4" valign="top"><div id="file_list"></div></td>
+	</tr>
+<tr>  </tr>
+<tr>  </tr>
+<tr>  </tr>
+</table>
+</form>
+</div>
+<script language="javascript">
+//取得数据表中的数据字段
+get_field();
+$("#table_name").blur(function(){
+	get_field();
+});
+function get_field(){
+	var table_name=$("#table_name").val();
+	var uri="{:U('Sys/Field/get_field?table_name=')}"+table_name;
+	$.ajax({
+		type: "get",
+		url: uri,
+		dataType:"html",
+		success: function(html){
+			$("#file_list").html(html);
+		}
+	});
+}
+//检查应用是否存在并且把对应的中文转为英文
+function check_app(onblur){
+	var app_name=$("#form_{$_REQUEST[_URL_][2]} .name").val();
+	if(onblur=='title'){
+		var title=$("#form_{$_REQUEST[_URL_][2]} .title").val();
+		var uri="{:U('Sys/Index/check_app?title=')}"+title;
+	}else{
+		var uri="{:U('Sys/Index/check_app?app_name=')}"+app_name;
+	}
+	if((app_name.length<1&&onblur=='title')||(onblur=='name'&&app_name.length>0)){
+		$.ajax({
+			type: "get",
+			url: uri,
+			dataType:"json",
+			success: function(data){
+				$("#form_{$_REQUEST[_URL_][2]} .name").val(data.data);
+				$("#form_{$_REQUEST[_URL_][2]} .name_msg").html(data.info);
+			}
+		});
+	}
+}
+</script>

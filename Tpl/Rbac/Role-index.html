@@ -1,0 +1,58 @@
+<include file="./Tpl/Public/header.html" />
+<h1>
+    <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span>
+    <foreach name="list_main_menu" item="info">
+    <span class="action-span"><a href="{$info[url]}" target="{$info[target]}">{$info[title]}</a></span>
+    </foreach>
+    <div style="clear:both"></div>
+</h1>
+<div class="list-div">
+<table cellspacing='1' cellpadding='3'>
+  <tr>
+    <th width="20px">编号</th>
+    <th width="100px">角色名称</th>
+    <th width="35px;">用户数</th>
+    <th>描述</th>
+    <th width="30px;">状态</th>
+    <th>操作</th>
+  </tr>
+  <foreach name="list" item="info">
+  <php>if($i++%2==0){ $class='even'; }else{ $class='odd'; }</php>
+  <tr class="{$class}">
+    <td>{$info[id]}</td>
+    <td>{$info[name]}</td>
+    <td>{$user_count[$info[id]]}</td>
+    <td>{$info[remark]}</td>
+    <td><if condition="$info[status] eq 1">正常<else/>禁用</if></td>
+    <td>
+    <a href="javascript:dialog_edit('id={$info[id]}')">修改</a> 
+    | <a href='{:U("Rbac/Menu/set_power?role_id=$info[id]")}'>授权</a>
+  </tr>
+  </foreach>
+</table>
+<table id="page-table" cellspacing="0">
+  <tr>
+    <td align="right" nowrap="true">
+            <div id="turn-page">{$page}</div>
+    </td>
+  </tr>
+</table>
+</div>
+<div id="dialog"><!--添加信息 --></div>
+<div id="dialog_edit"><!-- 修改信息--></div>
+<script type="text/javascript">
+function dialog_add(param){
+	dialog({'title':'添加角色','w':'380','h':'280'},'{:U("add")}','role_id={$_GET[role_id]}');
+}
+
+function dialog_edit(param){
+	dialog({'title':'修改角色','w':'380','h':'280'},'{:U("edit")}',param);
+}
+function confirm_delete(id){
+	if(confirm("确认删除此记录吗？删除后不可恢复。")){
+		window.location.href='{:U("Menu/foreverdelete?id=")}'+id;
+	}
+}
+
+</script>
+<include file="./Tpl/Public/footer.html" />

@@ -1,0 +1,35 @@
+<include file="./Tpl/Public/header.html" />
+<h1>
+    <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span>
+    <foreach name="list_main_menu" item="info">
+    <span class="action-span"><a href="{$info[url]}" target="{$info[target]}">{$info[title]}</a></span>
+    </foreach>
+    <div style="clear:both"></div>
+</h1>
+<ul style="padding:0; margin: 0; list-style-type:none; color: #CC0000;">{$notice}</ul>
+<div class="list-div">
+<table cellspacing='1' cellpadding='3'>
+  <tr>
+    <th colspan="4" class="group-title">系统介绍</th>
+  </tr>
+  <tr>
+    <td width="20%" valign="top"><h1>人力资源</h1><img alt="人力资源管理系统" src="/HRM.jpg" name="人力资源管理系统"></td>
+    <td width="30%" valign="top"><h1>进销存</h1><img name="进销存" src="__PUBLIC__/images/jxc/help.png" /></td>
+    <td width="20%" valign="top">&nbsp;</td>
+    <td width="30%" valign="top">&nbsp;</td>
+  </tr>
+</table>
+</div>
+<div class="list-div">
+<table cellspacing='1' cellpadding='3'>
+  <tr>
+    <th colspan="4" class="group-title">&nbsp;</th>
+  </tr>
+    <tr>
+      <td width="20%">&nbsp;</td>
+      <td width="30%">&nbsp;</td>
+      <td width="20%">&nbsp;</td>
+    </tr>
+</table>
+</div>
+<include file="./Tpl/Public/footer.html" />

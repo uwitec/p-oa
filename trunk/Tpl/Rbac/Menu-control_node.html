@@ -1,0 +1,112 @@
+<include file="./Tpl/Public/header.html" />
+<style>
+.green{
+	color:#3C0;
+}
+.red{
+	color:#C00;
+}
+</style>
+<h1>
+    <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span>
+    <div style="clear:both"></div>
+</h1>
+<h1>
+  <div>对菜单“<span style="color:#F90">{$_REQUEST[menu_name]}</span>”设置控制的节点权限时，同时也会给角色“<span style="color:#F90">
+    <foreach name="role_id_arr" item="role_id">{$list_role[$role_id]}、</foreach></span>
+    ”进行授权</div>
+    <span style="float:left" class="action-span"><a href='{:U("Rbac/Menu/control_node?group_id=0&menu_id=$_REQUEST[menu_id]&access_node=$_REQUEST[access_node]&role_ids=$_REQUEST[role_ids]&menu_name=$_REQUEST[menu_name]")}'>全部</a></span>
+  <foreach name="list_group" item="group">
+  	<span style="float:left" class="action-span"><a href='{:U("Rbac/Menu/control_node?group_id=$group[id]&menu_id=$_REQUEST[menu_id]&access_node=$_REQUEST[access_node]&role_ids=$_REQUEST[role_ids]&menu_name=$_REQUEST[menu_name]")}'>{$group[title]}</a></span>
+  </foreach>
+</h1>
+<div class="list-div">
+<form name="form_list" id="form_list" action='{:U("Rbac/Menu/control_node?menu_id=$_REQUEST[menu_id]")}' method="post" onsubmit="return check_form();">
+<script language="javascript">
+//检查表单
+function check_form(){
+	return true;	
+}
+</script>
+<input name="act" type="hidden" value="todo" />
+<input name="menu_id" type="hidden" value="{$menu_id}" />
+  <table width="100%" border="0" cellspacing="1" cellpadding="3">
+  <tr>
+      <th width="60px">
+        <input type="submit" name="button" id="button" value="控制" />
+      </a></th>
+      <th width="140">名称</th>
+      <th width="100">name</th>
+      <th width="60px">状态</th>
+      <th>备注URL连接</th>
+    </tr>
+    <foreach name="list" item="info">
+     <php>if($i++%2==0){ $class='even'; }else{ $class='odd'; }</php>
+ 	 <tr class="{$class}">
+      <td align="center">
+      <php>if(in_array($info[id],$access_node_arr)) $checked='checked="checked"'; else $checked='';</php><input name="set_power" type="checkbox" class="set_power" value="{$info[id]}" {$checked} />
+        <select name="node_ids[{$info[id]}]" id="ids_{$info[id]}" style="display:none">
+        	<option value="now_status" selected="selected">不变</option>
+          <option value="add">添加</option>
+          <option value="delete">删除</option>
+        </select></td>
+      <td><strong>{$info[title]}</strong></td>
+      <td align="center">{$info[name]}</td>
+      <td><if condition="$info[status] eq '1'"><span class="green">启用</span>
+          <else/>
+          <span class="red">禁用</span></if></td>
+      <td>{$info[remark]}</td>
+      </tr>
+        <foreach name="info[son_list]" item="son">
+        <tr class="{$class}">
+          <td align="center">
+          <php>if(in_array($son[id],$access_node_arr)) $checked='checked="checked"'; else $checked='';</php>
+          <input name="set_power" type="checkbox" class="set_power" value="{$son[id]}" {$checked} />
+        <select name="node_ids[{$son[id]}]" id="ids_{$son[id]}" style="display:none">
+        	<option value="now_status" selected="selected">不变</option>
+          <option value="add">添加</option>
+          <option value="delete">删除</option>
+        </select></td>
+          <td>|-------{$son[title]}</td>
+          <td align="center">{$son[name]}</td>
+          <td><if condition="$son[status] eq '1'"><span class="green">启用</span>
+              <else/>
+            <span class="red">禁用</span></if></td>
+          <td>{$son[remark]}</td>
+          </tr>
+            <foreach name="son[grandson_list]" item="grandson">
+            <tr class="{$class}">
+              <td align="center">
+              <php>if(in_array($grandson[id],$access_node_arr)) $checked='checked="checked"'; else $checked='';</php>
+              <input name="set_power" type="checkbox" class="set_power" value="{$grandson[id]}" {$checked} />
+        <select name="node_ids[{$grandson[id]}]" id="ids_{$grandson[id]}" style="display:none">
+        	<option value="now_status" selected="selected">不变</option>
+          <option value="add">添加</option>
+          <option value="delete">删除</option>
+        </select></td>
+              <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-------{$grandson[title]}</td>
+              <td align="center">{$grandson[name]}</td>
+              <td><if condition="$grandson[status] eq '1'"><span class="green">启用</span>
+                  <else/>
+              <span class="red">禁用</span></if></td>
+              <td>{$grandson[remark]}</td>
+              </tr>
+            </foreach>
+        </foreach>
+    </foreach>
+  </table>
+</form>
+<div id="turn-page">{$pages}</div>
+</div>
+<script type="text/javascript">
+$(".set_power").click(function (){
+	var ischecked=$(this).is(":checked");
+	var menu_id=$(this).val();
+	if(ischecked){
+		$("#ids_"+menu_id).val('add');
+	}else{
+		$("#ids_"+menu_id).val('delete');
+	}
+})
+</script>
+<include file="./Tpl/Public/footer.html" />

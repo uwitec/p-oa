@@ -1,0 +1,401 @@
+<include file="./Tpl/Public/header.html" />
+<h1>
+    <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span>
+    <div style="clear:both"></div>
+</h1>
+<div class="dialog-div">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+<tr>
+	  <th align="left"><strong>应用信息</strong></th></tr>
+    <tr>
+          <td>
+          <foreach name="list_app" item="app">
+          <div style="float:left; width:20%"><input type="radio" name="app_info" class="app_info" value="{$app[name]}" app_id='{$app[id]}' menu_id='{$app[menu_id]}' /><a href="javascript:alert('{$app[remark]}');" title="{$app[remark]}">{$app[name]}【{$app[title]}】</a></div>
+       	</foreach>     
+        <script language="javascript">
+		$('.app_info').click(function(){
+			var app_name=$(this).val();
+			var app_id=$(this).attr('app_id');
+			var menu_id=$(this).attr('menu_id');
+			$('.app_name').val(app_name);
+			$('.app_id').val(app_id);
+			//$('.action_menu').val(menu_id);
+		});
+        </script>
+       </td></tr>
+	<tr>
+	  <th align="left"><strong>默认模块信息</strong></th></tr>
+	<tr><td>
+     <form method='post'  id="form_module" action="{:U('Sys/Module/add')}">
+			<input name="act" type="hidden" id="act" value="todo">
+			<input name="app_name" type="hidden" class="app_name" value="" />
+			<input name="app_id" type="hidden" class="app_id" value="" />
+			<input type="hidden" value="[1][2]" class="menu_role_ids" name="menu_role_ids">
+    	<table width="100%" border="1" cellspacing="0" cellpadding="0">
+    	  <tr>
+	    <th width="80">标题</th>
+	    <td><input name="title" type="text" class="title" onblur="check_module('title');" value="默认模块" size="60" maxlength="60" /></td>
+	    <td rowspan="4" valign="top">
+        <div style="height:140px; overflow:scroll">
+        数据表：<input name="table_name" type="text" id="table_name" value="{$_REQUEST[table_name]}" />
+        无需填写前缀,如需添加字段请到“<a href="{:U('Sys/Field/index')}" style="color:#690" target="_blank">字段管理</a>”中增加
+      <script language="javascript">
+//取得数据表中的数据字段
+get_field();
+$("#table_name").blur(function(){
+	$(".table_name").val($("#table_name").val());
+	get_field();
+});
+function get_field(){
+	var table_name=$("#table_name").val();
+	var uri="{:U('Sys/Field/get_field?table_name=')}"+table_name;
+	$.ajax({
+		type: "get",
+		url: uri,
+		dataType:"html",
+		success: function(html){
+			$("#action_file_list").html(html);
+		}
+	});
+}
+</script>
+		<div id="action_file_list"></div>
+        </div>
+        </td>
+	    </tr>
+	  <tr>
+	    <th>名称</th>
+	    <td><input name="name" type="text" class="name" onblur="check_module('name');" size="60" maxlength="60">
+         <input name="type" type="radio" class="module_type" value="english" checked="checked" onclick="check_module('title');" /> 英文
+              <input name="type" type="radio" class="module_type" value="pinyin" onclick="check_module('title');" />拼音
+        <span style="color:#C30" class="name_msg">只能输入字母、数字和_，并且第一个字符必需是字母。</span>
+<script language="javascript">
+//检查模块是否存在并且把对应的中文转为英文
+function check_module(onblur){
+	var module_name=$("#form_module .name").val();
+	var type=$(".module_type:checked").val();
+	if(onblur=='title'){
+		var title=$("#form_module .title").val();
+		var uri="{:U('Sys/Index/check_module?title=')}"+title+'/type/'+type;
+	}else{
+		var uri="{:U('Sys/Index/check_module?module_name=')}"+module_name+'/type/'+type;
+	}
+	$.ajax({
+		type: "get",
+		url: uri,
+		dataType:"json",
+		success: function(data){
+			$("#form_module .name").val(data.data);
+			$("#form_module .name_msg").html(data.info);
+		}
+	});
+}
+</script>
+        </td>
+	    </tr>
+        <tr style="display:none">
+	    <th>状态</th>
+	    <td><select name="status">
+	      <option value="1">启用</option>
+	      <option value="0">禁用</option>
+	      </select></td>
+	    </tr>
+        <tr>
+              <th>显示菜单</th>
+              <td><select name="menu_status">
+                <option value="1">是</option>
+                <option value="0">否</option>
+              </select></td>
+            </tr>
+        <tr>
+        <tr>
+              <th>描述</th>
+              <td><textarea cols="57" rows="3" name="remark">作为应用的第一个模块</textarea></td>
+            </tr>
+	  </table>
+      </form>
+      </td></tr>
+      <tr>
+	  <th align="left"><strong>生成操作</strong></th></tr>
+	<tr>
+	  <td>
+       <form method='post'  id="form_action" action="{:U('Sys/Action/add_batch')}">
+			<input name="act" type="hidden" id="act" value="todo">
+            <input name="app_name" type="hidden" class="app_name" value="" />
+			<input name="app_id" type="hidden" class="app_id" value="" />
+            <input name="module_name" type="hidden" class="module_name" value="" />
+			<input name="module_id" type="hidden" class="module_id" value="" />
+            <input type="hidden" value="[1][2]" class="menu_role_ids" name="menu_role_ids">
+      <table width="100%" border="1" cellspacing="0" cellpadding="0">
+                 <tr>
+                  <th>操作</th>
+                  <th>模板</th>
+                  <th>标题</th>
+                  <th>名称</th>
+                  <th>说明</th>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" checked="checked" value="index" name="create_data[]" class="create_data_index" onclick="create_menu('.create_data_index','index')">列表</td>
+                  <td>
+                    <select name="index[tpl]" id="index_tpl" onchange="set_menu('index')">
+                      <option value="index" selected="selected" url="￥url" target="main-frame" position="menu">默认列表模板</option>
+                      <option url="￥url" target="main-frame" position="menu" value="index_1">列表带复选框模板</option>
+                  </select>
+                  <!--生成菜单要传过去的参数-->
+                  <input type="hidden" value="￥url" id="index_menu_url" name="index[menu_url]">
+                  <input type="hidden" value="main-frame" id="index_menu_target" name="index[menu_target]">
+                  <input type="hidden" value="menu" id="index_menu_position" name="index[menu_position]">
+                  </td>
+                  <td><input name="index[title]" type="text" class="title" value="数据列表" id="index[title]">
+                    <input name="index[menu]" type="checkbox" class="action_menu index_menu" value="1" checked="checked" style="display:none"/>
+                    <input name="index[menu_status]" type="checkbox" value="1" />
+                    显示菜单
+                  </td>
+                  <td><input name="index[name]" type="text" class="name" id="index[name]" value="index">
+                  <input name="index[table_name]" type="hidden" class="table_name" value="{$_REQUEST[table_name]}" /></td>
+                  <td><textarea cols="57" rows="3" name="index[remark]" id="index[remark]"></textarea></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" checked="checked" value="add" name="create_data[]" class="create_data_add" onclick="create_menu('.create_data_add','add')">添加</td>
+                  <td>
+                    <select name="add[tpl]" id="add_tpl" onchange="set_menu('add')">
+                      <option url="javascript:dialog_add();" target="_self" position="main" value="add" url="" target="" position="">默认添加对话框模板</option>
+                      <option url="￥url" target="_blank" position="main" value="add_new">新开窗口模板</option>
+                  </select>
+                  <!--生成菜单要传过去的参数-->
+                  <input type="hidden" value="javascript:dialog_add();" id="add_menu_url" name="add[menu_url]">
+                  <input type="hidden" value="_self" id="add_menu_target" name="add[menu_target]">
+                  <input type="hidden" value="main" id="add_menu_position" name="add[menu_position]">
+                  </td>
+                  <td><input name="add[title]" type="text" class="title" value="添加" id="add[title]">
+                  	<input name="add[menu]" type="checkbox" class="action_menu add_menu" value="1" checked="checked" style="display:none"/>
+                    <input name="add[menu_status]" type="checkbox" value="1" checked="checked" />
+                  显示菜单</td>
+                  <td><input name="add[name]" type="text" class="name" id="add[name]" value="add"><input name="add[table_name]" type="hidden" class="table_name" value="{$_REQUEST[table_name]}" /></td>
+                  <td><textarea cols="57" rows="3" name="add[remark]" id="add[remark]"></textarea></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" checked="checked" value="edit" name="create_data[]" class="create_data_edit" onclick="create_menu('.create_data_edit','edit')">修改</td>
+                  <td>
+                    <select name="edit[tpl]" id="edit_tpl" onchange="set_menu('edit')">
+                      <option url="javascript:diaolog_edit();" target="_self" position="main" value="edit">默认修改对话框模板</option>
+                      <option url="￥url" target="_blank" position="main" value="edit_new">新开修改模板</option>
+                  </select>
+                    <input type="hidden" value="javascript:diaolog_edit();" id="edit_menu_url" name="edit[menu_url]" />
+                    <input type="hidden" value="_self" id="edit_menu_target" name="edit[menu_target]" />
+                  <input type="hidden" value="main" id="edit_menu_position" name="edit[menu_position]" />
+                  </td>
+                  <td><input name="edit[title]" type="text" class="title" value="修改" id="edit[title]">
+                  	<input name="edit[menu]" type="checkbox" class="action_menu edit_menu" value="1" checked="checked" style="display:none"/>
+                    <input name="edit[menu_status]" type="checkbox" value="1" />
+                    显示菜单</td>
+                  <td><input name="edit[name]" type="text" class="name" id="edit[name]" value="edit"><input name="edit[table_name]" type="hidden" class="table_name" value="{$_REQUEST[table_name]}" /></td>
+                  <td><textarea cols="57" rows="3" name="edit[remark]" id="edit[remark]"></textarea></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" checked="checked" value="delete" name="create_data[]" class="create_data_delete" onclick="create_menu('.create_data_delete','delete')">
+                  删除</td>
+                  <td>
+                    <select name="delete[tpl]" id="delete_tpl" onchange="set_menu('delete')">
+                      <option>无需模板</option>
+                    </select>
+                    <input type="hidden" value="javascript:diaolog_delete();" id="delete_menu_url" name="delete[menu_url]" />
+                    <input type="hidden" value="_self" id="delete_menu_target" name="delete[menu_target]" />
+                  <input type="hidden" value="main" id="delete_menu_position" name="delete[menu_position]" />
+                  </td>
+                  <td><input name="delete[title]" type="text" class="title" value="禁用" id="delete[title]">
+                  <input name="delete[menu]" type="checkbox" class="action_menu delete_menu" value="1" checked="checked" style="display:none"/>
+                  <input name="delete[menu_status]" type="checkbox" value="1" />
+                    显示菜单</td>
+                  <td><input name="delete[name]" type="text" class="name" id="delete[name]" value="delete"><input name="delete[table_name]" type="hidden" class="table_name" value="{$_REQUEST[table_name]}" /></td>
+                  <td><textarea cols="57" rows="3" name="delete[remark]" id="delete[remark]">此操作只会把数据状态修改为status=0，不会实现在数据库中删除，相当于回收站或者禁用的功能</textarea></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" checked="checked" value="foreverdelete" name="create_data[]" class="create_data_foreverdelete" onclick="create_menu('.create_data_foreverdelete','foreverdelete')">
+                  永久删除</td>
+                  <td>
+                    <select name="foreverdelete[tpl]" id="foreverdelete_tpl" onchange="set_menu('foreverdelete')">
+                      <option url="javascript:diaolog_foreverdelete();" target="_self" position="main" value="">无需模板</option>
+                  </select>
+                    <input type="hidden" value="javascript:diaolog_foreverdelete();" id="foreverdelete_menu_url" name="foreverdelete[menu_url]" />
+                    <input type="hidden" value="_self" id="foreverdelete_menu_target" name="foreverdelete[menu_target]" />
+                  <input type="hidden" value="main" id="foreverdelete_menu_position" name="foreverdelete[menu_position]" />
+                  </td>
+                  <td><input name="foreverdelete[title]" type="text" class="title" value="删除" id="foreverdelete[title]">
+                  <input name="foreverdelete[menu]" type="checkbox" class="action_menu foreverdelete_menu" value="1" checked="checked" style="display:none"/>
+                  <input name="delete[menu_status]" type="checkbox" value="1" />
+                    显示菜单</td>
+                  <td><input name="foreverdelete[name]" type="text" class="name" id="foreverdelete[name]" value="foreverdelete"><input name="foreverdelete[table_name]" type="hidden" class="table_name" value="{$_REQUEST[table_name]}" /></td>
+                  <td><textarea cols="57" rows="3" name="foreverdelete[remark]" id="foreverdelete[remark]">彻底在数据库中删除，不可以找回来</textarea></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" value="show" name="create_data[]" class="create_data_show" onclick="create_menu('.create_data_show','show')">详细信息</td>
+                  <td><label for="index[tpl]"></label>
+                    <select name="show[tpl]" id="show_tpl" onchange="set_menu('show')">
+                      <option url="￥url" target="_self" position="main" value="show">默认详细信息模板</option>
+                      <option url="￥url" target="_self" position="main" value="show_2">详细信息模板2</option>
+                  </select>
+                    <input type="hidden" value="￥url" id="show_menu_url" name="show[menu_url]" />
+                    <input type="hidden" value="_self" id="show_menu_target" name="show[menu_target]" />
+                  <input type="hidden" value="main" id="show_menu_position" name="show[menu_position]" /></td>
+                  <td><input name="show[title]" type="text" class="title" value="详细信息" id="show[title]">
+                  <input name="show[menu]" type="checkbox" class="action_menu show_menu" value="1" style="display:none"/>
+                    <input name="show[menu_status]" type="checkbox" value="1" />
+                    显示菜单</td>
+                  <td><input name="show[name]" type="text" class="name" id="show[name]" value="show"><input name="show[table_name]" type="hidden" class="table_name" value="{$_REQUEST[table_name]}" /></td>
+                  <td><textarea cols="57" rows="3" name="show[remark]" id="show[remark]">选定的单个数据的详细信息</textarea></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" value="export" name="create_data[]" class="create_data_export" onclick="create_menu('.create_data_export','export')">导出数据</td>
+                  <td><label for="index[tpl]"></label>
+                    <select name="export[tpl]" id="export_tpl" onchange="set_menu('export');">
+                      <option url="￥url" target="_self" position="main" value="export">默认导出数据模板</option>
+                  </select>
+                    <input type="hidden" value="￥url" id="export_menu_url" name="export[menu_url]" />
+                    <input type="hidden" value="_self" id="export_menu_target" name="export[menu_target]" />
+                  <input type="hidden" value="main" id="export_menu_position" name="export[menu_position]" /></td>
+                  <td><input name="export[title]" type="text" class="title" value="导出数据" id="export[title]">
+                  <input name="export[menu]" type="checkbox" class="action_menu export_menu" value="1" style="display:none"/>
+                     <input name="export[menu_status]" type="checkbox" value="1" />
+                    显示菜单</td>
+                  <td><input name="export[name]" type="text" class="name" id="export[name]" value="export"><input name="export[table_name]" type="hidden" class="table_name" value="{$_REQUEST[table_name]}" /></td>
+                  <td><textarea cols="57" rows="3" name="export[remark]" id="export[remark]">可以根据index中筛选或者选择的数据项进行导出的数据，此操作要依赖于index的操作</textarea></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" value="import" name="create_data[]" class="create_data_import" onclick="create_menu('.create_data_import','import')">
+                  导入数据</td>
+                  <td>
+                    <select name="import[tpl]" id="import_tpl" onchange="set_menu('import');">
+                      <option url="￥url" target="_self" position="main" value="import">默认导入数据模板</option>
+                  </select>
+                    <input type="hidden" value="￥url" id="import_menu_url" name="import[menu_url]" />
+                    <input type="hidden" value="_self" id="import_menu_target" name="import[menu_target]" />
+                  <input type="hidden" value="main" id="import_menu_position" name="import[menu_position]" /></td>
+                  <td><input name="import[title]" type="text" class="title" value="导入数据" id="import[title]">
+                  <input name="import[menu]" type="checkbox" class="action_menu import_menu" value="1" style="display:none"/>
+                     <input name="import[menu_status]" type="checkbox" value="1" />
+                   显示菜单</td>
+                  <td><input name="import[name]" type="text" class="name" id="import[name]" value="import"><input name="import[table_name]" type="hidden" class="table_name" value="{$_REQUEST[table_name]}" /></td>
+                  <td><textarea cols="57" rows="3" name="import[remark]" id="import[remark]">对数据表进行批量导入</textarea></td>
+                </tr>
+              </table>
+              </form>
+              </td>
+      </tr>
+      
+    <tr>
+	  <th align="left"><strong>权限</strong></th></tr>
+	<tr>
+	  <td>
+      <form id="form_role" name="form_role" method="post" action="{:U('Sys/Module/add_access')}">
+	  <input name="app_id" type="hidden" class="app_id" value="" />
+	  <input name="module_id" type="hidden" class="module_id" value="" />
+      <input name="action_ids" type="hidden" class="action_ids" value="" />
+      <foreach name="list_role" item="role">
+	    <input name="role_id[{$role[id]}]" class="role_id" type="checkbox" value="{$role[id]}" <if condition="$role[id] eq 1 || $role[id] eq 2">checked="checked"</if> />{$role[name]}
+      </foreach>
+      </form></td>
+    </tr>
+</table>
+<div><input name="all_form_button" type="button" id="all_form_button" onclick="check_all_form();" value="确认添加" /></div>
+<script language="javascript">
+function create_menu(dom,action){
+	$("."+action+"_menu").attr('checked',$(dom).is(':checked'));
+}
+function check_all_form(){
+	//检查是否选择了应用
+	var select_app=0;
+	$(".app_info").each(function() {
+        if($(this).is(":checked")){
+			select_app=1;
+		}
+    });
+	if(select_app!=1){
+		alert('请选择应用信息');
+		return false;
+	}
+	//检查模块的
+	if($("#form_module .title").val().length<3){
+		alert('模板标题必2个字符以上');
+		return false;
+	}
+	if($("#form_module .name").val().length<3){
+		alert('模块名称必2个字符以上');
+		return false;
+	}
+	if($("#table_name").val()==''){
+		alert('请输入对应的表名');
+		return false;
+	}
+	if($("#table_name").val()=='demo'){
+		if(!confirm('是否使用demo表作为模块的操作数据表?')){
+			alert('请输入你想要操作的数据表');
+			$("#table_name").focus();
+			return false;
+		}
+	}
+	//把权限赋予到菜单
+	$(".menu_role_ids").val('');
+	$("#form_role .role_id").each(function() {
+        if($(this).is(':checked')){
+			$(".menu_role_ids").val($(".menu_role_ids").val()+'['+$(this).val()+']');
+		}
+    });
+	//提交应用
+	submit_module();
+}
+//提交模块
+function submit_module(){
+	$("#form_module").ajaxSubmit({
+		dataType:'json',
+		success:function(data){
+			if(data.id){
+				$("#form_action .module_name").val(data.name);
+				$("#form_action .module_id").val(data.id);
+				$("#form_role .module_id").val(data.id);
+				if(data.menu_id){
+					$('.action_menu').val(data.menu_id);
+				}
+				submit_action();
+			}else{
+				alert(data.info);	
+			}
+		}
+	});
+}
+//提交操作
+function submit_action(){
+	$("#form_action").ajaxSubmit({
+		dataType:'json',
+		success:function(data){
+			if(data.ids){
+				$("#form_role .action_ids").val(data.ids);
+				submit_role();
+			}
+		}
+	});
+}
+//提交权限
+function submit_role(){
+	$("#form_role").ajaxSubmit({
+		dataType:'json',
+		success:function(data){
+			if(data.status){
+				alert('应用添加成功！');
+				window.location.href=data.url;
+			}
+		}
+	});
+}
+function set_menu(dom){
+	var obj=$("#"+dom+"_tpl option:selected");
+	var target=obj.attr('target');
+	var url=obj.attr('url');
+	var position=obj.attr('position');alert(position);
+	$("#"+dom+"_menu_target").val(target);
+	$("#"+dom+"_menu_url").val(url);
+	$("#"+dom+"_menu_position").val(position);
+}
+</script>
+</div>
+<include file="./Tpl/Public/footer.html" />

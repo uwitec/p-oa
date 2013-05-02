@@ -1,0 +1,28 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}" onsubmit="return check_submit();">
+<input name="act" type="hidden" id="act" value="todo">
+<input name="id" type="hidden" id="id" value="{$info[id]}">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+<tr><th>姓名</th><td><input name='name' type='text' class='name' value='{$info[name]}'></td><th>身份证</th><td><input name='id_card' type='text' class='id_card' value='{$info[id_card]}'></td></tr>
+<tr><th>所在部门</th><td>{:W('Superman',array('tpl'=>'select','html_name'=>'department_id','table_name'=>'hrm_organizational','name'=>'department_name','value'=>'id','default'=>$info[department_id]))}</td>
+<th>职位</th><td>{:W('Superman',array('tpl'=>'select','html_name'=>post_id,'table_name'=>'hrm_post','name'=>'name','value'=>'id','default'=>$info[post_id]))}</td></tr>
+<tr><th>薪酬体系</th><td>{:W('Superman',array('tpl'=>'select','html_name'=>'pay_system','table_name'=>'hrm_salary_set','name'=>'name','value'=>'id','default'=>$info[pay_system]))}
+</td><th>开户银行</th><td><input name='bank' type='text' class='bank' value='{$info[bank]}'></td></tr>
+<tr><th>银行帐号</th><td><input name='bank_account' type='text' class='bank_account' value='{$info[bank_account]}'></td><th>入职日期</th><td><input name='entry_date' type='text' class='date' value='{$info[entry_date]}'></td></tr>
+<tr><th>转正日期</th><td><input name='regularized_date' type='text' class='date ' value='{$info[regularized_date]}'></td>
+<th>状态</th><td>
+  <select name="status" id="status">
+    <option value="1" <if condition="$info[status] eq 1">selected="selected"</if>>试用</option>
+    <option value="2" <if condition="$info[status] eq 2">selected="selected"</if>>转正</option>
+    <option value="-1" <if condition="$info[status] eq 3">selected="selected"</if>>离职</option>
+  </select></td></tr>
+
+</table>
+</form>
+</div>
+<script language="javascript">
+$(".date").datepicker();
+function check_submit(){
+<!--[￥check_submit]-->	
+}
+</script>

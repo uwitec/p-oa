@@ -1,0 +1,10 @@
+<script language="javascript">
+$("{$auto}").autocomplete({
+	source: {$url},
+	minLength: 2,
+	select: function( event, ui ) {
+		{$set_data}
+		{$call_back}
+	}
+});
+</script>

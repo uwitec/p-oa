@@ -1,0 +1,114 @@
+<include file="./Tpl/Public/header.html" />
+<h1>
+    <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span>
+    <foreach name="list_main_menu" item="info">
+    <span class="action-span"><a href="{$info[url]}" target="{$info[target]}">{$info[title]}</a></span>
+    </foreach>
+    <div style="clear:both"></div>
+</h1>
+
+<div class="list-div">
+<table cellspacing='1' cellpadding='3'>
+  <tr>
+    <th>序号</th>
+    <th><a href="?_order=title&_sort={$sort}">分类名称</a><if condition="$order eq 'title'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th><th><a href="?_order=pid&_sort={$sort}">上级分类</a><if condition="$order eq 'pid'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th><th><a href="?_order=cat_dir&_sort={$sort}">分类路径</a><if condition="$order eq 'cat_dir'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th><th><a href="?_order=bak&_sort={$sort}">分类说明</a><if condition="$order eq 'bak'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+    <th>操作</th>
+    </tr>
+  <foreach name="list" item="info" key="k">
+  <php>if($i++%2==0){ $class='even'; }else{ $class='odd'; }</php>
+  <tr class="{$class}">
+	<td>{$k+1}</td>
+    <td>{$info[title]}</td><td>{$info[pid]}</td><td>{$info[cat_dir]}</td><td>{$info[bak]}</td>
+    <td>
+        <a href="javascript:dialog_edit('{$info[id]}');">修改 </a>| 
+        <a href="javascript:confirm_delete('{$info[id]}');">删除</a>
+    </td>
+    </tr>
+  </foreach>
+</table>
+<div id="turn-page">{$page}</div>
+</div>
+<div id="dialog_add"><!--添加信息 --></div>
+<div id="dialog_edit"><!-- 修改信息--></div>
+<div id="dialog_delete" style="color:#F00; font-size:13px; vertical-align: middle;">"彻底删除"的数据是不可恢复的，请慎用！</div>
+<script type="text/javascript">
+$("#dialog_add").dialog({
+    autoOpen: false,
+    title: '添加信息',
+    width:'480',
+    height:'150',
+    modal: true,
+    buttons: {
+        '确认': function () {
+   			$("#dialog_add form").submit();
+   		},
+        '取消': function () {
+           $("#dialog_add").dialog("close");
+        }
+    }
+});
+function dialog_add(){
+	var uri='{:U("cat_add")}';
+	$.ajax({
+		type: "get",
+		url: uri,
+		dataType:"html",
+		success: function(html){
+			$("#dialog_add").html(html);
+			$("#dialog_add").dialog("open");
+		}
+	});
+}
+$("#dialog_edit").dialog({
+    autoOpen: false,
+    title: '修改信息',
+    width:'480',
+    height:'150',
+    modal: true,
+    buttons: {
+        '确认': function () {
+   			$("#dialog_edit form").submit();
+   		},
+        '取消': function () {
+           $("#dialog_edit").dialog("close");
+        }
+    }
+});
+function dialog_edit(id){
+	var uri='{:U("cat_edit?id=")}'+id;
+	$.ajax({
+		type: "get",
+		url: uri,
+		dataType:"html",
+		success: function(html){
+			$("#dialog_edit").html(html);
+			$("#dialog_edit").dialog("open");
+		}
+	});
+}
+//删除数据
+var delete_id="";
+$("#dialog_delete").dialog({
+    autoOpen: false,
+    title: '删除信息',
+    width:'270',
+    height:'150',
+    modal: true,
+    buttons: {
+        '丢到垃圾站': function () {
+        	window.location.href='{:U("delete?id=")}'+delete_id;
+   		},
+        '彻底删除': function () {
+			window.location.href='{:U("foreverdelete?id=")}'+delete_id;
+        },
+		'取消': function () {
+           $("#dialog_delete").dialog("close");
+        }
+    }
+});
+function confirm_delete(id){
+	delete_id=id;
+	$("#dialog_delete").dialog("open");
+}
+</script>
+<include file="./Tpl/Public/footer.html" />

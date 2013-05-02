@@ -1,0 +1,55 @@
+<script language="javascript" src="__PUBLIC__/js/uploadify/jquery.uploadify.min.js"></script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/js/uploadify/uploadify.css" />
+<input id="file_upload" name="file_upload" type="file" multiple="true">
+<input type="hidden" name="{$html_name}" class="{$html_name}" />
+<script type="text/javascript">
+		$(function() {
+			$('#file_upload').uploadify({
+				'formData'     : {
+					'app':'{$app}',
+					'module':'{$module}',
+					'add_user_id':"{$_SESSION[C('USER_AUTH_KEY')]}",
+				},
+				'multi'    : false,//true为可以多选
+				'queueSizeLimit' : 1, //一次最多可以上传N个
+				'itemTemplate' : '<div id="${fileID}" class="uploadify-queue-item">\
+                    <div class="cancel">\
+                        <a href="javascript:delete_file(\'#${instanceID}\', \'${fileID}\');">X</a>\
+                    </div>\
+                    <span class="fileName">${fileName} (${fileSize})</span><span class="data"></span>\
+                </div>' ,
+				'method'   : 'post', 
+				'buttonText' :'选择文件',
+				'fileObjName' : '{$filename}', //php处接收的名称$_FILES['the_files'];
+				'removeCompleted' : false, //完成后隐藏信息
+				'fileTypeExts' : '{$filetypeexts}', 
+				'fileSizeLimit' : '{$fileSizeLimit}',
+				'height'   : 20, 
+				'width'   : 65, 
+				'swf'      : '__PUBLIC__/js/uploadify/uploadify.swf',
+				'uploader' : '{:U("Sys/UploadFiles/$method")}',
+				'onUploadSuccess' : function(file, data, response) {
+					if($("[name='{$html_name}']").val()){
+						var path=$("[name='{$html_name}']").val()+','+data;
+					}else{
+						var path=data;
+					}
+					$("[name='{$html_name}']").val(path);
+				}
+			});
+		});
+		//删除文件
+		function delete_file(instanceID,fileID){
+			var path=$("[name='{$html_name}']").val();
+			var uri='{:U("Sys/UploadFiles/delete")}';
+			$.ajax({
+				type: "post",
+				data:"file_path="+path,
+				url: uri,
+				success: function(data){
+				}
+			});
+			$(instanceID).uploadify('cancel',fileID);
+			$("[name='{$html_name}']").val('');
+		}
+</script>

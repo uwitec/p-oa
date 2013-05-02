@@ -1,0 +1,4 @@
+<foreach name="list" item="info">
+<input name="{$html_name}" type="radio" value="{$info[$value]}" <php>if(in_array($info[$value],$default)) echo 'checked="checked"';</php> />
+{$info[$name]}
+</foreach>

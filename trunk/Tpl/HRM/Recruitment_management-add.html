@@ -1,0 +1,115 @@
+<div class="dialog-div">
+<form action="{:U($_REQUEST[_URL_][2])}" method='post' enctype="multipart/form-data"  id="form_{$_REQUEST[_URL_][2]}" onsubmit="return check_submit();">
+<input name="act" type="hidden" id="act" value="todo">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+      <tr>
+        <th>姓名</th>
+        <td><input name='name' type='text' class='name check_data' regexp="/[^\s]+/i" title="必需填写" value='{$info[name]}'>
+          <span style="color:#F00">*</span></td>
+        <th>性别</th>
+        <td><select name="gender" class="gender">
+            <option>男</option>
+            <option>女</option>
+          </select>
+          <span style="color:#F00">*</span></td>
+        <th>身份证</th>
+        <td><input name='id_card' type='text' regexp="/^[0-9a-z]{15,18}$/i" class='id_card check_data' title='身份证号码只能是15至或者18位的数据和字母！'>
+          <span style="color:#F00">*</span></td>
+      </tr>
+      <tr>
+        <th>籍贯</th>
+        <td><input name='hometown' type='text' class='hometown' value='{$info[hometown]}'></td>
+        <th>婚姻状况</th>
+        <td><select name="marital_status" class="marital_status">
+            <option>已婚</option>
+            <option>未婚</option>
+            <option>再婚</option>
+          </select></td>
+        <th>健康状况</th>
+        <td><select name="health" class="health">
+            <option>良好</option>
+            <option>健康</option>
+            <option>亚健康</option>
+            <option>一般</option>
+            <option>差</option>
+          </select></td>
+      </tr>
+      <tr>
+        <th>政治面貌</th>
+        <td>
+        <select name="political_landscape" class="political_landscape">
+            <option>党员</option>
+            <option>团员</option>
+            <option>群众</option>
+          </select></td>
+        <th>户口所在地</th>
+        <td><input name='account_address' type='text' class='account_address' value='{$info[account_address]}'></td>
+        <th>现住址</th>
+        <td><input name='present_address' type='text' class='present_address' value='{$info[present_address]}'></td>
+      </tr>
+      <tr>
+        <th>毕业院校</th>
+        <td><input name='graduate_school' type='text' class='graduate_school' value='{$info[graduate_school]}'></td>
+        <th>学历</th>
+        <td><select name="degree" class="degree">
+            <option>博士后</option>
+            <option>博士</option>
+            <option>研究生</option>
+            <option>本科</option>
+            <option>大专</option>
+            <option>高职</option>
+            <option>高中</option>
+            <option>职中</option>
+            <option>技校</option>
+            <option>初中</option>
+            <option>小学 </option>
+          </select></td>
+        <th>专业</th>
+        <td><input name='profession' type='text' class='profession' value='{$info[profession]}'></td>
+      </tr>
+      <tr>
+        <th>意向职位</th>
+        <td><input name='intention_position ' type='text' class='intention_position' value='{$info[intention_position]}'></td>
+        <th>期望薪酬</th>
+        <td><input name='expect_salary' type='text' class='expect_salary' value='{$info[expect_salary]}'></td>
+        <th>民族</th>
+        <td><input name='nation' type='text' class='nation' value='{$info[nation]}' /></td>
+      </tr>
+      <tr>
+        <th>简历文档</th>
+        <td>
+          <input type="file" name="resume_document" class="resume_document" regexp="/[^\s]+/" title="必需上传简历文档"/><span style="color:#F00">*
+        </span></td>
+        <th>联系电话</th>
+        <td><input name='tel' type='text' class='tel' value='{$info[tel]}' /></td>
+        <th>&nbsp;</th>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+</form>
+</div>
+<script language="javascript">
+function check_submit(){
+	var regexp=''; 
+	var str='';
+	var error=false;
+	$('#form_{$_REQUEST[_URL_][2]} .check_data').each(function(index, element) {
+		regexp=eval($(this).attr('regexp'));
+		str=$(this).val();
+		if(!str.match(regexp)){
+			alert($(this).attr('title'));
+			$(this).focus();
+			error=true;
+			return false;
+		}
+		
+    });
+	if(error){
+		return false;
+	}else{
+		return true;
+	}
+<!--[￥check_submit]-->	
+}
+<!--[￥date]-->
+</script>

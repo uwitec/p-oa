@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{:C('SYS_NAME')}</title>
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="__PUBLIC__/css/general.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/css/main.css" rel="stylesheet" type="text/css" />
+<link type="text/css" href="__PUBLIC__/css/jquery-ui-1.8.23.custom.css" rel="stylesheet" />	
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-1.8.23.custom.min.js"></script>
+</head>
+<body style="background:url(__PUBLIC__/images/login_bg.jpg); ">
+<div id="background" style="position:absolute;z-index:-1;width:100%;height:100%;top:0px;left:0px;"><img width="100%" height="100%" src="__PUBLIC__/images/login_bg.jpg"></div>
+<div style="color:#FFF">技术支持QQ:37838862；EMAIL:hjwtp2005@qq.com<br>测试账号(用户名/密码) 管理员：admin/admin 领导：leader/leader 员工：member/member 演示：demo/demo</div>
+<div id="dialog_login">
+<form method='post' name="login" id="form1" action="__URL__/checkLogin/">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr height="28px">
+    <td width="80px;" align="center">帐&nbsp;&nbsp;&nbsp;号：</td>
+    <td><input name="account" type="text" id="account" size="32" /></td>
+  </tr>
+  <tr height="28px">
+    <td align="center">密&nbsp;&nbsp;&nbsp;码：</td>
+    <td><input name="password" type="password" id="password" size="32" /></td>
+  </tr>
+  <tr height="28px">
+    <td align="center">验证码：</td>
+    <td><input name="verify" type="text" size="6" id="verify" maxlength="4"  />
+      <img id="verifyImg" src="__URL__/verify/" onclick="fleshVerify()" border="0" alt="点击刷新验证码" style="cursor:pointer" align="absmiddle" /></td>
+  </tr>
+</table>
+</form>
+</div>
+<script language="javascript">
+$("#dialog_login").dialog({
+	title:"{:C('SYS_NAME')}",
+	buttons: {
+		'登录': function() {
+			check_data();
+		}
+	}
+});
+function check_data(){
+	if(!$("#account").val()){
+		alert('请输入帐号');
+	}else if(!$("#password").val()){
+		alert('请输入密码');
+	}else if(!$("#verify").val()){
+		alert('请输入验证码');
+	}else {
+		$("#form1").submit();
+	}	
+}
+function fleshVerify(){
+	var random_num=Math.random()*10000;
+	$("#verifyImg").attr('src','__URL__/verify/random='+random_num);
+}
+//这个就是键盘触发的函数
+var submit_check= function(evt){
+    evt=window.event||evt;
+    if(evt.keyCode==13&&!$("#account").is(":focus")){
+    	check_data();
+    }                
+}
+window.document.onkeydown=submit_check;//当有键按下时执行函数
+</script>
+</body>
+</html>

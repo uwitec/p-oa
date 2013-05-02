@@ -1,0 +1,86 @@
+<include file="./Tpl/Public/header.html" />
+<h1>
+    <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span>
+    <foreach name="list_main_menu" item="info">
+    <span class="action-span"><a href="{$info[url]}" target="{$info[target]}">{$info[title]}</a></span>
+    </foreach>
+    <div style="clear:both"></div>
+</h1>
+<div class="form-div">
+					  <form name="searchForm" action="">
+					    <img width="26" height="22" border="0" alt="SEARCH" src="__PUBLIC__/images/icon_search.gif">
+					    姓名：<input name='name' type='text' value='{$Think.request.name}' />
+身份证：<input name='id_card' type='text' value='{$Think.request.id_card}' />
+
+					    <input type="submit" class="button" value=" 搜索 ">
+					  </form>
+					</div>
+<div class="list-div">
+<table cellspacing='1' cellpadding='3'>
+  <tr>
+    <th>序号</th>
+    <th><a href="?_order=name&_sort={$sort}">姓名</a><if condition="$order eq 'name'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th><th><a href="?_order=id_card&_sort={$sort}">身份证</a><if condition="$order eq 'id_card'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+    <th>员工编号</th>
+    <th><a href="?_order=department_id&_sort={$sort}">所在部门</a><if condition="$order eq 'department_id'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th><th><a href="?_order=post_id&_sort={$sort}">职位</a><if condition="$order eq 'post_id'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th><th><a href="?_order=pay_system&_sort={$sort}">薪酬体系</a><if condition="$order eq 'pay_system'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th><th><a href="?_order=bank&_sort={$sort}">开户银行</a><if condition="$order eq 'bank'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th><th><a href="?_order=bank_account&_sort={$sort}">银行帐号</a><if condition="$order eq 'bank_account'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th><th><a href="?_order=entry_date&_sort={$sort}">入职日期</a><if condition="$order eq 'entry_date'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th><th><a href="?_order=regularized_date&_sort={$sort}">转正日期</a><if condition="$order eq 'regularized_date'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+    <th><a href="?_order=resume_id&_sort={$sort}">简历编号</a>
+      <if condition="$order eq 'resume_id'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+    <th>操作</th>
+    </tr>
+  <foreach name="list" item="info" key="k">
+  <php>if($i++%2==0){ $class='even'; }else{ $class='odd'; }</php>
+  <tr class="{$class}">
+	<td>{$k+1}</td>
+    <td>{$info[name]}</td><td>{$info[id_card]}</td>
+    <td>{$info[employee_number]}</td>
+    <td>{$department[$info[department_id]]}</td>
+    <td>{$post[$info[post_id]]}</td>
+    <td>{$pay_system[$info[pay_system]]}</td><td>{$info[bank]}</td><td>{$info[bank_account]}</td><td>{$info[entry_date]}</td><td>{$info[regularized_date]}</td>
+    <td>{$info[resume_code]}</td>
+    <td>
+   		<a href="javascript:dialog({'title':'生成工资',w:800,h:300},'{:U("Employe/create_salary")}','id={$info[id]}');">生成工资</a>| 
+        <a href="javascript:dialog_edit('id={$info[id]}');">修改 </a>| 
+        <a href="javascript:confirm_delete('{$info[id]}');">删除</a>
+    </td>
+    </tr>
+  </foreach>
+</table>
+<div id="turn-page">{$page}</div>
+</div>
+<div id="dialog"><!--公用对话框容器--></div>
+<div id="dialog_delete" style="color:#F00; font-size:13px; vertical-align: middle;">"彻底删除"的数据是不可恢复的，请慎用！</div>
+<script type="text/javascript">
+//参数param一般是id=XX
+function dialog_add(param){
+	dialog({'title':'添加信息','w':'480','h':'225'},'{:U("add")}',param);
+}
+function dialog_edit(param){
+	dialog({'title':'修改信息','w':'480','h':'225'},'{:U("edit")}',param);
+}
+//删除数据
+var delete_id="";
+$("#dialog_delete").dialog({
+    autoOpen: false,
+    title: '删除信息',
+    width:'270',
+    height:'150',
+    modal: true,
+    buttons: {
+        '丢到垃圾站': function () {
+        	window.location.href='{:U("delete?id=")}'+delete_id;
+   		},
+        '彻底删除': function () {
+			window.location.href='{:U("foreverdelete?id=")}'+delete_id;
+        },
+		'取消': function () {
+           $("#dialog_delete").dialog("close");
+        }
+    }
+});
+function confirm_delete(id){
+	delete_id=id;
+	$("#dialog_delete").dialog("open");
+}
+//初始化
+Initialize();
+</script>
+<include file="./Tpl/Public/footer.html" />

@@ -1,0 +1,25 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}" onsubmit="return check_submit();">
+<input name="act" type="hidden" id="act" value="todo">
+<input name="id" type="hidden" id="id" value="{$info[id]}">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+<tr>
+  <th>常用变量</th>
+  <td>[￥本月天数]]、[￥事假天数]]、[￥病假天数]、[￥个人所得税]、[劳务税]</td></tr>
+<tr>
+  <th>名称</th><td><input name='name' type='text' class='name' value="{$info[name]}" size="70"></td></tr>
+<tr>
+  <th>应发工资公式</th><td>
+  <textarea name="should_wages" cols="130" rows="5">{$info[should_wages]}</textarea></td></tr>
+</tr>
+<tr>
+  <th>应扣款公式</th><td><textarea name="should_debit" cols="130" rows="5">{$info[should_debit]}</textarea></td></tr>
+</tr>
+</table>
+</form>
+</div>
+<script language="javascript">
+function check_submit(){
+<!--[￥check_submit]-->	
+}
+</script>

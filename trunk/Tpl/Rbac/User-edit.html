@@ -1,0 +1,55 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}" onsubmit="return check_password();">
+<input name="act" type="hidden" id="act" value="todo">
+<input name="id" type="hidden" id="id" value="{$info[id]}">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+      <tr>
+        <th>帐号</th>
+        <td><input name="account" type="text" disabled="disabled" id="account" value="{$info[account]}">
+          <select name="status" id="status">
+            <option value="1" <if condition="$info[status] eq 1">selected="selected"</if>>启用</option>
+            <option value="-1" <if condition="$info[status] eq -1">selected="selected"</if>>禁用</option>
+        </select></td>
+      </tr>
+      <tr>
+        <th>修改密码</th>
+        <td><input name="new_password" type="password" id="new_password">
+        不修改请留空</td>
+      </tr>
+      <tr>
+        <th>确认密码</th>
+        <td><input name="new_password2" type="password" id="new_password2">
+        再次确认要修改的密码</td>
+      </tr>
+      <tr>
+        <th>姓名</th>
+        <td><input name="nickname" type="text" class="date" id="nickname" value="{$info[nickname]}" /></td>
+      </tr>
+      <tr>
+        <th>邮箱</th>
+        <td>
+          <input name="email" type="text" id="email" value="{$info[email]}"></td>
+      </tr>
+      <tr>
+        <th>角色</th>
+        <td><php>$role_list=get_role();foreach($role_list as $role){</php>
+        <input name="role_arr[]" type="checkbox" id="role_arr" value="{$role[id]}" <if condition="$role_user[$role[id]]">checked="checked"</if> />{$role[name]}
+        <php>}</php></td>
+      </tr>
+      <tr>
+        <th>备注</th>
+        <td>
+          <textarea name="remark" id="remark" cols="45" rows="5">{$info[remark]}</textarea>
+        </td>
+      </tr>
+</table>
+</form>
+</div>
+<script type="text/javascript">
+function check_password(){
+	if($("#new_password2").val()!=$("#new_password").val()){
+		alert('2次输入的密码不一样，请重新输入');
+		return false;
+	}
+}
+</script>

@@ -1,0 +1,25 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}" onsubmit="return check_submit();">
+<input name="act" type="hidden" id="act" value="todo">
+<input name="id" type="hidden" id="id" value="{$info[id]}">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+<tr><th>部门名称</th><td><input name='department_name' type='text' class='department_name' value='{$info[department_name]}'></td></tr>
+<tr><th>计划编制</th><td><input name='plan_number' type='text' class='plan_number' value='{$info[plan_number]}'></td></tr>
+<tr><th>部门负责人</th><td>
+  <select name="department_heads_id" class="department_heads_id">
+    <option value="">请选择</option>
+    <foreach name="list_employe" item="employe">
+    <option value="{$employa[id]}" <if condition="$employa[id] eq $info[department_heads_id]">selected</if>>{$employe[name]}({$employe[id_card]})</option>
+    </foreach>
+  </select></td></tr>
+<tr>
+  <th>职责及工作说明</th><td><textarea name='description2' cols="50" rows="5" class='description'>{$info[description]}</textarea></td></tr>
+</table>
+</form>
+</div>
+<script language="javascript">
+function check_submit(){
+<!--[￥check_submit]-->	
+}
+<!--[￥date]-->
+</script>

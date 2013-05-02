@@ -1,0 +1,9 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}">
+<input name="act" type="hidden" id="act" value="todo">
+<input name='pid' type='hidden' class='pid' value="{$Think.request.pid}">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+	<tr><th>分类名称</th><td><input name='title' type='text' class='title'></td></tr>
+</table>
+</form>
+</div>

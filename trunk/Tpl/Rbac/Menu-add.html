@@ -1,0 +1,133 @@
+<div class="dialog-div">
+<form method="post" name="form_{$_REQUEST[_URL_][2]}" id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}" onsubmit="return check_form();">
+<input name="act" type="hidden" id="act" value="todo">
+<input name="role_id" type="hidden" value="{$_GET[role_id]}">
+<input name="user_id" type="hidden" value="{$_GET[user_id]}">
+<input name="group_id" type="hidden" value="{$_GET[group_id]}">
+<input name="parent_id" type="hidden" value="{$_GET[parent_id]?$_GET[parent_id]:0}">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+      <tr>
+        <th width="60px">名称</th>
+        <td><input name="title" type="text" class="title"></td>
+      </tr>
+      <tr>
+        <th>位置</th>
+        <td><select name="position" class="position" onchange="select_position();">
+          <option value="menu">左边菜单</option>
+          <option value="top1">顶部应用菜单</option>
+          <option value="top2">快捷菜单</option>
+          <option value="main" selected="selected">右边功能菜单</option>
+        </select></td>
+      </tr>
+      <tr>
+        <th>目标窗口</th>
+        <td><select name="target" class="target">
+          <option value="menu-frame">左边菜单窗口</option>
+          <option value="top-frame">顶部窗口</option>
+          <option value="main-frame">主页面窗口</option>
+          <option value="_blank">新开窗口</option>
+          <option value="_self" selected="selected">自身窗口</option>
+        </select></td>
+      </tr>
+      <tr id="assignto">
+        <th>分配到</th>
+        <td><select name="app" class="app">
+            <option value="">请选择应用</option>
+            <foreach name="list_control_app" item="app">
+              <option value="{$app[name]}" node_id="{$app[id]}">{$app[title]}</option>
+            </foreach>
+          </select>
+          <select name="module" class="module">
+          <option value="">请选择模块</option>
+      </select>
+          <select name="action" class="action">
+            <option value="">请选择节点</option>
+      </select>
+        <div><a href="javascript:create_url();">生成连接</a></div></td>
+      </tr>
+      <tr>
+        <th>连接</th>
+        <td>
+            <input name="url" type="text" class="url" size="50">
+          <p><a href="javascript:set_url('javascript:dialog_add();');">添加对话框</a></p>
+        </td>
+      </tr>
+      <tr>
+        <th>控制节点<input name="node_id" type="hidden" id="node_id" value="">
+<input name="access_node" type="hidden" id="access_node" value=""></th>
+        <td>
+          <select name="control_app" id="control_app">
+            <option value="">请选择应用</option>
+            <foreach name="list_control_app" item="app">
+            <option value="{$app[id]}">{$app[title]}</option>
+            </foreach>
+          </select>
+          <select name="control_module" id="control_module">
+            <option value="">请选择模块</option>
+          </select>
+          <select name="control_action" id="control_action">
+            <option value="">请选择节点</option>
+        </select>
+<script language="javascript">
+//分配到
+$(".app").change(function (){
+	$(".module").empty();
+	get_next_node($(this).find("option:selected").attr('node_id'),".module",'title','name');
+});
+$(".module").change(function (){
+	$(".action").empty();
+	get_next_node($(this).find("option:selected").attr('node_id'),".action",'title','name');
+});
+//控制节点
+$("#control_app").change(function (){
+	$("#control_module").empty();
+	get_next_node($(this).val(),"#control_module",'title','id');
+});
+$("#control_module").change(function (){
+	$("#control_action").empty();
+	get_next_node($(this).val(),"#control_action",'title','id');
+});
+function get_next_node(pid,dom,name,value){
+	var data='';
+	var uri='{:u("Rbac/Menu/Spiderman_get_node?pid=")}'+pid;
+	$.ajax({
+		data:"name="+name+'&value='+value,
+		url:uri,
+		success: function(html){
+			$(dom).append(html);
+		}
+	});
+}
+</script>
+
+        </td>
+      </tr>
+</table>
+</form>
+</div>
+<script language="javascript">
+//生成URL连接
+function set_url(url){
+	$("#form_{$_REQUEST[_URL_][2]} .url").val(url);
+}
+//通过“分配到”生成URL连接
+function create_url(){
+	var app=$('#form_{$_REQUEST[_URL_][2]} .app').val();
+	var module=$('#form_{$_REQUEST[_URL_][2]} .module').val();
+	var action=$('#form_{$_REQUEST[_URL_][2]} .action').val();
+	url="/index.php/"+app+'/'+module+'/'+action;
+	set_url(url);
+}
+//检查表单
+function check_form(){
+	var control_action=$("#control_action").val();
+	$("#node_id").val(control_action);
+	$("#access_node").val(control_action);
+	if(control_action==''){
+		if(!confirm('请确认是否需要控制节点，需要请按取消选择。')){
+			return false;
+		}
+	}
+	return true;
+}
+</script>

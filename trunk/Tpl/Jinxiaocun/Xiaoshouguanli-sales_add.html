@@ -1,0 +1,109 @@
+<div class="dialog-div">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+	<tr>
+	  <th colspan="4" align="left">销售产品</th>
+	  </tr>
+	<tr>
+	  <th>产品名称</th>
+	  <td><input name='p_name' type='text' id="p_name">
+      
+      </td>
+	  <th>产品代码</th>
+	  <td><input name='p_code' type='text' id='p_code' /></td>
+	</tr>
+	<tr>
+	  <th>产品规格</th><td><input name='p_specification' type='text' disabled="disabled" id='p_specification'></td>
+	  <th>库存总量</th>
+	  <td><input name='p_total_number' type='text' disabled="disabled" id='p_total_number' />
+      <input type="hidden" name="p_storage_id" id="p_storage_id" /></td>
+	</tr>
+	<tr>
+	  <th>销售价格</th>
+	  <td><input name='p_sell_price' type='text' id="p_sell_price"  /></td>
+	  <th>销售数量</th>
+	  <td><input name='p_number' type='text' id="p_number"  /></td>
+	</tr>
+    <tr>
+	  <td colspan="4" align="center"><input type="button" name="button" id="button" value="登记到此单" onclick="dengji();" /></td>
+	  </tr>
+      </table>
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}" onsubmit="return check_submit();">
+<input name="act" type="hidden" id="act" value="todo">
+   <table width="100%" border="1" cellspacing="0" cellpadding="0">   
+	<tr>
+	  <th colspan="4" align="left">销售单详细信息
+	    <input type="submit" name="button2" id="button2" value="提交销售记录" /></th>
+	  </tr>
+<tr>
+	  <th>出单单号</th>
+	  <td><input name='sell[out_number]' type='text'  id="out_number" value="{:sales_number()}" size="25" /></td>
+	  <th>业务员</th>
+	  <td>
+	    <select name="sell[salesman_id]" id="sell[salesman_id]">
+        <foreach name="list_user" item="user">
+	      <option value="{$user[id]}" <if condition="$_SESSION[C('USER_AUTH_KEY')] eq $user[id]">selected="selected"</if>>{$user['nickname']}</option>
+	    </foreach>
+        </select></td>
+	  </tr>
+      <tr>
+	  <th>客户</th>
+	  <td><select name="sell[customer_id]" id="customer_id">
+      	<foreach name="list_customer" item="customer">
+	    <option value="{$customer[id]}">{$customer[name]}</option>
+        </foreach>
+	    </select></td>
+	  <th>销售日期</th>
+	  <td><input name='sell[sale_date]' type='text'  class="date" value="<php>echo date('Y-m-d');</php>"/></td>
+	  </tr>
+      <tr>
+	  <th>总金额</th>
+	  <td><input name='sell[total_amount]' type='text'  id="total_amount" value="0" /></td>
+	  <th>收款银行帐号</th>
+	  <td><select name='sell[bank_account]' id="bank_account">
+	    <option selected="selected" value="">请选择</option>
+        <foreach name="list_bank_account" item="bank_account">
+        <option value="{$bank_account[account]}">{$bank_account[bank]}({$bank_account[account]})</option>
+        </foreach>
+	  </select><span style="color:#F00">非财务人员不用选此项</span></td>
+	  </tr>
+<tr>
+  <td colspan="4"><table id="table_sell" width="100%" border="1" cellspacing="0" cellpadding="0">
+    <tr>
+      <th>产品名称</th>
+      <th>产品代码</th>
+      <th>产品规格</th>
+      <th>产品数量</th>
+      <th>产品单价</th>
+    </tr>
+  </table></td>
+</tr>
+</table>
+</form>
+</div>
+<script language="javascript">
+$('.date').datepicker();
+//登记到此单
+var i=1;
+function dengji(){
+	var name=$("#p_name").val();
+	var code=$("#p_code").val();
+	var specification=$("#p_specification").val();
+	var number=$("#p_number").val();
+	var sell_price=$("#p_sell_price").val();
+	var storage_id=$("#p_storage_id").val();
+	var html='<tr><td><input name="list_sell_product['+i+'][name]" type="text" value="'+name+'" /></td>';
+    html+='<td><input name="list_sell_product['+i+'][code]" type="text" value="'+code+'"/><input type="hidden" name="list_sell_product['+i+'][storage_id]" value="'+storage_id+'" /></td>';
+    html+='<td><input name="list_sell_product['+i+'][specification]" type="text" value="'+specification+'" /></td>';
+    html+='<td><input name="list_sell_product['+i+'][number]" type="text" value="'+number+'" /></td>';
+    html+='<td><input name="list_sell_product['+i+'][price]" type="text" value="'+sell_price+'" /></td></tr>';
+	i++;
+	$("#table_sell").append(html);
+	//加入总金额
+	var total_amount=$("#total_amount").val();
+	$("#total_amount").val(Number(total_amount)+Number(sell_price)*Number(number));
+}
+//检查表单数据完整性
+function check_submit(){
+	
+}
+</script>

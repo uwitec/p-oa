@@ -1,0 +1,15 @@
+<script language="javascript">
+function Spiderman{$function_name}(){
+	var uri='{:U("Sys/Spiderman/get_data")}';
+	$.ajax({
+		type: "post",
+		url: uri,
+		data:{$param},
+		dataType:"{$data_type}",
+		success: function(rs){
+			{$set_data}
+			{$call_back}
+		}
+	});
+}
+</script>

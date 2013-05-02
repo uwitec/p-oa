@@ -1,0 +1,71 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}">
+<input name="act" type="hidden" id="act" value="todo">
+<input name="id" type="hidden" id="id" value="{$info[id]}">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+	<tr>
+    	<th>表名</th>
+    	<td><input name="table_name" type="text" id="table_name" value="{$info[table_name]}" size="60" maxlength="60" readonly="readonly" /></td>
+    </tr>
+    <tr>
+    	<th>名称</th>
+    	<td><input name="name" type="text" id="name" value="{$info[name]}" size="60" maxlength="60" /></td>
+    </tr>
+    <tr>
+    	<th>字段</th>
+    	<td><input name="field" type="text" id="field" value="{$info[field]}" size="60" />
+   	    <input type="hidden" name="old_field" id="old_field" value="{$info[field]}"/></td>
+    </tr>
+    <tr>
+    	<th>字段类型</th>
+    	<td>
+    	  <select name="formtype" id="formtype" onchange="select_formtype();">
+    	    <option value="text" <if condition="$info[formtype] eq 'text'">selected="selected" </if>>文本框</option>
+            <option value="number" <if condition="$info[formtype] eq 'number'">selected="selected" </if>>数字</option>
+            <option value="money" <if condition="$info[formtype] eq 'money'">selected="selected" </if>>金额</option>
+            <option value="date" <if condition="$info[formtype] eq 'date'">selected="selected" </if>>日期</option>
+          	<option value="date_time" <if condition="$info[formtype] eq 'date_time'">selected="selected" </if>>时间</option>
+    	    <option value="password" <if condition="$info[formtype] eq 'password'">selected="selected" </if>>密码框</option>
+            <option value="select" <if condition="$info[formtype] eq 'select'">selected="selected" </if>>下拉框</option>
+    	    <option value="textarea" <if condition="$info[formtype] eq 'textarea'">selected="selected" </if>>多行文本</option>
+    	    <option value="radio" <if condition="$info[formtype] eq 'radio'">selected="selected" </if>>单选框</option>
+    	    <option value="checkbox" <if condition="$info[formtype] eq 'checkbox'">selected="selected" </if>>复选框</option>
+        </select>
+    	  最大长度
+    	  <input name="maxlength" type="text" id="maxlength" value="{$info[maxlength]}" size="5" maxlength="5" />
+    	  用于搜索
+    	  <input name="issearch" type="checkbox" id="issearch" value="1" <if condition="$info[issearch]">checked="checked"</if> /></td>
+    </tr>
+    <tr>
+    	<th>提示</th>
+    	<td><textarea name="tips" id="tips">{$info[tips]}</textarea></td>
+    </tr>
+</table>
+</form>
+</div>
+<script language="javascript">
+//设置最大长度
+function select_formtype(){
+	var formtype=$("[name='formtype']").val();
+	switch(formtype){
+		case 'text':
+			$("#maxlength").val('32');
+		break;
+		case 'number':
+			$("#maxlength").val('11');
+		break;
+		case 'password':
+		case 'select':
+		case 'radio':
+		case 'checkbox':
+			$("#maxlength").val('64');
+		break;
+		case 'textarea':
+			$("#maxlength").val('512');
+		break;
+		default :
+			$("#maxlength").val('');
+		break;
+	}
+}
+</script>

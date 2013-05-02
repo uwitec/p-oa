@@ -1,0 +1,381 @@
+<div class="dialog-div">
+  <form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}" onsubmit="return check_submit();">
+    <input name="act" type="hidden" id="act" value="todo">
+    <table width="100%" border="1" cellspacing="0" cellpadding="0">
+      <tr>
+        <th>年月</th>
+        <td><input name='year_month' type='text' class='year_month'></td>
+        <th>员工编号</th>
+        <td><input name='employee_number' type='text' class='employee_number'></td>
+        <th>员工姓名</th>
+        <td><input name='employee_name' type='text' class='employee_name'></td>
+        <th>本月应出勤天数</th>
+        <td><input name='need_attendance_days' type='text' class='need_attendance_days'></td>
+      </tr>
+      <tr>
+        <th>01日</th>
+        <td><select name="day01" class="day01">
+          <option value="0" >请选择</option>
+          <option value="1" >上班</option>
+          <option value="2" >加班</option>
+          <option value="3" >事假</option>
+          <option value="4" >病假</option>
+          <option value="5" >公休</option>
+          <option value="6" >补休</option>
+          <option value="10" >其它</option>
+        </select></td>
+        <th>02日</th>
+        <td><select name="day02" class="day02">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+        <th>03日</th>
+        <td><select name="day03" class="day03">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+        <th>04日</th>
+        <td><select name="day04" class="day04">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+      </tr>
+      <tr>
+        <th>05日</th>
+        <td><select name="day05" class="day05">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+        <th>06日</th>
+        <td><select name="day06" class="day06">
+          <option value="0" >请选择</option>
+          <option value="1" >上班</option>
+          <option value="2" >加班</option>
+          <option value="3" >事假</option>
+          <option value="4" >病假</option>
+          <option value="5" >公休</option>
+          <option value="6" >补休</option>
+          <option value="10" >其它</option>
+        </select></td>
+        <th>07日</th>
+        <td><select name="day07" class="day07">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+        <th>08日</th>
+        <td><select name="day08" class="day08">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+      </tr>
+      <tr>
+        <th>09日</th>
+        <td><select name="day09" class="day09">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+        <th>10日</th>
+        <td><select name="day10" class="day10">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+        <th>11日</th>
+        <td><select name="day11" class="day11">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+        <th>12日</th>
+        <td><select name="day12" class="day12">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+      </tr>
+      <tr>
+        <th>13日</th>
+        <td><select name="day13" class="day13">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+        <th>14日</th>
+        <td><select name="day14" class="day14">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+        <th>15日</th>
+        <td><select name="day15" class="day15">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+        <th>16日</th>
+        <td><select name="day16" class="day16">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+      </tr>
+      <tr>
+        <th>17日</th>
+        <td><select name="day17" class="day17">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+        <th>18日</th>
+        <td><select name="day18" class="day18">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+        <th>19日</th>
+        <td><select name="day19" class="day19">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+        <th>20日</th>
+        <td><select name="day20" class="day20">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+      </tr>
+      <tr>
+        <th>21日</th>
+        <td><select name="day21" class="day21">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+        <th>22日</th>
+        <td><select name="day22" class="day22">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+        <th>23日</th>
+        <td><select name="day23" class="day23">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+        <th>24日</th>
+        <td><select name="day24" class="day24">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+      </tr>
+      <tr>
+        <th>25日</th>
+        <td><select name="day25" class="day25">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+        <th>26日</th>
+        <td><select name="day26" class="day26">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+        <th>27日</th>
+        <td><select name="day27" class="day27">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+        <th>28日</th>
+        <td><select name="day28" class="day28">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+      </tr>
+      <tr>
+        <th>29日</th>
+        <td><select name="day29" class="day29">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+        <th>30日</th>
+        <td><select name="day30" class="day30">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+        </select></td>
+        <th>31日</th>
+        <td><select name="day31" class="day31">
+            <option value="0" >请选择</option>
+            <option value="1" >上班</option>
+            <option value="2" >加班</option>
+            <option value="3" >事假</option>
+            <option value="4" >病假</option>
+            <option value="5" >公休</option>
+            <option value="6" >补休</option>
+            <option value="10" >其它</option>
+          </select></td>
+        <th>&nbsp;</th>
+        <td>&nbsp;</td>
+    </table>
+  </form>
+</div>
+<script language="javascript">
+function check_submit(){
+<!--[￥check_submit]-->	
+}
+<!--[￥date]-->
+</script>

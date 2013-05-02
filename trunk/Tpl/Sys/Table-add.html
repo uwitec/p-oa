@@ -1,0 +1,34 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}">
+<input name="act" type="hidden" id="act" value="todo">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+	<tr>
+	  <th>中文</th><td><input name='title' type='text' class='title' size="45" onblur="zh2pinyin();"></td></tr>
+	<tr>
+    <tr><th>表名</th><td><input name='name' type='text' class='name' size="45">
+    		<input name="pinyin" type="radio" class="pinyin" onchange="zh2pinyin();" value="en" checked="checked"/> 英文
+    	  <input type="radio" name="pinyin" class="pinyin" value="pinyin" onchange="zh2pinyin();" />拼音
+          <input type="radio" name="pinyin" class="pinyin" value="pinyin_first_letter" onchange="zh2pinyin();" />拼音首字母</td></tr>
+	<tr>
+    <th>备注</th><td><textarea name="remark" cols="45" rows="5" class="remark"></textarea></td></tr>
+
+</table>
+</form>
+</div>
+<script language="javascript">
+function zh2pinyin(){
+	$(".remark").val($('.title').val());
+	var text=$("#form_{$_REQUEST[_URL_][2]} .title").val();
+	var type=$("#form_{$_REQUEST[_URL_][2]} .pinyin:checked").val();
+	var uri="{:U('/Sys/Field/zh2pinyin')}";
+	$.ajax({
+		type: "post",
+		url: uri,
+		data:"text="+text+'&type='+type,
+		dataType:"html",
+		success: function(pinyin){
+			$("#form_{$_REQUEST[_URL_][2]} .name").val(pinyin);
+		}
+	});
+}
+</script>

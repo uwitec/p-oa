@@ -1,0 +1,6 @@
+<select name="{$html_name}" id="{$html_name}">
+<option value="">--请选择--</option>
+<foreach name="list" item="info">
+  <option value="{$info[$value]}" <php>if(in_array($info[$value],$default)) echo 'selected="selected"';</php>>{$info[$name]}</option>
+</foreach>
+</select>

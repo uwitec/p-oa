@@ -1,0 +1,16 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}">
+<input name="act" type="hidden" id="act" value="todo">
+<input name="id" type="hidden" id="id" value="{$info[id]}">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+	<tr>
+	  <th>仓库名称</th><td><input name='name' type='text' class="name" value='{$info[name]}'></td></tr>
+	<tr><th>仓库管理员</th><td><select name="admin_id" id="admin_id">
+	  <option>请选择</option>
+     {:user_select("$info[admin_id]")}
+	  </select></td></tr>
+	<tr><th>仓库说明</th><td><textarea name='remark' cols="50" rows="5" class='remark'>{$info[remark]}</textarea></td></tr>
+
+</table>
+</form>
+</div>

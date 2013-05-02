@@ -1,0 +1,49 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}" onsubmit="return check_submit();">
+<input name="act" type="hidden" id="act" value="todo">
+<input name="talent_id" type="hidden" value="{$_REQUEST[talent_id]}">
+<input name='resume_code' type='hidden' class='resume_code' value="{$_REQUEST[resume_code]}">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+<tr><th>姓名</th><td><input name='name' type='text' class='name' value="{$_REQUEST[name]}"></td><th>身份证</th><td><input name='id_card' type='text' class='id_card' value="{$_REQUEST[id_card]}" maxlength="18"></td></tr>
+<tr><th>所在部门</th><td>{:W('Superman',array('tpl'=>'select','html_name'=>'department_id','table_name'=>'hrm_organizational','name'=>'department_name','value'=>'id'))}
+  </td>
+  <th>职位</th><td>
+  {:W('Superman',array('tpl'=>'select','html_name'=>post_id,'table_name'=>'hrm_post','name'=>'name','value'=>'id'))}</td></tr>
+<tr><th>薪酬体系</th><td>
+  <select name="pay_system" class="pay_system">
+    <option>请选择</option>
+    <foreach name="list_salary_set" item="salary_set">
+    <option value="{$salary_set[id]}">{$salary_set[name]}</option>
+    </foreach>
+  </select></td><th>开户银行</th><td><input name='bank' type='text' class='bank'></td></tr>
+<tr><th>银行帐号</th><td><input name='bank_account' type='text' class='bank_account'></td><th>入职日期</th><td><input name='entry_date' type='text' class='entry_date date'></td></tr>
+<tr><th>转正日期</th><td><input name='regularized_date' type='text' class='regularized_date date'></td>
+<th>员工编号</th><td><input name='employee_number' type='text' class='employee_number check_data' title="请填写员工编号" regexp="/\S+/" value="{$info[employee_number]}"></td></tr>
+
+</table>
+</form>
+</div>
+<script language="javascript">
+function check_submit(){
+	var regexp=''; 
+	var str='';
+	var error=false;
+	$('#form_{$_REQUEST[_URL_][2]} .check_data').each(function(index, element) {
+		regexp=eval($(this).attr('regexp'));
+		str=$(this).val();
+		if(!str.match(regexp)){
+			alert($(this).attr('title'));
+			$(this).focus();
+			error=true;
+			return false;
+		}
+		
+    });
+	if(error){
+		return false;
+	}else{
+		return true;
+	}
+}
+$(".date").datepicker();
+</script>

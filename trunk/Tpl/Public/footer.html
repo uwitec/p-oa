@@ -1,0 +1,49 @@
+<div id="footer" class="not_print">版权所有 &copy; 2008-2012 {:C('SYS_NAME')}，并保留所有权利。</div>
+<div id="dialog"><!--系统公用的对话框容器--></div>
+<div id="dialog_tip_msg"><!--右下角的信息提示--></div>
+<script language="javascript">
+//初始化系统常用的JS
+Initialize();
+//start 定时弹出信息提示对话框
+$("#dialog_tip_msg").dialog({
+    autoOpen: false,
+    title: '信息提示',
+    width:'400px',
+    height:'400',
+    modal: false,
+	hide: "slow",
+	show:'slow',
+	position:{my: "left top", at: "right bottom", of: window}
+});
+function dialog_tip_msg(){
+	var isopen=$("#dialog_tip_msg").dialog('isOpen');
+	if(!isopen){
+		$.ajax({
+			url:'{:U("Sys/Tip/dialog_tip_msg")}',
+			type:'POST',
+			dataType:"html",
+			success: function(html){
+				if(html){
+					$("#dialog_tip_msg").html(html);
+					$("#dialog_tip_msg").dialog('open');
+				}else{
+					$("#dialog_tip_msg").html('');
+				}
+			}
+		});
+	}
+}
+$("#dialog_tip_msg").on("dialogclose",function(event,ui){
+	clearInterval(run_dialog_tip_msg);
+});
+dialog_tip_msg();
+var run_dialog_tip_msg=setInterval("dialog_tip_msg()",30000); 
+//end 定时弹出信息提示对话框
+//点击列表变色
+$(".list-div table tr").click(function(e) {
+	$(".list-div table tr").removeClass("selected");
+    $(this).addClass("selected");
+});
+</script>
+</body>
+</html>

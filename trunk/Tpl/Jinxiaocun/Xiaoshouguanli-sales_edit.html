@@ -1,0 +1,14 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}">
+<input name="act" type="hidden" id="act" value="todo">
+<input name="id" type="hidden" id="id" value="{$info[id]}">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+	<tr><th>出单单号</th><td><input name='cddh' type='text' disabled="disabled" class='cddh' value='{$info[cddh]}'></td></tr>
+	<tr><th>合计总金额</th><td><input name='hjzje' type='text' class='hjzje'></td></tr>
+	<tr><th>销售员</th><td><input name='xsy' type='text' class='xsy' value='{$info[salesman_name]}'></td></tr>
+	<tr><th>审核人</th><td><input name='shr' type='text' class='shr' value='{$info[auditor_name]}'></td></tr>
+	<tr><th>审核时间</th><td><input name='shsj' type='text' class='shsj' value='{$info[shsj]}'></td></tr>
+
+</table>
+</form>
+</div>

@@ -1,0 +1,12 @@
+<table border="1" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>序号</th>
+    <th>文本框</th><th>密码框</th><th>下拉选择框</th><th>复选框</th><th>单选框</th>
+  </tr>
+  <foreach name="list" item="info">
+  <tr>
+	<td>{$k+1}</td>
+    <td>{$info[text]}</td><td>{$info[password]}</td><td>{$info[select]}</td><td>{$info[checkbox]}</td><td>{$info[radio]}</td>
+    </tr>
+  </foreach>
+</table>

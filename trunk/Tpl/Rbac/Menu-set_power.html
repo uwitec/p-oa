@@ -1,0 +1,111 @@
+<include file="./Tpl/Public/header.html" />
+<style>
+.green{
+	color:#3C0;
+}
+.red{
+	color:#C00;
+}
+</style>
+<h1>
+    <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span>
+    <div style="clear:both"></div>
+</h1>
+<h1>
+<select id="roles" name="roles" style="float:left">
+<option value="">请选择</option>
+<foreach name="list_role" key="role_id" item="role"> 
+  <option value="{$role_id}" <if condition="$role_id eq $_REQUEST['role_id']">selected="selected"</if>>{$role}</option>
+</foreach>
+</select>
+<foreach name="list_group" item="info">
+<span class="action-span" style="float:left"><a href='{:U("Rbac/Menu/set_power?group_id=$info[id]&role_id=$_REQUEST[role_id]")}'>{$info[title]}</a></span>
+</foreach>
+<script language="javascript">
+$("#roles").change(function(){
+	window.location.href="{:U('set_power?role_id=')}"+$("#roles").val();
+})
+//检查表单
+function check_form(){
+	return true;	
+}
+</script>
+</h1>
+<div class="list-div">
+<form name="form_list" id="form_list" action='{:U("Rbac/Menu/set_power?role_id=$_REQUEST[role_id]")}' method="post" onsubmit="return check_form();">
+<input name="act" type="hidden" value="todo" />
+  <table width="100%" border="0" cellspacing="1" cellpadding="3">
+  <tr>
+      <th width="60px">
+        <input type="submit" name="button" id="button" value="授权" />
+      </a></th>
+      <th width="140">名称</th>
+      <th width="50">显示菜单</th>
+      <th width="400px">授权角色</th>
+      <th>URL连接</th>
+    </tr>
+    <foreach name="list" item="info">
+     <php>if($i++%2==0){ $class='even'; }else{ $class='odd'; }</php>
+ 	 <tr class="{$class}">
+      <td align="center">
+      <php>if(strstr($info[role_id],"[$_REQUEST[role_id]]")) $checked='checked="checked"'; else $checked='';</php><input name="set_power" type="checkbox" class="set_power" value="{$info[id]}" {$checked} />
+        <select name="menu_ids[{$info[id]}]" id="ids_{$info[id]}" style="display:none">
+        	<option value="now_status" selected="selected">不变</option>
+          <option value="add">添加</option>
+          <option value="delete">删除</option>
+        </select></td>
+      <td><strong>{$info[title]}</strong></td>
+      <td align="center"><if condition="$info[status] eq '1'"><span class="green">是</span><else/><span class="red">否</span></if></td>
+      <td><php>$role_id_arr=explode('][',substr($info[role_id],1,-1));foreach($role_id_arr as $role_id){echo $list_role[$role_id].'、';}</php></td>
+      <td>{$info[url]}</td>
+      </tr>
+        <foreach name="info[son_list]" item="son">
+        <tr class="{$class}">
+          <td align="center">
+          <php>if(strstr($son[role_id],"[$_REQUEST[role_id]]")) $checked='checked="checked"'; else $checked='';</php>
+          <input name="set_power" type="checkbox" class="set_power" value="{$son[id]}" {$checked} />
+        <select name="menu_ids[{$son[id]}]" id="ids_{$son[id]}" style="display:none">
+        	<option value="now_status" selected="selected">不变</option>
+          <option value="add">添加</option>
+          <option value="delete">删除</option>
+        </select></td>
+          <td>|-------{$son[title]}</td>
+          <td align="center"><if condition="$son[status] eq '1'"><span class="green">是</span><else/><span class="red">否</span></if>
+          </td>
+          <td><php>$role_id_arr=explode('][',substr($son[role_id],1,-1));foreach($role_id_arr as $role_id){echo $list_role[$role_id].'、';}</php></td>
+          <td>{$son[url]}</td>
+          </tr>
+            <foreach name="son[grandson_list]" item="grandson">
+            <tr class="{$class}">
+              <td align="center">
+              <php>if(strstr($grandson[role_id],"[$_REQUEST[role_id]]")) $checked='checked="checked"'; else $checked='';</php>
+              <input name="set_power" type="checkbox" class="set_power" value="{$grandson[id]}" {$checked} />
+        <select name="menu_ids[{$grandson[id]}]" id="ids_{$grandson[id]}" style="display:none">
+        	<option value="now_status" selected="selected">不变</option>
+          <option value="add">添加</option>
+          <option value="delete">删除</option>
+        </select></td>
+              <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-------{$grandson[title]}</td>
+              <td align="center"><if condition="$grandson[status] eq '1'"><span class="green">是</span><else/><span class="red">否</span></if></td>
+              <td><php>$role_id_arr=explode('][',substr($grandson[role_id],1,-1));foreach($role_id_arr as $role_id){echo $list_role[$role_id].'、';}</php></td>
+              <td>{$grandson[url]}</td>
+              </tr>
+            </foreach>
+        </foreach>
+    </foreach>
+  </table>
+</form>
+<div id="turn-page">{$pages}</div>
+</div>
+<script type="text/javascript">
+$(".set_power").click(function (){
+	var ischecked=$(this).is(":checked");
+	var menu_id=$(this).val();
+	if(ischecked){
+		$("#ids_"+menu_id).val('add');
+	}else{
+		$("#ids_"+menu_id).val('delete');
+	}
+})
+</script>
+<include file="./Tpl/Public/footer.html" />

@@ -1,0 +1,12 @@
+<table border="1" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>序号</th>
+    <th>名称</th>
+    <th>添加人</th>
+  </tr>
+  <foreach name="list" item="info">
+	<td>{$k+1}</td>
+    <td>{$info[name]}</td>
+    <td title="{$info[add_time]|date="Y-m-d H:s",###}">{$info[add_username]}</td>
+  </foreach>
+</table>

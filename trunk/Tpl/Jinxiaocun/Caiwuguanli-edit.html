@@ -1,0 +1,15 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}">
+<input name="act" type="hidden" id="act" value="todo">
+<input name="id" type="hidden" id="id" value="{$info[id]}">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+<tr><th>银行帐号</th><td><input name='bank_account' type='text' class='bank_account' value='{$info[bank_account]}'></td>
+<th>财务科目</th><td><select name="cat_id" id="cat_id">
+  <option value="" selected="selected">请选择</option>
+  {:finances_cat_select(0)}
+</select></td></tr>
+<tr><th>收入金额</th><td><input name='in_money' type='text' class='in_money' value="{$info[in_money]}"></td><th>支出金额</th><td><input name='out_money' type='text' class='out_money' value="{$info[out_money]}"></td></tr>
+<tr><th>收支说明</th><td colspan="3"><textarea name='remark' cols="60" rows="5" class='remark'>{$info[remark]}</textarea></td></tr>
+</table>
+</form>
+</div>

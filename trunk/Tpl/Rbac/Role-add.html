@@ -1,0 +1,23 @@
+<div class="dialog-div">
+<form method='post' name="form_{$_REQUEST[_URL_][2]}" id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}">
+<input name="act" type="hidden" id="act" value="todo">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+      <tr>
+        <th>角色</th>
+        <td><input name="name" type="text" id="name"></td>
+      </tr>
+      <tr>
+        <th>状态</th>
+        <td><select name="status" id="status">
+          <option value="1">启用</option>
+          <option value="-1">禁用</option>
+        </select></td>
+      </tr>
+      <tr>
+        <th>备注</th>
+        <td><label for="remark"></label>
+        <textarea name="remark" id="remark" cols="45" rows="5"></textarea></td>
+      </tr>
+</table>
+</form>
+</div>

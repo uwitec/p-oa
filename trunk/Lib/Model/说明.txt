@@ -1,0 +1,1 @@
+DemoRelationMode.class.php是一个关联模型的表，在建立时可以参考用。

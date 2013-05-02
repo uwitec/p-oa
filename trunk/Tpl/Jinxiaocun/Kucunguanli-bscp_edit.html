@@ -1,0 +1,11 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}">
+<input name="act" type="hidden" id="act" value="todo">
+<input name="id" type="hidden" id="id" value="{$info[id]}">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+<tr><th>产品名称</th><td><input name='cpmc' type='text' class='cpmc' value='{$info[cpmc]}'></td><th>产品代码</th><td><input name='cpdm' type='text' class='cpdm' value='{$info[cpdm]}'></td></tr>
+<tr><th>报损数量</th><td><input name='bssl' type='text' class='bssl'></td><th>报损原因</th><td><input name='bsyy' type='text' class='bsyy' value='{$info[bsyy]}'></td></tr>
+<tr><th>产品所在仓库</th><td><input name='cpszck' type='text' class='cpszck' value='{$info[cpszck]}'></td>
+</table>
+</form>
+</div>

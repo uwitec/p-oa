@@ -1,0 +1,118 @@
+/*
+打印样式,对于网页打印来说，就算是在打印设置中全部设置了0，都会出现左：7mm,右：4.5mm，上：5mm的边距的。
+因此在设置打印机的时候，设置10mm，实现打出来的会是离左边距17mm,右14.5mm,上:15mm 意思是说在设置边距时，必需是上减3mm，下减10mm,左右减5mm,
+打印尺寸：显示器尺寸=1cm：1.149cm
+也就是说要在打印出来的长度或者宽度是1cm，对应在样式中需要设置为1.149cm
+
+*/
+
+@media print{
+	body{
+	padding:0px;
+	}
+	.noprint{
+		display:none;
+	}	
+}
+
+/**A4纸竖放时，打印边距为0时**/
+.a4,.a4-common,.a4-narrow,.a4-moderate,.a4-wide{
+	width:794px;
+	height:1123px;
+	margin:0 auto;
+	background-color:#FFF;
+	page-break-after:always;
+	overflow:hidden;
+}
+/**A4纸普通边距为上下：2.54cm,左右：3.18cm**/
+.a4-common{
+	padding:29.18mm 36.53mm;
+}
+/**A4纸窄边距为上下左右：1.27cm**/
+.a4-narrow{
+	padding:14.59mm;
+}
+/**A4纸适中边距为上下：2.54,左右：1.97**/
+.a4-moderate{
+	padding:29.18mm 22.63mm;
+}
+/**A4纸宽边距为上下：2.54,左右：5.08**/
+.a4-wide{
+	padding:29.18mm 58.36mm;
+}
+	
+/**A4纸横放时**/
+.a4-t{
+	width:1123px;
+	height:775px;
+	margin:0 auto;
+	padding:1cm;/*设置页边距*/
+	background-color:#FFF;
+	page-break-after:always;
+	overflow:hidden;
+}
+/**============字号================**/
+/*初号*/
+.size-0 {
+	font-size: 42pt;
+}
+/*小初*/
+.size-x0 {
+	font-size:36pt;
+}
+/*一号*/
+.size-1{
+	font-size:26.5pt;
+}
+/*小一*/
+.size-x1{
+	font-size:24.5pt;
+}
+/*二号*/
+.size-2{
+	font-size:22.5pt;
+}
+/*小二*/
+.size-x2{
+	font-size:18.5pt;
+}
+/*三号*/
+.size-3{
+	font-size:16.5pt;
+}
+/*小三*/
+.size-x3{
+	font-size:15.5pt;
+}
+/*四号*/
+.size-4{
+	font-size:14.5pt;
+}
+/*小四*/
+.size-x4{
+	font-size:12.5pt;
+}
+/*五号*/
+.size-5{
+	font-size:11pt;
+}
+/*小五*/
+.size-x5{
+	font-size:9.5pt;
+}
+/*六号*/
+.size-6{
+	font-size:8pt;
+}
+/*小六*/
+.size-x6{
+	font-size:7pt;
+}
+/*七号*/
+.size-7{
+	font-size:6pt;
+}
+/*八号*/
+.size-8{
+	font-size:5.5pt;
+}

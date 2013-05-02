@@ -1,0 +1,73 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}" onsubmit="return check_submit();">
+<input name="act" type="hidden" id="act" value="todo">
+<input name="status" type="hidden" value="1" />
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+      <tr>
+        <th>帐号</th>
+        <td><input name="account" type="text" class="account"><span id="check_account_msg" style="color:#F00"></span></td>
+      </tr>
+      <tr>
+        <th>密码</th>
+        <td><input name="password" type="password" class="password"></td>
+      </tr>
+      <tr>
+        <th>确认密码</th>
+        <td><input name="password2" type="password" class="password2"></td>
+      </tr>
+      <tr>
+        <th>姓名</th>
+        <td><input name="nickname" type="text" class="nickname" /></td>
+      </tr>
+      <tr>
+        <th>邮箱</th>
+        <td>
+          <input name="email" type="text" class="email"></td>
+      </tr>
+      <tr>
+        <th>角色</th>
+        <td><php>$role_list=get_role();foreach($role_list as $role){</php><input name="role_arr[]" type="checkbox" class="role_arr" value="{$role[id]}" {$checked} />{$role[name]}<php>}</php></td>
+      </tr>
+      <tr>
+        <th>备注</th>
+        <td>
+          <textarea name="remark" class="remark" cols="45" rows="5"></textarea>
+        </td>
+      </tr>
+</table>
+</form>
+</div>
+<script type="text/javascript">
+$("#form_{$_REQUEST[_URL_][2]} .account").blur(function (){
+	var uri="{:U('Rbac/User/checkAccount')}";
+	$.ajax({
+		type: "post",
+		url: uri,
+		data:"account="+$(this).val(),
+		dataType:"json",
+		success: function(obj){
+			if(obj.status==0){
+				$("#check_account_msg").html(obj.info);
+			}else{
+				$("#check_account_msg").html('此帐号可以使用');
+			}
+		}
+	});
+});
+//检查表单数据
+function check_submit(){
+	if($("#form_{$_REQUEST[_URL_][2]} .password").val().length<5){
+		alert("密码必需大于5个字符");
+		return false;
+	}
+	if($("#form_{$_REQUEST[_URL_][2]} .password2").val()!=$("#form_{$_REQUEST[_URL_][2]} .password").val()){
+		alert('2次输入的密码不一样');
+		return false;
+	}
+	if($(".role_arr:checked").length<1){
+		alert('请选择其中一个角色');
+		return false;
+	}
+	return true;
+}
+</script>

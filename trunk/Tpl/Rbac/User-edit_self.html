@@ -1,0 +1,61 @@
+<include file="./Tpl/Public/header.html" />
+<h1>
+    <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span>
+    <div style="clear:both"></div>
+</h1>
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}" onsubmit="return check_password();">
+<input name="act" type="hidden" id="act" value="todo">
+<input name="id" type="hidden" id="id" value="{$info[id]}">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+      <tr>
+        <th>帐号</th>
+        <td><input name="account" type="text" disabled="disabled" id="account" value="{$info[account]}"></td>
+      </tr>
+      <tr>
+        <th>原密码</th>
+        <td><input name="old_password" type="password" id="old_password">不修改请留空</td>
+      </tr>
+      <tr>
+        <th>修改密码</th>
+        <td><input name="new_password" type="password" id="new_password">不修改请留空</td>
+      </tr>
+      <tr>
+        <th>确认密码</th>
+        <td><input name="new_password2" type="password" id="new_password2">
+        再次确认要修改的密码</td>
+      </tr>
+      <tr>
+        <th>姓名</th>
+        <td><input name="nickname" type="text" class="date" id="nickname" value="{$info[nickname]}" /></td>
+      </tr>
+      <tr>
+        <th>邮箱</th>
+        <td>
+          <input name="email" type="text" id="email" value="{$info[email]}"></td>
+      </tr>
+      <tr>
+        <th>授权角色</th>
+        <td><foreach name="list_role" item="role">{$role['name']} 、</foreach></td>
+      </tr>
+      <tr>
+        <th>备注</th>
+        <td>
+          <textarea name="remark" id="remark" cols="45" rows="5">{$info[remark]}</textarea></td>
+      </tr>
+      <tr>
+        <th>&nbsp;</th>
+        <td><input type="submit" name="button" id="button" value="修改" /></td>
+      </tr>
+</table>
+</form>
+</div>
+<script type="text/javascript">
+function check_password(){
+	if($("#new_password2").val()!=$("#new_password").val()){
+		alert('2次输入的密码不一样，请重新输入');
+		return false;
+	}
+}
+</script>
+<include file="./Tpl/Public/footer.html" />

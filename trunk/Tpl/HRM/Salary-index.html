@@ -1,0 +1,113 @@
+<include file="./Tpl/Public/header.html" />
+<h1> <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span>
+  <foreach name="list_main_menu" item="info"> <span class="action-span"><a href="{$info[url]}" target="{$info[target]}">{$info[title]}</a></span> </foreach>
+  <div style="clear:both"></div>
+</h1>
+<div class="form-div">
+  <form name="searchForm" action="">
+    <img width="26" height="22" border="0" alt="SEARCH" src="__PUBLIC__/images/icon_search.gif"> 姓名：
+    <input name='name' type='text' value='{$Think.request.name}' />
+    身份证：
+    <input name='id_card' type='text' value='{$Think.request.id_card}' />
+    <input type="submit" class="button" value=" 搜索 ">
+  </form>
+</div>
+<div class="list-div" style="width:120%;">
+  <table cellspacing='1' cellpadding='3'>
+    <tr>
+      <th rowspan="2">序号</th>
+      <th rowspan="2" style="width:60px"><a href="?_order=name&_sort={$sort}">姓名</a>
+        <if condition="$order eq 'name'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th rowspan="2"><a href="?_order=id_card&_sort={$sort}">身份证</a>
+        <if condition="$order eq 'id_card'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th rowspan="2"><a href="?_order=pay_system_id&_sort={$sort}">薪酬体系</a>
+        <if condition="$order eq 'pay_system_id'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th rowspan="2"><a href="?_order=need_attendance_days&_sort={$sort}">应出勤<br>天数</a>
+        <if condition="$order eq 'need_attendance_days'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th rowspan="2"><a href="?_order=actual_attendance_days&_sort={$sort}">实际出<br>勤天数</a>
+        <if condition="$order eq 'actual_attendance_days'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th colspan="<php>echo count($list[0][should_wages]);</php>">应发工资</th>
+      <th colspan="<php>echo count($list[0][should_debit]);</php>">应扣款</th>
+      <th rowspan="2"><a href="?_order=real_wages&_sort={$sort}">实发工资</a>
+        <if condition="$order eq 'real_wages'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th rowspan="2"><a href="?_order=employee_signature&_sort={$sort}">员工签名</a>
+        <if condition="$order eq 'employee_signature'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th rowspan="2"><a href="?_order=signature_date&_sort={$sort}">签名日期</a>
+        <if condition="$order eq 'signature_date'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th rowspan="2"><a href="?_order=bank&_sort={$sort}">开户银行</a>
+        <if condition="$order eq 'bank'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th rowspan="2"><a href="?_order=bank_account&_sort={$sort}">银行帐号</a>
+        <if condition="$order eq 'bank_account'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th rowspan="2"><a href="?_order=employee_number&_sort={$sort}">员工编号</a>
+        <if condition="$order eq 'employee_number'"><img src="__PUBLIC__/images/{$sortImg}.gif" width="9px" height="9px" alt="{$sortAlt}" /></if></th>
+      <th rowspan="2">操作</th>
+    </tr>
+    <tr>
+    <foreach name="list[0][should_wages]" key="key" item="should_wages">
+      <th>{$key}</th>
+   </foreach>
+   <foreach name="list[0][should_debit]" key="key" item="should_debit">
+      <th>{$key}</th>
+   </foreach>
+    </tr>
+    <foreach name="list" item="info" key="k">
+      <php>if($i++%2==0){ $class='even'; }else{ $class='odd'; }</php>
+      <tr class="{$class}">
+        <td>{$k+1}</td>
+        <td>{$info[name]}</td>
+        <td>{$info[id_card]}</td>
+        <td>{$pay_system[$info[pay_system_id]]}</td>
+        <td>{$info[need_attendance_days]}</td>
+        <td>{$info[actual_attendance_days]}</td>
+        <foreach name="info[should_wages]" key="key" item="should_wages"><td>{$should_wages}</td></foreach>
+        <foreach name="info[should_debit]" key="key" item="should_debit"><td>{$should_debit}</td></foreach>
+        <td>{$info[real_wages]}</td>
+        <td>{$info[employee_signature]}</td>
+        <td>{$info[signature_date]}</td>
+        <td>{$info[bank]}</td>
+        <td>{$info[bank_account]}</td>
+        <td>{$info[employee_number]}</td>
+        <td><a href="javascript:dialog_edit('id={$info[id]}');">修改 </a>| <a href="javascript:confirm_delete('{$info[id]}');">删除</a></td>
+      </tr>
+    </foreach>
+  </table>
+  <div id="turn-page">{$page}</div>
+</div>
+<div id="dialog"><!--公用对话框容器--></div>
+<div id="dialog_delete" style="color:#F00; font-size:13px; vertical-align: middle;">"彻底删除"的数据是不可恢复的，请慎用！</div>
+<script type="text/javascript">
+//参数param一般是id=XX
+function dialog_add(param){
+	dialog({'title':'添加信息','w':'960','h':'200'},'{:U("add")}',param);
+}
+function dialog_edit(param){
+	dialog({'title':'修改信息','w':'960','h':'200'},'{:U("edit")}',param);
+}
+//删除数据
+var delete_id="";
+$("#dialog_delete").dialog({
+    autoOpen: false,
+    title: '删除信息',
+    width:'270',
+    height:'150',
+    modal: true,
+    buttons: {
+        '丢到垃圾站': function () {
+        	window.location.href='{:U("delete?id=")}'+delete_id;
+   		},
+        '彻底删除': function () {
+			window.location.href='{:U("foreverdelete?id=")}'+delete_id;
+        },
+		'取消': function () {
+           $("#dialog_delete").dialog("close");
+        }
+    }
+});
+function confirm_delete(id){
+	delete_id=id;
+	$("#dialog_delete").dialog("open");
+}
+//初始化
+Initialize();
+</script> 
+<include file="./Tpl/Public/footer.html" />

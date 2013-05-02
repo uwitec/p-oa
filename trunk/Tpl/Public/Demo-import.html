@@ -1,0 +1,32 @@
+<include file="./Tpl/Public/header.html" />
+<h1>
+    <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span>
+    <span class="action-span"><a href="{:U('Product/Index/index')}" >返回</a></span>
+    <div style="clear:both"></div>
+</h1>
+<div class="list-div">
+<form id="import_form" enctype="multipart/form-data" name="import_form" method="post" action="" onsubmit="return check_data();">
+<input name="act" type="hidden" value="todo" />
+[￥field_key]
+<table cellspacing='1' cellpadding='3'>
+<tr>
+  <th width="100px">批量导入数据</th>
+  <td>{:W('UploadFile',array('method'=>'tmp','html_name'=>'file_path'))}<input type="submit" name="button" id="button" value="确认导入" />  </td>
+  </tr>
+<tr>
+  <th>说明</th>
+  <td>本模块只支持CSV格式数据上传，请下载文件格式【<a href="[￥import_file_url]">[￥import_file_name]</a>】</td></tr>
+</table>
+</form>
+</div>
+<script language="javascript">
+function check_data(){
+	if($('.file_path').val()){
+		return true;
+	}else{
+		alert('请选择文件');
+		return false;
+	}
+}
+</script>
+<include file="./Tpl/Public/footer.html" />

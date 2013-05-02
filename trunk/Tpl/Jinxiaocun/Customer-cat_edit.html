@@ -1,0 +1,11 @@
+<div class="dialog-div">
+<form method='post'  id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}">
+<input name="act" type="hidden" id="act" value="todo">
+<input name="id" type="hidden" id="id" value="{$info[id]}">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+<tr><th>分类名称</th><td><input name='title' type='text' class='title' value='{$info[title]}'></td><th>上级分类</th><td><input name='pid' type='text' class='pid'></td></tr>
+<tr><th>分类路径</th><td><input name='cat_dir' type='text' class='cat_dir' value='{$info[cat_dir]}'>用,分开</td><th>分类说明</th><td><textarea name='bak' class='bak'>{$info[bak]}</textarea></td></tr>
+
+</table>
+</form>
+</div>

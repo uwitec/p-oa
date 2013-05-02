@@ -1,0 +1,182 @@
+<include file="./Tpl/Public/header.html" />
+<style>
+.green{
+	color:#3C0;
+}
+.red{
+	color:#C00;
+}
+</style>
+<h1>
+    <span class="action-span1">{$current_operation[g][title]}->{$current_operation[m][title]}->{$current_operation[a][title]}</span>
+    <span class="action-span">
+    <foreach name="list_main_menu" item="info">
+    <span class="action-span"><a href="{$info[url]}" target="{$info[target]}">{$info[title]}</a></span>
+    </foreach>
+    <div style="clear:both"></div>
+</h1>
+<h1>
+<foreach name="list_group" item="info">
+<span class="action-span" style="float:left"><a href='{:U("Rbac/Menu/index?group_id=$info[id]")}'>{$info[title]}</a></span>
+</foreach>
+</h1>
+<script language="javascript">
+function set_sequence(){
+	$("#form_list").submit();
+	
+}
+</script>
+<div class="list-div">
+<form name="form_list" id="form_list" action='{:U("Rbac/Menu/sequence")}' method="post">
+  <table width="100%" border="0" cellspacing="1" cellpadding="3">
+  <tr>
+      <th width="50px"><a href="javascript:set_sequence();">排序</a></th>
+      <th width="140">名称</th>
+      <th width="50">显示菜单</th>
+      <th width="400px">授权角色</th>
+      <th>URL连接</th>
+      <th width="220px">操作</th>
+    </tr>
+    <foreach name="list" item="info">
+     <php>if($i++%2==0){ $class='even'; }else{ $class='odd'; }</php>
+ 	 <tr class="{$class}">
+      <td>
+        <input name="listorder[{$info[id]}]" type="text" class="listorder" value="{$info[listorder]}" size="6" maxlength="5" /></td>
+      <td><strong>{$info[title]}</strong></td>
+      <td align="center"><if condition="$info[status] eq '1'"><a href='{:U("Rbac/Menu/set_status?id=$info[id]&status=0")}'><span class="green">是</span></a><else/>
+              <a href='{:U("Rbac/Menu/set_status?id=$info[id]&status=1")}'><span class="red">否</span></a></if></td>
+      <td><php>$role_id_arr=explode('][',substr($info[role_id],1,-1));foreach($role_id_arr as $role_id){echo $list_role[$role_id].'、';}</php></td>
+      <td>{$info[url]}</td>
+      <td><a href='{:U("control_node?group_id=$info[group_id]&menu_id=$info[id]&access_node=$info[access_node]&role_ids=$info[role_id]")}'>控制节点</a> | <a href="javascript:dialog_add('{$info[id]}');">添加下级</a> | <a href="javascript:dialog_edit('{$info[id]}');">修改</a> | <a href="javascript:confirm_delete('{$info[id]}');">删除</a></td>
+    </tr>
+        <foreach name="info[son_list]" item="son">
+        <tr class="{$class}">
+          <td>
+            <input name="listorder[{$son[id]}]" type="text" class="listorder" value="{$son[listorder]}" size="6" maxlength="5" /></td>
+          <td>|-------{$son[title]}</td>
+          <td align="center"><if condition="$son[status] eq '1'"><a href='{:U("Rbac/Menu/set_status?id=$son[id]&status=0")}'><span class="green">是</span></a><else/>
+              <a href='{:U("Rbac/Menu/set_status?id=$son[id]&status=1")}'><span class="red">否</span></a></if>
+          </td>
+          <td><php>$role_id_arr=explode('][',substr($son[role_id],1,-1));foreach($role_id_arr as $role_id){echo $list_role[$role_id].'、';}</php></td>
+          <td>{$son[url]}</td>
+          <td><a href='{:U("control_node?group_id=$son[group_id]&menu_id=$son[id]&access_node=$son[access_node]&role_ids=$son[role_id]")}'>控制节点</a> | <a href="javascript:dialog_add('{$son[id]}');">添加下级</a> | <a href="javascript:dialog_move('{$son[id]}','{$info[id]}');">移动</a> | <a href="javascript:dialog_edit('{$son[id]}');">修改</a> | <a href="javascript:confirm_delete('{$son[id]}');">删除</a></td>
+        </tr>
+            <foreach name="son[grandson_list]" item="grandson">
+            <tr class="{$class}">
+              <td>
+                <input name="listorder[{$grandson[id]}]" type="text" class="listorder" value="{$grandson[listorder]}" size="6" maxlength="5" /></td>
+              <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-------{$grandson[title]}</td>
+              <td align="center"><if condition="$grandson[status] eq '1'"><a href='{:U("Rbac/Menu/set_status?id=$grandson[id]&status=0")}'><span class="green">是</span></a><else/>
+              <a href='{:U("Rbac/Menu/set_status?id=$grandson[id]&status=1")}'><span class="red">否</span></a></if></td>
+              <td><php>$role_id_arr=explode('][',substr($grandson[role_id],1,-1));foreach($role_id_arr as $role_id){echo $list_role[$role_id].'、';}</php></td>
+              <td>{$grandson[url]}</td>
+              <td><a href='{:U("control_node?group_id=$grandson[group_id]&menu_id=$grandson[id]&access_node=$grandson[access_node]&role_ids=$grandson[role_id]")}'>控制节点</a>  | <a href="javascript:dialog_move('{$grandson[id]}','{$son[id]}');">移动</a> | <a href="javascript:dialog_edit('{$grandson[id]}');">修改</a> | <a href="javascript:confirm_delete('{$grandson[id]}');">删除</a></td>
+            </tr>
+            </foreach>
+        </foreach>
+    </foreach>
+  </table>
+</form>
+<div id="turn-page">{$pages}</div>
+</div>
+<div id="dialog_add"><!--添加信息 --></div>
+<div id="dialog_edit"><!-- 修改信息--></div>
+<div id="dialog_move"><!-- 移动菜单信息-->
+    <form name="form_move" id="form_move" action='{:U("Rbac/Menu/move")}' method="post">
+    <input name="id" class="id" type="hidden" value="" />
+    移动到：<select name="parent_id" class="parent_id">
+    <foreach name="list" item="info">
+         <option value="{$info[id]}">{$info[title]}</option>
+         <foreach name="info[son_list]" item="son">
+         <option value="{$son[id]}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|--{$son[title]}</option>
+         </foreach>
+    </foreach>
+            </select>
+    </form>
+</div>
+<script type="text/javascript">
+$("#dialog_add").dialog({
+    autoOpen: false,
+    title: '添加信息',
+    width:'600',
+    height:'400',
+    modal: true,
+    buttons: {
+        '确认': function () {
+   			$("#dialog_add .dialog-div form").submit();
+   		},
+        '取消': function () {
+           $("#dialog_add").dialog("close");
+        }
+    }
+});
+function dialog_add(parent_id){
+	<php>$group_id=$_REQUEST['group_id']?$_REQUEST['group_id']:1;</php>
+	var uri='{:U("add?group_id=$group_id&parent_id=")}'+parent_id;
+	$.ajax({
+		type: "get",
+		url: uri,
+		dataType:"html",
+		success: function(html){
+			$("#dialog_add").html(html);
+			$("#dialog_add").dialog("open");
+		}
+	});
+}
+$("#dialog_edit").dialog({
+    autoOpen: false,
+    title: '修改信息',
+    width:'600',
+    height:'400',
+    modal: true,
+    buttons: {
+        '确认': function () {
+   			$("#dialog_edit form").submit();
+        	$("#dialog_edit").dialog("close");
+   		},
+        '取消': function () {
+           $("#dialog_edit").dialog("close");
+        }
+    }
+});
+function dialog_edit(id){
+	var uri='{:U("edit?id=")}'+id;
+	$.ajax({
+		type: "get",
+		url: uri,
+		dataType:"html",
+		success: function(html){
+			$("#dialog_edit").html(html);
+			$("#dialog_edit").dialog("open");
+		}
+	});
+}
+//移动菜单位置
+$("#dialog_move").dialog({
+    autoOpen: false,
+    title: '移动菜单位置',
+    width:'200',
+    height:'120',
+    modal: true,
+    buttons: {
+        '确认': function () {
+   			$("#dialog_move form").submit();
+        	$("#dialog_move").dialog("close");
+   		},
+        '取消': function () {
+           $("#dialog_move").dialog("close");
+        }
+    }
+});
+function dialog_move(id,pid){
+	$("#form_move .id").val(id);
+	$("#form_move .parent_id").val(pid);
+	$("#dialog_move").dialog("open");
+}
+function confirm_delete(id){
+	if(confirm("确认删除此记录吗？删除后不可恢复。")){
+		window.location.href='{:U("Menu/delete?id=")}'+id;
+	}
+}
+</script>
+<include file="./Tpl/Public/footer.html" />

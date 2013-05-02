@@ -1,0 +1,70 @@
+<div class="dialog-div">
+<form method='post' name="form_{$_REQUEST[_URL_][2]}" id="form_{$_REQUEST[_URL_][2]}" action="{:U($_REQUEST[_URL_][2])}">
+<input name="act" type="hidden" id="act" value="todo">
+<input name="id" type="hidden" class="id" value="{$info[id]}">
+<input name="node_id" type="hidden" class="node_id" value="{$info[node_id]}">
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+      <tr>
+        <th>名称</th>
+        <td><input name="title" type="text" class="title" value="{$info[title]}"></td>
+      </tr>
+      <tr>
+        <th>位置</th>
+        <td><select name="position" class="position">
+          <option value="menu" <if condition="$info[position] eq 'menu'">selected="selected"</if>>左边菜单</option>
+          <option value="top1" <if condition="$info[position] eq 'top1'">selected="selected"</if>>顶部应用菜单</option>
+          <option value="top2" <if condition="$info[position] eq 'top2'">selected="selected"</if>>快捷菜单</option>
+          <option value="main" <if condition="$info[position] eq 'main'">selected="selected"</if>>右边功能菜单</option>
+        </select></td>
+      </tr>
+      <tr>
+        <th>目标窗口</th>
+        <td><select name="target" class="target">
+          <option value="menu-frame" <if condition="$info[target] eq 'menu-frame'">selected="selected"</if>>左边菜单窗口</option>
+          <option value="top-frame" <if condition="$info[target] eq 'top-frame'">selected="selected"</if>>顶部窗口</option>
+          <option value="main-frame" <if condition="$info[target] eq 'main-frame'">selected="selected"</if>>主页面窗口</option>
+          <option value="_blank" <if condition="$info[target] eq '_blank'">selected="selected"</if>>新开窗口</option>
+          <option value="_self" <if condition="$info[target] eq '_self'">selected="selected"</if>>自身窗口</option>
+        </select></td>
+      </tr>
+      <tr>
+        <th>分配到</th>
+        <td>应用<input name="app" type="text" class="app" value="{$info[app]}" size="16" maxlength="20">
+        模块<input name="module" type="text" class="module" value="{$info[module]}" size="16" maxlength="20">
+        操作<input name="action" type="text" class="action" value="{$info[action]}" size="16" maxlength="20">
+        <div><a href="javascript:create_url();">生成连接</a></div>
+        </td>
+      </tr>
+      <if condition="$info[role_id]">
+      <tr>
+        <th>已授权角色</th>
+        <td>
+        <foreach name="list_role" item="role">
+        <if condition="strstr($info[role_id],'['.$role[id].']')">{$role[name]}、</if>
+        </foreach>
+        </td>
+      </tr>
+      </if>
+      <tr>
+        <th>连接</th>
+        <td>
+          <input name="url" type="text" class="url" value="{$info[url]}" size="50"><p><a href="javascript:set_url('javascript:dialog_add();');">添加对话框</a></p>
+        </td>
+      </tr>
+</table>
+</form>
+</div>
+<script language="javascript">
+//生成URL连接
+function set_url(url){
+	$("#form_{$_REQUEST[_URL_][2]} .url").val(url);
+}
+//通过“分配到”生成URL连接
+function create_url(){
+	var app=$('#form_{$_REQUEST[_URL_][2]} .app').val();
+	var module=$('#form_{$_REQUEST[_URL_][2]} .module').val();
+	var action=$('#form_{$_REQUEST[_URL_][2]} .action').val();
+	url="/index.php/"+app+'/'+module+'/'+action;
+	set_url(url);
+}
+</script>
